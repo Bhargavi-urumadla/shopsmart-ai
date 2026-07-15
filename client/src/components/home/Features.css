@@ -1,0 +1,60 @@
+.features{
+    padding:80px 60px;
+    background:white;
+}
+
+.features h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:60px;
+}
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:30px;
+
+}
+
+.feature-card{
+
+    background:#f8fafc;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    text-align:center;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.feature-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.feature-card h3{
+
+    margin:20px 0;
+
+}
+
+.feature-card p{
+
+    color:#64748b;
+
+    line-height:1.6;
+
+    font-size:17px;
+
+}
