@@ -1,23 +1,178 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import API from "../api/api";
 import Navbar from "../components/layout/Navbar";
-import Hero from "../components/home/Hero";
-import Features from "../components/home/Features";
-import HowItWorks from "../components/home/HowItWorks";
-import Testimonials from "../components/home/Testimonials";
-import Footer from "../components/layout/Footer";
+import "./Home.css";
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  description: string;
+  image: string;
+}
+
 function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await API.get("/products");
+
+      // Show only first 4 products
+      setProducts(res.data.slice(0, 4));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Navbar />
 
-      <Hero />
+      <div className="home-page">
 
-      <Features />
-      <HowItWorks />
-       <Testimonials />
+        {/* Hero Section */}
 
-        <Footer />
+        <section className="hero">
 
+          <div className="hero-left">
 
+            <h1>👋 Welcome Back</h1>
+
+            <h2>{user?.name || "Shopper"}</h2>
+
+            <p>
+              Shop smarter with AI. Explore products,
+              save your favourites, manage your cart,
+              and track all your orders from one place.
+            </p>
+
+            <Link to="/products">
+              <button className="shop-btn">
+                🛍 Shop Now
+              </button>
+            </Link>
+
+          </div>
+
+          <div className="hero-right">
+            🤖
+          </div>
+
+        </section>
+
+        {/* Dashboard */}
+
+        <section className="dashboard">
+
+          <Link to="/products" className="dashboard-card">
+            <div className="icon">🛍</div>
+
+            <h3>Products</h3>
+
+            <p>Browse all available products</p>
+          </Link>
+
+          <Link to="/wishlist" className="dashboard-card">
+            <div className="icon">❤️</div>
+
+            <h3>Wishlist</h3>
+
+            <p>Products you saved</p>
+          </Link>
+
+          <Link to="/cart" className="dashboard-card">
+            <div className="icon">🛒</div>
+
+            <h3>Cart</h3>
+
+            <p>View shopping cart</p>
+          </Link>
+
+          <Link to="/orders" className="dashboard-card">
+            <div className="icon">📦</div>
+
+            <h3>Orders</h3>
+
+            <p>Track previous orders</p>
+          </Link>
+
+        </section>
+
+        {/* Featured Products */}
+
+        <section className="featured">
+
+          <div className="section-header">
+
+            <h2>🔥 Featured Products</h2>
+
+            <Link to="/products">
+              View All →
+            </Link>
+
+          </div>
+
+          <div className="featured-grid">
+
+            {products.map((product) => (
+
+              <div
+                className="featured-card"
+                key={product._id}
+              >
+<img
+  src={product.image}
+  alt={product.name}
+  onError={(e) => {
+    (e.currentTarget as HTMLImageElement).src =
+      "https://placehold.co/400x300?text=ShopSmart";
+  }}
+/>
+
+                <h3>{product.name}</h3>
+
+                <p>{product.category}</p>
+
+                <h2>₹ {product.price}</h2>
+
+                <Link to="/products">
+                  <button>
+                    View Product
+                  </button>
+                </Link>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* AI Tip */}
+
+        <section className="ai-box">
+
+          <h2>💡 AI Shopping Tip</h2>
+
+          <p>
+            Compare products before purchasing.
+            Save favourites in your wishlist and
+            place orders with confidence.
+          </p>
+
+        </section>
+
+      </div>
     </>
   );
 }
