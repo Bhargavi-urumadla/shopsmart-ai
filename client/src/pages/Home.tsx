@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../api/api";
-import Navbar from "../components/layout/Navbar";
+import { notify } from "../utils/notify";
+import ProductSkeleton from "../components/Skeleton/ProductSkeleton";
 import "./Home.css";
 
 interface Product {
@@ -15,8 +16,11 @@ interface Product {
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const user = JSON.parse(
+    localStorage.getItem("user") || "null"
+  );
 
   useEffect(() => {
     fetchProducts();
@@ -24,18 +28,26 @@ function Home() {
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
+
       const res = await API.get("/products");
 
       // Show only first 4 products
       setProducts(res.data.slice(0, 4));
     } catch (error) {
-      console.log(error);
+      console.error(error);
+
+      notify.error(
+        "Unable to load featured products. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Navbar />
+  
 
       <div className="home-page">
 
@@ -47,7 +59,9 @@ function Home() {
 
             <h1>👋 Welcome Back</h1>
 
-            <h2>{user?.name || "Shopper"}</h2>
+            <h2>
+              {user?.name || "Shopper"}
+            </h2>
 
             <p>
               Shop smarter with AI. Explore products,
@@ -73,7 +87,10 @@ function Home() {
 
         <section className="dashboard">
 
-          <Link to="/products" className="dashboard-card">
+          <Link
+            to="/products"
+            className="dashboard-card"
+          >
             <div className="icon">🛍</div>
 
             <h3>Products</h3>
@@ -81,7 +98,10 @@ function Home() {
             <p>Browse all available products</p>
           </Link>
 
-          <Link to="/wishlist" className="dashboard-card">
+          <Link
+            to="/wishlist"
+            className="dashboard-card"
+          >
             <div className="icon">❤️</div>
 
             <h3>Wishlist</h3>
@@ -89,7 +109,10 @@ function Home() {
             <p>Products you saved</p>
           </Link>
 
-          <Link to="/cart" className="dashboard-card">
+          <Link
+            to="/cart"
+            className="dashboard-card"
+          >
             <div className="icon">🛒</div>
 
             <h3>Cart</h3>
@@ -97,7 +120,10 @@ function Home() {
             <p>View shopping cart</p>
           </Link>
 
-          <Link to="/orders" className="dashboard-card">
+          <Link
+            to="/orders"
+            className="dashboard-card"
+          >
             <div className="icon">📦</div>
 
             <h3>Orders</h3>
@@ -121,40 +147,57 @@ function Home() {
 
           </div>
 
-          <div className="featured-grid">
+          {/* Featured Products Loading */}
 
-            {products.map((product) => (
+          {loading ? (
+  <ProductSkeleton count={4} />
+) : (
 
-              <div
-                className="featured-card"
-                key={product._id}
-              >
-<img
-  src={product.image}
-  alt={product.name}
-  onError={(e) => {
-    (e.currentTarget as HTMLImageElement).src =
-      "https://placehold.co/400x300?text=ShopSmart";
-  }}
-/>
+            <div className="featured-grid">
 
-                <h3>{product.name}</h3>
+              {products.map((product) => (
 
-                <p>{product.category}</p>
+                <div
+                  className="featured-card"
+                  key={product._id}
+                >
 
-                <h2>₹ {product.price}</h2>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        "https://placehold.co/400x300?text=ShopSmart";
+                    }}
+                  />
 
-                <Link to="/products">
-                  <button>
-                    View Product
-                  </button>
-                </Link>
+                  <h3>
+                    {product.name}
+                  </h3>
 
-              </div>
+                  <p>
+                    {product.category}
+                  </p>
 
-            ))}
+                  <h2>
+                    ₹ {product.price}
+                  </h2>
 
-          </div>
+                  <Link
+                    to={`/products/${product._id}`}
+                  >
+                    <button>
+                      View Product
+                    </button>
+                  </Link>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          )}
 
         </section>
 

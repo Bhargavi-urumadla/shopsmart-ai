@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/api";
 import "./Register.css";
+import { notify } from "../utils/notify";
 
 function Register() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Register() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      notify.error("Passwords do not match.");
       return;
     }
 
@@ -35,12 +36,11 @@ function Register() {
         password: formData.password,
       });
 
-      alert(res.data.message);
-
+      notify.success(res.data.message);
       navigate("/login");
 
     } catch (error: any) {
-      alert(error.response?.data?.message || "Registration Failed");
+      notify.error(error.response?.data?.message || "Registration Failed");
     }
   };
 

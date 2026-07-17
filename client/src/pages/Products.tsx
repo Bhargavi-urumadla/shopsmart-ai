@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import API from "../api/api";
 import "./Products.css";
+
+import { notify } from "../utils/notify";
+import Loader from "../components/Loader/Loader";
+import ProductSkeleton from "../components/Skeleton/ProductSkeleton";
 
 interface Product {
   _id: string;
@@ -10,6 +15,7 @@ interface Product {
   category: string;
   description: string;
   image: string;
+  rating?: number;
 }
 
 function Products() {
@@ -18,26 +24,51 @@ function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Track individual button loading
+  const [addingToCartId, setAddingToCartId] =
+    useState<string | null>(null);
+
+  const [addingToWishlistId, setAddingToWishlistId] =
+    useState<string | null>(null);
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
+  // =========================
   // Fetch Products
+  // =========================
+
   const fetchProducts = async () => {
     try {
+      setLoading(true);
+
       const res = await API.get("/products");
+      console.log("PRODUCTS FROM API:", res.data);
+
+
       setProducts(res.data);
     } catch (error) {
-      console.log(error);
-      alert("Failed to load products");
+      console.error(error);
+
+      notify.error(
+        "Unable to load products. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  // =========================
   // Add to Cart
+  // =========================
+
   const addToCart = async (productId: string) => {
+    if (addingToCartId === productId) return;
+
     try {
+      setAddingToCartId(productId);
+
       await API.post(
         "/cart",
         {
@@ -46,24 +77,40 @@ function Products() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
           },
         }
       );
 
-      alert("✅ Product Added to Cart");
+      notify.success("Added to cart");
 
-      // Navigate to Cart Page
-      navigate("/cart");
-
+      // Keep user on Products page.
+      // They can continue shopping.
+      // Navigate to cart using navbar/cart icon.
     } catch (error: any) {
-      alert(error.response?.data?.message || "Failed to add product");
+      notify.error(
+        error.response?.data?.message ||
+          "Failed to add product"
+      );
+    } finally {
+      setAddingToCartId(null);
     }
   };
 
+  // =========================
   // Add to Wishlist
-  const addWishlist = async (productId: string) => {
+  // =========================
+
+  const addWishlist = async (
+    productId: string
+  ) => {
+    if (addingToWishlistId === productId) return;
+
     try {
+      setAddingToWishlistId(productId);
+
       await API.post(
         "/wishlist",
         {
@@ -71,87 +118,237 @@ function Products() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem(
+              "token"
+            )}`,
           },
         }
       );
 
-      alert("❤️ Added to Wishlist");
-
-      // Optional
-      // navigate("/wishlist");
-
+      notify.success("Added to Wishlist");
     } catch (error: any) {
-      alert(error.response?.data?.message || "Failed");
+      notify.error(
+        error.response?.data?.message ||
+          "Failed to add to wishlist"
+      );
+    } finally {
+      setAddingToWishlistId(null);
     }
   };
 
+  // =========================
+  // Skeleton Loading
+  // =========================
+
   if (loading) {
-    return <h2 className="loading">Loading Products...</h2>;
+    return (
+      <div className="products-page">
+        <div className="products-header">
+          <div>
+            <span className="products-subtitle">
+              DISCOVER YOUR FAVORITES
+            </span>
+
+            <h1>
+              🛍 Explore Products
+            </h1>
+          </div>
+        </div>
+
+        <ProductSkeleton count={8} />
+      </div>
+    );
   }
 
   return (
     <div className="products-page">
 
-      <h1>🛍 ShopSmart Products</h1>
+      {/* Page Header */}
+
+      <div className="products-header">
+
+        <div>
+          <span className="products-subtitle">
+            DISCOVER YOUR FAVORITES
+          </span>
+
+          <h1>
+            🛍 ShopSmart Products
+          </h1>
+
+          <p>
+            Explore our collection and find
+            something perfect for you.
+          </p>
+        </div>
+
+        <div className="products-count">
+          {products.length} Products
+        </div>
+
+      </div>
+
+      {/* Products */}
 
       <div className="products-grid">
 
         {products.map((product) => (
 
-          <div className="product-card" key={product._id}>
+          <div
+            className="product-card"
+            key={product._id}
+          >
 
-           <img
+            {/* Product Image */}
+
+            <div className="product-image-container">
+
+              {/* <img
+                src={product.image}
+                alt={product.name}
+                onClick={() =>
+                  navigate(
+                    `/products/${product._id}`
+                  )
+                }
+                onError={(e) => {
+                  e.currentTarget.src =
+                    "https://placehold.co/400x300?text=ShopSmart";
+                }}
+              /> */}
+              <img
   src={product.image}
   alt={product.name}
-  onClick={() => navigate(`/products/${product._id}`)}
-  style={{ cursor: "pointer" }}
+  onClick={() =>
+    navigate(`/products/${product._id}`)
+  }
 />
 
-           <h3
-  onClick={() => navigate(`/products/${product._id}`)}
-  style={{ cursor: "pointer" }}
->
-  {product.name}
-</h3>
+              {/* Category Badge */}
 
-            <p className="price">
-              ₹ {product.price}
-            </p>
+              <span className="category-badge">
+                {product.category}
+              </span>
 
-            <p className="category">
-              {product.category}
-            </p>
+              {/* Wishlist Heart */}
 
-            <p className="description">
-              {product.description}
-            </p>
+              <button
+                className="wishlist-icon-btn"
+                aria-label={`Add ${product.name} to wishlist`}
+                disabled={
+                  addingToWishlistId ===
+                  product._id
+                }
+                onClick={() =>
+                  addWishlist(product._id)
+                }
+              >
+                {addingToWishlistId ===
+                product._id ? (
+                  <Loader
+                    size="small"
+                    text=""
+                  />
+                ) : (
+                  "♡"
+                )}
+              </button>
 
-            <div className="buttons">
- <button
-  className="view-btn"
-  onClick={() => {
-    console.log(product._id);
-    navigate(`/products/${product._id}`);
-  }}
->
-  👁 View Details
-</button>
+            </div>
 
-  <button
-    className="cart-btn"
-    onClick={() => addToCart(product._id)}
-  >
-    🛒 Add to Cart
-  </button>
+            {/* Product Content */}
 
-  <button
-    className="wishlist-btn"
-    onClick={() => addWishlist(product._id)}
-  >
-    ❤️ Wishlist
-  </button>
-</div>
+            <div className="product-card-content">
+
+              <h3
+                onClick={() =>
+                  navigate(
+                    `/products/${product._id}`
+                  )
+                }
+              >
+                {product.name}
+              </h3>
+
+              {/* Rating */}
+
+              <div className="product-rating">
+                <span>⭐</span>
+
+                <span>
+                  {product.rating ?? "4.5"}
+                </span>
+
+                <span className="rating-text">
+                  Highly Rated
+                </span>
+              </div>
+
+              {/* Description */}
+
+              <p className="description">
+                {product.description}
+              </p>
+
+              {/* Price */}
+
+              <div className="product-price-row">
+
+                <div>
+                  <span className="price-label">
+                    Price
+                  </span>
+
+                  <p className="price">
+                    ₹ {product.price}
+                  </p>
+                </div>
+
+                <span className="stock-badge">
+                  In Stock
+                </span>
+
+              </div>
+
+              {/* Buttons */}
+
+              <div className="product-actions">
+
+                <button
+                  className="view-btn"
+                  onClick={() =>
+                    navigate(
+                      `/products/${product._id}`
+                    )
+                  }
+                >
+                  View Details
+                </button>
+
+                <button
+                  className="cart-btn"
+                  disabled={
+                    addingToCartId ===
+                    product._id
+                  }
+                  onClick={() =>
+                    addToCart(product._id)
+                  }
+                >
+                  {addingToCartId ===
+                  product._id ? (
+                    <Loader
+                      size="small"
+                      text="Adding..."
+                    />
+                  ) : (
+                    "🛒 Add to Cart"
+                  )}
+                </button>
+
+              </div>
+
+            </div>
 
           </div>
 
