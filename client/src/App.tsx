@@ -9,21 +9,48 @@ import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 
+import Layout from "./components/layout/Layout";
+import AIAssistant from "./pages/AIAssistant";
 function App() {
   return (
     <Routes>
-
-      <Route path="/" element={<Landing />} />
-
+      {/* Public Routes - No Navbar */}
       <Route path="/login" element={<Login />} />
-
       <Route path="/register" element={<Register />} />
 
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/products" element={<Products />} />
-      <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/products/:id" element={<ProductDetails />} />
-      <Route path="/cart" element={<Cart />} />
+      {/* Shared Layout - Navbar appears on all routes below */}
+      <Route element={<Layout />}>
+        <Route path="/" element={<Landing />} />
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/products"
+          element={<Products />}
+        />
+
+        <Route
+          path="/products/:id"
+          element={<ProductDetails />}
+        />
+
+        <Route
+          path="/wishlist"
+          element={<Wishlist />}
+        />
+
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
+      </Route>
+      <Route
+  path="/ai-assistant"
+  element={<AIAssistant />}
+/>
     </Routes>
   );
 }

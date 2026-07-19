@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/api";
 import "./Login.css";
+import { notify } from "../utils/notify";
+import Loader from "../components/Loader/Loader";
 
 function Login() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -18,27 +21,55 @@ function Login() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  // VERY IMPORTANT:
+  // Prevent the form from refreshing the browser
+  e.preventDefault();
 
-    try {
-      const res = await API.post("/auth/login", formData);
+  // Prevent multiple clicks
+  if (loading) return;
 
-// Save JWT Token
-localStorage.setItem("token", res.data.token);
+  // Start small button loader
+  setLoading(true);
 
-// Save logged-in user details
-localStorage.setItem("user", JSON.stringify(res.data.user));
+  try {
+    console.log("Login started");
 
-alert("Login Successful");
+    const res = await API.post("/auth/login", formData);
 
-// Navigate to Home
-navigate("/dashboard");
+    console.log("Login response:", res.data);
 
-    } catch (error: any) {
-      alert(error.response?.data?.message || "Login Failed");
-    }
-  };
+    // Save JWT token
+    localStorage.setItem("token", res.data.token);
+
+    // Save user
+    localStorage.setItem(
+      "user",
+      JSON.stringify(res.data.user)
+    );
+
+    console.log(
+      "Token saved:",
+      localStorage.getItem("token")
+    );
+
+    notify.success("Login successful");
+
+    // Go to dashboard
+    navigate("/dashboard");
+  } catch (error: any) {
+    console.error("Login error:", error);
+
+    notify.error(
+      error.response?.data?.message ||
+        "Something went wrong. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};;
 
   return (
     <div className="login-container">
@@ -81,11 +112,20 @@ navigate("/dashboard");
 
           </div>
 
-          <button className="login-btn">
-
-            Login
-
-          </button>
+          <button
+  type="submit"
+  className="login-btn"
+  disabled={loading}
+>
+  {loading ? (
+    <Loader
+      size="small"
+      text="Logging in..."
+    />
+  ) : (
+    "Login"
+  )}
+</button>
 
         </form>
 

@@ -1,122 +1,387 @@
-.logo a {
-  text-decoration: none;
-  color: white;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.nav-links a:hover {
-  color: #13aeb0;
-}
-
-.username {
-  color: #13aeb0;
-  font-weight: bold;
-}
-
-.logout-btn {
-  background: #13aeb0;
-  color: white;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.logout-btn:hover {
-  background: #0f9193;
-}/* Navbar */
+/* =====================================
+   NAVBAR
+===================================== */
 
 .navbar {
-  height: 75px;
-  background: #13aeb0;
+  min-height: 76px;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 70px;
+
+  padding: 0 5%;
+
   position: sticky;
   top: 0;
+
   z-index: 1000;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+
+  background:
+    linear-gradient(
+      135deg,
+      #0fa5a7,
+      #13aeb0
+    );
+
+  box-shadow:
+    0 4px 20px
+    rgba(15, 23, 42, 0.12);
 }
 
-/* Logo */
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo {
+  flex-shrink: 0;
+}
 
 .logo a {
-  color: white;
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
   text-decoration: none;
-  font-size: 30px;
-  font-weight: bold;
+
+  font-size: 25px;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
 }
 
-/* Navigation */
+.logo-icon {
+  font-size: 26px;
+}
+
+.logo-ai {
+  padding: 3px 7px;
+
+  background:
+    rgba(255, 255, 255, 0.2);
+
+  border-radius: 7px;
+
+  font-size: 14px;
+}
+
+
+/* =====================================
+   NAVBAR CONTENT
+===================================== */
+
+.navbar-content {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-left: 50px;
+}
+
+
+/* =====================================
+   NAVIGATION LINKS
+===================================== */
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
-  list-style: none;
+
+  gap: 8px;
+
   margin: 0;
   padding: 0;
+
+  list-style: none;
 }
 
 .nav-links li {
   list-style: none;
 }
 
-/* Links */
+.nav-link {
+  position: relative;
 
-.nav-links a {
-  color: white;
+  display: flex;
+  align-items: center;
+
+  padding: 10px 13px;
+
+  color:
+    rgba(255, 255, 255, 0.88);
+
   text-decoration: none;
+
+  border-radius: 9px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  transform: translateY(-1px);
+}
+
+
+/* Active Page */
+
+.nav-link.active {
+  color: #0f9698;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0, 0, 0, 0.1);
+}
+
+
+/* =====================================
+   RIGHT SIDE
+===================================== */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+}
+
+
+/* =====================================
+   USER INFO
+===================================== */
+
+.user-info {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(255, 255, 255, 0.2);
+
+  color: #ffffff;
+
+  border:
+    2px solid
+    rgba(255, 255, 255, 0.5);
+
+  border-radius: 50%;
+
   font-size: 17px;
-  font-weight: 500;
-  transition: 0.3s;
+  font-weight: 800;
 }
 
-.nav-links a:hover {
-  color: #ffe082;
+.user-details {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Register Button */
+.welcome-text {
+  color:
+    rgba(255, 255, 255, 0.75);
 
-.register-btn a {
-  background: white;
-  color: #13aeb0;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: bold;
+  font-size: 11px;
 }
-
-.register-btn a:hover {
-  background: #f3f3f3;
-}
-
-/* Username */
 
 .username {
-  color: white;
-  font-weight: bold;
-  font-size: 17px;
+  max-width: 130px;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Logout */
+
+/* =====================================
+   LOGOUT
+===================================== */
 
 .logout-btn {
-  background: #ff4d4f;
-  color: white;
+  padding: 10px 17px;
+
+  background: #ff4d5f;
+
+  color: #ffffff;
+
   border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 700;
+
   cursor: pointer;
-  font-size: 15px;
-  transition: .3s;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .logout-btn:hover {
-  background: #d9363e;
+  background: #e63e50;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 15px
+    rgba(230, 62, 80, 0.3);
+}
+
+
+/* =====================================
+   MOBILE MENU BUTTON
+===================================== */
+
+.mobile-menu-btn {
+  display: none;
+
+  margin-left: auto;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  border: none;
+
+  font-size: 27px;
+
+  cursor: pointer;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 1050px) {
+
+  .navbar {
+    padding:
+      0 25px;
+  }
+
+  .navbar-content {
+    margin-left: 25px;
+  }
+
+  .nav-link {
+    padding:
+      9px 8px;
+
+    font-size: 14px;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 800px) {
+
+  .navbar {
+    min-height: 70px;
+
+    padding:
+      0 20px;
+
+    flex-wrap: wrap;
+  }
+
+  .logo a {
+    font-size: 22px;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .navbar-content {
+    width: 100%;
+
+    display: none;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    margin: 0;
+
+    padding:
+      15px 0 20px;
+  }
+
+  .navbar-content.active {
+    display: flex;
+  }
+
+  .nav-links {
+    width: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 5px;
+  }
+
+  .nav-link {
+    width: 100%;
+
+    padding:
+      12px 15px;
+
+    box-sizing: border-box;
+  }
+
+  .nav-right {
+    margin-top: 15px;
+
+    padding-top: 15px;
+
+    border-top:
+      1px solid
+      rgba(255, 255, 255, 0.2);
+
+    justify-content: space-between;
+  }
+
+  .user-details {
+    display: flex;
+  }
+
 }

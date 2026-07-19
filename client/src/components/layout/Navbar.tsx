@@ -1,18 +1,36 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {
+  NavLink,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
 import "./Navbar.css";
+import { notify } from "../../utils/notify";
 
 function Navbar() {
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
+  const user = JSON.parse(
+    localStorage.getItem("user") || "null"
+  );
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    alert("Logged Out Successfully");
+    notify.success(
+      "Logged out successfully."
+    );
 
     navigate("/login");
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -21,49 +39,167 @@ function Navbar() {
       {/* Logo */}
 
       <div className="logo">
-        <Link to="/">🛍 ShopSmart AI</Link>
+        <Link
+          to="/"
+          onClick={closeMenu}
+        >
+          <span className="logo-icon">
+            🛍
+          </span>
+
+          <span>
+            ShopSmart
+          </span>
+
+          <span className="logo-ai">
+            AI
+          </span>
+        </Link>
       </div>
+
+
+      {/* Mobile Menu Button */}
+
+      <button
+        className="mobile-menu-btn"
+        onClick={() =>
+          setMenuOpen(!menuOpen)
+        }
+        aria-label="Toggle navigation menu"
+      >
+        {menuOpen ? "✕" : "☰"}
+      </button>
+
 
       {/* Navigation */}
 
-      <ul className="nav-links">
+      <div
+        className={
+          menuOpen
+            ? "navbar-content active"
+            : "navbar-content"
+        }
+      >
 
-        <li>
-          <Link to="/">Home</Link>
-        </li>
+        <ul className="nav-links">
 
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
+          <li>
+            <NavLink
+              to="/"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              Home
+            </NavLink>
+          </li>
 
-        <li>
-          <Link to="/wishlist">Wishlist</Link>
-        </li>
+          <li>
+            <NavLink
+              to="/products"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              Products
+            </NavLink>
+          </li>
 
-        <li>
-          <Link to="/cart">Cart</Link>
-        </li>
+          <li>
+            <NavLink
+              to="/wishlist"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              <span>
+                ❤️ Wishlist
+              </span>
+            </NavLink>
+          </li>
 
-        <li>
-          <Link to="/orders">Orders</Link>
-        </li>
+          <li>
+            <NavLink
+              to="/cart"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              <span>
+                🛒 Cart
+              </span>
+            </NavLink>
+          </li>
 
-      </ul>
+          <li>
+            <NavLink
+              to="/orders"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              Orders
+            </NavLink>
+          </li>
+          <li>
+    <Link to="/ai-assistant">
+      🤖 AI Assistant
+    </Link>
+  </li>
 
-      {/* Right Side */}
+        </ul>
 
-      <div className="nav-right">
 
-        <span className="username">
-          👋 {user?.name}
-        </span>
+        {/* Right Side */}
 
-        <button
-          className="logout-btn"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
+        <div className="nav-right">
+
+          <div className="user-info">
+
+            <div className="user-avatar">
+              {user?.name
+                ?.charAt(0)
+                ?.toUpperCase() || "U"}
+            </div>
+
+            <div className="user-details">
+
+              <span className="welcome-text">
+                Welcome
+              </span>
+
+              <span className="username">
+                {user?.name || "Shopper"}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+
+        </div>
 
       </div>
 
