@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+dotenv.config();
+
+// Debug (Temporary)
+console.log("GROQ_API_KEY loaded:", !!process.env.GROQ_API_KEY);
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
@@ -8,7 +12,8 @@ const productRoutes = require("./routes/productRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-dotenv.config();
+const aiRoutes = require("./routes/aiRoutes");
+
 
 const app = express();
 
@@ -25,6 +30,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/ai", aiRoutes);
+
 // Test Route
 app.get("/", (req, res) => {
   res.send("🚀 ShopSmart AI Backend is Running");

@@ -18,6 +18,12 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
 
+    // NEW
+    productType: {
+      type: String,
+      required: true,
+    },
+
     brand: {
       type: String,
       default: "",
@@ -42,6 +48,13 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+
+    // NEW
+    tags: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     timestamps: true,
