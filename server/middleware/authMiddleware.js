@@ -1,35 +1,50 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
   try {
     let token;
 
-    // Check Authorization header
     if (
       req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization.startsWith("Bearer ")
     ) {
       token = req.headers.authorization.split(" ")[1];
+    }
 
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Token:", token);
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
-
-      // Save user id in request
-      req.user = decoded;
-
-      next();
-    } else {
+    if (!token) {
       return res.status(401).json({
+        success: false,
         message: "Access denied. No token provided.",
       });
     }
+
+    // Verify JWT
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Get latest user from database
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    // Attach user to request
+    req.user = user;
+
+    next();
+
   } catch (error) {
     return res.status(401).json({
-      message: "Invalid token",
+      success: false,
+      message: "Invalid or expired token.",
     });
   }
 };
 
-module.exports = { protect };
+module.exports = {
+  protect,
+};
