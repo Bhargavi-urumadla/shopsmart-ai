@@ -18,7 +18,6 @@ function DashboardLayout({
   stats,
   profile,
   recentOrders,
-  offerBanner,
 }: DashboardLayoutProps) {
   return (
     <div className="dashboard-container">

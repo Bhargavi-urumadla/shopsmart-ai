@@ -4,7 +4,6 @@ import API from "../api/api";
 import "./ProductDetails.css";
 import { notify } from "../utils/notify";
 import Loader from "../components/Loader/Loader";
-import { Link } from "react-router-dom";
 
 interface Product {
   _id: string;
