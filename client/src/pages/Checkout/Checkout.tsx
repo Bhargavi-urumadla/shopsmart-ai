@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Checkout.css";
 import API from "../../api/api";
-import Loader from "../../components/Loader/Loader";
 import { notify } from "../../utils/notify";
 import ShippingAddress from "../../components/Checkout/ShippingAddress";
 import PaymentMethod from "../../components/Checkout/PaymentMethod";
@@ -29,7 +28,7 @@ const [placingOrder, setPlacingOrder] =
     const [paymentMethod, setPaymentMethod] =
   useState("COD");
     const [cart, setCart] = useState<CartItem[]>([]);
-const [loading, setLoading] = useState(true);
+const [, setLoading] = useState(true);
 
 const [errors, setErrors] = useState({
   fullName: "",

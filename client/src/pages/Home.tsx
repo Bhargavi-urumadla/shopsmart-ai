@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import API from "../api/api";
 import { notify } from "../utils/notify";
-import ProductSkeleton from "../components/Skeleton/ProductSkeleton";
 import "./Home.css";
 import Hero from "../components/home/Hero";
 import Stats from "../components/home/Stats";
@@ -23,12 +21,9 @@ interface Product {
 }
 
 function Home() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setProducts] = useState<Product[]>([]);
+  const [, setLoading] = useState(true);
 
-  const user = JSON.parse(
-    localStorage.getItem("user") || "null"
-  );
 
   useEffect(() => {
     fetchProducts();
