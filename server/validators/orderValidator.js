@@ -4,34 +4,42 @@ const { body } = require("express-validator");
 // Order Validation
 // ==============================
 const orderValidation = [
-  // Products array
-  body("products")
-    .isArray({ min: 1 })
-    .withMessage("At least one product is required"),
-
-  // Validate each product ID
-  body("products.*.product")
-    .notEmpty()
-    .withMessage("Product ID is required")
-    .isMongoId()
-    .withMessage("Invalid Product ID"),
-
-  // Validate each quantity
-  body("products.*.quantity")
-    .isInt({ min: 1 })
-    .withMessage("Quantity must be at least 1"),
-
-  // Shipping Address
-  body("shippingAddress")
+  body("shippingAddress.fullName")
     .trim()
     .notEmpty()
-    .withMessage("Shipping address is required"),
+    .withMessage("Full name is required"),
 
-  // Payment Method
+  body("shippingAddress.phone")
+    .trim()
+    .notEmpty()
+    .withMessage("Phone number is required"),
+
+  body("shippingAddress.address")
+    .trim()
+    .notEmpty()
+    .withMessage("Address is required"),
+
+  body("shippingAddress.city")
+    .trim()
+    .notEmpty()
+    .withMessage("City is required"),
+
+  body("shippingAddress.state")
+    .trim()
+    .notEmpty()
+    .withMessage("State is required"),
+
+  body("shippingAddress.pincode")
+    .trim()
+    .notEmpty()
+    .withMessage("Pincode is required"),
+
   body("paymentMethod")
     .trim()
     .notEmpty()
-    .withMessage("Payment method is required"),
+    .withMessage("Payment method is required")
+    .isIn(["COD", "UPI", "Card", "Net Banking"])
+    .withMessage("Invalid payment method"),
 ];
 
 module.exports = {

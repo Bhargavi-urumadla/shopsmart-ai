@@ -27,7 +27,13 @@ const addProduct = async (req, res) => {
       isFeatured,
     } = req.body;
 
-    if (!name || !description || !category || !productType || price === undefined) {
+    if (
+      !name ||
+      !description ||
+      !category ||
+      !productType ||
+      price === undefined
+    ) {
       return res.status(400).json({
         success: false,
         message: "Please fill all required fields",
@@ -61,7 +67,6 @@ const addProduct = async (req, res) => {
       message: "Product added successfully",
       data: product,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -95,6 +100,29 @@ const getProducts = async (req, res) => {
       filter.productType = req.query.productType;
     }
 
+    if (req.query.search) {
+      filter.$or = [
+        {
+          name: {
+            $regex: req.query.search,
+            $options: "i",
+          },
+        },
+        {
+          description: {
+            $regex: req.query.search,
+            $options: "i",
+          },
+        },
+        {
+          brand: {
+            $regex: req.query.search,
+            $options: "i",
+          },
+        },
+      ];
+    }
+
     if (req.query.minPrice || req.query.maxPrice) {
       filter.price = {};
 
@@ -107,27 +135,37 @@ const getProducts = async (req, res) => {
       }
     }
 
-    let sort = {};
+    let sort = {
+      createdAt: -1,
+    };
 
     switch (req.query.sort) {
       case "priceAsc":
-        sort.price = 1;
+        sort = { price: 1 };
         break;
 
       case "priceDesc":
-        sort.price = -1;
+        sort = { price: -1 };
         break;
 
       case "rating":
-        sort.rating = -1;
+        sort = { rating: -1 };
         break;
 
       case "latest":
-        sort.createdAt = -1;
+        sort = { createdAt: -1 };
+        break;
+
+      case "nameAsc":
+        sort = { name: 1 };
+        break;
+
+      case "nameDesc":
+        sort = { name: -1 };
         break;
 
       default:
-        sort.createdAt = -1;
+        break;
     }
 
     const products = await Product.find(filter)
@@ -137,50 +175,23 @@ const getProducts = async (req, res) => {
 
     const totalProducts = await Product.countDocuments(filter);
 
+    const totalPages = Math.max(
+  1,
+  Math.ceil(totalProducts / limit)
+);
+
     res.status(200).json({
       success: true,
-      count: products.length,
-      totalProducts,
-      currentPage: page,
-      totalPages: Math.ceil(totalProducts / limit),
       data: products,
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-// =========================
-// Search Products
-// =========================
-const searchProducts = async (req, res) => {
-  try {
-    const { q } = req.query;
-
-    if (!q) {
-      return res.status(400).json({
-        success: false,
-        message: "Search query is required",
-      });
-    }
-
-    const products = await Product.find({
-      isActive: true,
-      $text: {
-        $search: q,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalProducts,
+        limit,
+        hasNextPage: page < totalPages,
+        hasPreviousPage: page > 1,
       },
     });
-
-    res.status(200).json({
-      success: true,
-      count: products.length,
-      data: products,
-    });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -188,7 +199,6 @@ const searchProducts = async (req, res) => {
     });
   }
 };
-
 // =========================
 // Featured Products
 // =========================
@@ -204,7 +214,6 @@ const getFeaturedProducts = async (req, res) => {
       count: products.length,
       data: products,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -234,7 +243,6 @@ const getProductById = async (req, res) => {
       success: true,
       data: product,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -269,7 +277,6 @@ const updateProduct = async (req, res) => {
       message: "Product updated successfully",
       data: product,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -304,7 +311,6 @@ const deleteProduct = async (req, res) => {
       success: true,
       message: "Product deleted successfully",
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -313,10 +319,12 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// =========================
+// Exports
+// =========================
 module.exports = {
   addProduct,
   getProducts,
-  searchProducts,
   getFeaturedProducts,
   getProductById,
   updateProduct,

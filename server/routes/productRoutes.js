@@ -4,7 +4,6 @@ const router = express.Router();
 const {
   addProduct,
   getProducts,
-  searchProducts,
   getFeaturedProducts,
   getProductById,
   updateProduct,
@@ -17,6 +16,9 @@ const {
   productValidation,
 } = require("../validators/productValidator");
 
+console.log("productValidation:", typeof productValidation);
+console.log("validate:", typeof validate);
+console.log("addProduct:", typeof addProduct);
 /**
  * @swagger
  * tags:
@@ -78,26 +80,7 @@ router.post(
   addProduct
 );
 
-/**
- * @swagger
- * /api/products/search:
- *   get:
- *     summary: Search products
- *     description: Search products by keyword.
- *     tags: [Products]
- *     parameters:
- *       - in: query
- *         name: q
- *         schema:
- *           type: string
- *         example: samsung
- *         required: true
- *         description: Search keyword
- *     responses:
- *       200:
- *         description: Products fetched successfully
- */
-router.get("/search", searchProducts);
+
 
 /**
  * @swagger
