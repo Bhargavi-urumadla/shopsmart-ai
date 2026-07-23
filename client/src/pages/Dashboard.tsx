@@ -1,55 +1,23 @@
-
 import "./Dashboard.css";
 
+import DashboardLayout from "../components/Dashboard/DashboardLayout";
+import Sidebar from "../components/Sidebar/Sidebar";
+import Hero from "../components/Hero/Hero";
+import QuickActions from "../components/QuickActions/QuickActions";
+import StatsCards from "../components/StatsCards/StatsCards";
+import ProfileCard from "../components/ProfileCard/ProfileCard";
+import RecentOrders from "../components/RecentOrders/RecentOrders";
+import OfferBanner from "../components/OfferBanner/OfferBanner";
 function Dashboard() {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-
   return (
-    <>
-   
-
-      <div className="dashboard">
-
-        <h1>Welcome 👋 {user?.name}</h1>
-
-        <p>What would you like to do today?</p>
-
-        <div className="dashboard-grid">
-
-          <div className="card">
-            📦
-            <h3>Products</h3>
-            <p>Browse all products</p>
-          </div>
-
-          <div className="card">
-            ❤️
-            <h3>Wishlist</h3>
-            <p>Your saved products</p>
-          </div>
-
-          <div className="card">
-            🛒
-            <h3>Cart</h3>
-            <p>Items ready to buy</p>
-          </div>
-
-          <div className="card">
-            📋
-            <h3>Orders</h3>
-            <p>Track your orders</p>
-          </div>
-
-          <div className="card ai">
-            🤖
-            <h3>AI Shopping Assistant</h3>
-            <p>Ask AI to compare products</p>
-          </div>
-
-        </div>
-
-      </div>
-    </>
+    <DashboardLayout
+      sidebar={<Sidebar />}
+      hero={<Hero />}
+      quickActions={<QuickActions />}
+      stats={<StatsCards />}
+      profile={<ProfileCard />}
+      recentOrders={<RecentOrders />}
+      offerBanner={<OfferBanner />} header={undefined}    />
   );
 }
 

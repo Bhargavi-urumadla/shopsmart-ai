@@ -1,0 +1,65 @@
+.ai-insights {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ai-header h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.insight-card {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  transition: .3s;
+}
+
+.insight-card:hover {
+  transform: translateY(-3px);
+}
+
+.insight-icon {
+  font-size: 24px;
+}
+
+.success {
+  background: #ecfdf5;
+}
+
+.warning {
+  background: #fff7ed;
+}
+
+.info {
+  background: #eff6ff;
+}
+
+.insight-content h4 {
+  margin: 0 0 6px;
+}
+
+.insight-content p {
+  margin: 0 0 12px;
+  color: #555;
+}
+
+.insight-content button {
+  background: #14b8a6;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}

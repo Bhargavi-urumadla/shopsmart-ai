@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import API from "../api/api";
@@ -7,7 +7,8 @@ import "./Products.css";
 import { notify } from "../utils/notify";
 import Loader from "../components/Loader/Loader";
 import ProductSkeleton from "../components/Skeleton/ProductSkeleton";
-
+import ProductsToolbar from "../components/products/ProductsToolbar";
+import ProductsHero from "../components/Hero/ProductsHero";
 interface Product {
   _id: string;
   name: string;
@@ -20,8 +21,8 @@ interface Product {
 
 function Products() {
   const navigate = useNavigate();
-
-  const [products, setProducts] = useState<Product[]>([]);
+const [products, setProducts] = useState<Product[]>([]);
+  
   const [loading, setLoading] = useState(true);
 
   // Track individual button loading
@@ -30,34 +31,85 @@ function Products() {
 
   const [addingToWishlistId, setAddingToWishlistId] =
     useState<string | null>(null);
+const [search, setSearch] = useState("");
+const [debouncedSearch, setDebouncedSearch] = useState("");
 
+const [sort, setSort] = useState("");
+
+const [category, setCategory] = useState("All");
+
+const [currentPage, setCurrentPage] = useState(1);
+
+const [totalPages, setTotalPages] = useState(1);
+const [totalProducts, setTotalProducts] = useState(0);
+
+const limit = 8;
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setDebouncedSearch(search);
+    setCurrentPage(1);
+  }, 500);
+
+  return () => clearTimeout(timer);
+}, [search]);
+useEffect(() => {
+  setCurrentPage(1);
+}, [category, sort]);
   useEffect(() => {
-    fetchProducts();
-  }, []);
+  fetchProducts();
+}, [debouncedSearch, sort, category, currentPage]);
 
   // =========================
   // Fetch Products
   // =========================
+const fetchProducts = useCallback(async () => {
+  try {
+    setLoading(true);
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
+    const params = new URLSearchParams();
 
-      const res = await API.get("/products");
-      console.log("PRODUCTS FROM API:", res.data);
+    params.append("page", currentPage.toString());
+    params.append("limit", limit.toString());
 
-
-      setProducts(res.data);
-    } catch (error) {
-      console.error(error);
-
-      notify.error(
-        "Unable to load products. Please try again."
-      );
-    } finally {
-      setLoading(false);
+    if (category !== "All") {
+      params.append("category", category);
     }
-  };
+
+    if (sort) {
+      params.append("sort", sort);
+    }
+
+    if (debouncedSearch.trim()) {
+      params.append("search", debouncedSearch);
+    }
+
+    const res = await API.get(
+      `/products?${params.toString()}`
+    );
+
+    setProducts(res.data.data || []);
+
+if (res.data.pagination) {
+  setTotalPages(res.data.pagination.totalPages);
+  setTotalProducts(res.data.pagination.totalProducts);
+}
+
+  } catch (error) {
+    console.error(error);
+
+    notify.error(
+      "Unable to load products."
+    );
+  } finally {
+    setLoading(false);
+  }
+}, [
+  category,
+  sort,
+  debouncedSearch,
+  currentPage,
+]);
 
   // =========================
   // Add to Cart
@@ -143,17 +195,7 @@ function Products() {
   if (loading) {
     return (
       <div className="products-page">
-        <div className="products-header">
-          <div>
-            <span className="products-subtitle">
-              DISCOVER YOUR FAVORITES
-            </span>
-
-            <h1>
-              🛍 Explore Products
-            </h1>
-          </div>
-        </div>
+        <ProductsHero />
 
         <ProductSkeleton count={8} />
       </div>
@@ -161,203 +203,194 @@ function Products() {
   }
 
   return (
-    <div className="products-page">
+  <div className="products-page">
 
-      {/* Page Header */}
+    <ProductsHero />
 
-      <div className="products-header">
+    <ProductsToolbar
+      search={search}
+      setSearch={setSearch}
+      sort={sort}
+      setSort={setSort}
+      category={category}
+      setCategory={setCategory}
+      totalProducts={totalProducts}
+    />
 
-        <div>
-          <span className="products-subtitle">
-            DISCOVER YOUR FAVORITES
-          </span>
-
-          <h1>
-            🛍 ShopSmart Products
-          </h1>
-
-          <p>
-            Explore our collection and find
-            something perfect for you.
-          </p>
-        </div>
-
-        <div className="products-count">
-          {products.length} Products
-        </div>
-
+    {products.length === 0 ? (
+      <div className="empty-products">
+        <h2>No Products Found</h2>
+        <p>Try another search or category.</p>
       </div>
-
-      {/* Products */}
-
-      <div className="products-grid">
-
-        {products.map((product) => (
-
-          <div
-            className="product-card"
-            key={product._id}
-          >
-
-            {/* Product Image */}
-
-            <div className="product-image-container">
-
-              {/* <img
-                src={product.image}
-                alt={product.name}
-                onClick={() =>
-                  navigate(
-                    `/products/${product._id}`
-                  )
-                }
-                onError={(e) => {
-                  e.currentTarget.src =
-                    "https://placehold.co/400x300?text=ShopSmart";
-                }}
-              /> */}
-              <img
-  src={product.image}
-  alt={product.name}
-  onClick={() =>
-    navigate(`/products/${product._id}`)
-  }
-/>
-
-              {/* Category Badge */}
-
-              <span className="category-badge">
-                {product.category}
-              </span>
-
-              {/* Wishlist Heart */}
-
-              <button
-                className="wishlist-icon-btn"
-                aria-label={`Add ${product.name} to wishlist`}
-                disabled={
-                  addingToWishlistId ===
-                  product._id
-                }
-                onClick={() =>
-                  addWishlist(product._id)
-                }
-              >
-                {addingToWishlistId ===
-                product._id ? (
-                  <Loader
-                    size="small"
-                    text=""
-                  />
-                ) : (
-                  "♡"
-                )}
-              </button>
-
-            </div>
-
-            {/* Product Content */}
-
-            <div className="product-card-content">
-
-              <h3
-                onClick={() =>
-                  navigate(
-                    `/products/${product._id}`
-                  )
-                }
-              >
-                {product.name}
-              </h3>
-
-              {/* Rating */}
-
-              <div className="product-rating">
-                <span>⭐</span>
-
-                <span>
-                  {product.rating ?? "4.5"}
-                </span>
-
-                <span className="rating-text">
-                  Highly Rated
-                </span>
-              </div>
-
-              {/* Description */}
-
-              <p className="description">
-                {product.description}
-              </p>
-
-              {/* Price */}
-
-              <div className="product-price-row">
-
-                <div>
-                  <span className="price-label">
-                    Price
-                  </span>
-
-                  <p className="price">
-                    ₹ {product.price}
-                  </p>
-                </div>
-
-                <span className="stock-badge">
-                  In Stock
-                </span>
-
-              </div>
-
-              {/* Buttons */}
-
-              <div className="product-actions">
-
-                <button
-                  className="view-btn"
+    ) : (
+      <>
+        <div className="products-grid">
+          {products.map((product, index) => (
+            <div
+              className="product-card"
+              key={product._id}
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
+              {/* Product Image */}
+              <div className="product-image-container">
+                <img
+                  src={product.image}
+                  alt={product.name}
                   onClick={() =>
-                    navigate(
-                      `/products/${product._id}`
-                    )
+                    navigate(`/products/${product._id}`)
                   }
-                >
-                  View Details
-                </button>
+                />
+
+                <span className="category-badge">
+                  {product.category}
+                </span>
 
                 <button
-                  className="cart-btn"
+                  className="wishlist-icon-btn"
+                  aria-label={`Add ${product.name} to wishlist`}
                   disabled={
-                    addingToCartId ===
-                    product._id
+                    addingToWishlistId === product._id
                   }
                   onClick={() =>
-                    addToCart(product._id)
+                    addWishlist(product._id)
                   }
                 >
-                  {addingToCartId ===
-                  product._id ? (
-                    <Loader
-                      size="small"
-                      text="Adding..."
-                    />
+                  {addingToWishlistId === product._id ? (
+                    <Loader size="small" text="" />
                   ) : (
-                    "🛒 Add to Cart"
+                    "♡"
                   )}
                 </button>
-
               </div>
 
+              {/* Product Content */}
+              <div className="product-card-content">
+
+                <h3
+                  onClick={() =>
+                    navigate(`/products/${product._id}`)
+                  }
+                >
+                  {product.name}
+                </h3>
+
+                <div className="product-rating">
+                  <span>⭐</span>
+                  <span>{product.rating ?? "4.5"}</span>
+                  <span className="rating-text">
+                    Highly Rated
+                  </span>
+                </div>
+
+                <p className="description">
+                  {product.description}
+                </p>
+
+                <div className="product-price-row">
+                  <div>
+                    <span className="price-label">
+                      Price
+                    </span>
+
+                    <p className="price">
+                      ₹ {product.price}
+                    </p>
+                  </div>
+
+                  <span className="stock-badge">
+                    In Stock
+                  </span>
+                </div>
+
+                <div className="product-actions">
+
+                  <button
+                    className="view-btn"
+                    onClick={() =>
+                      navigate(`/products/${product._id}`)
+                    }
+                  >
+                    View Details
+                  </button>
+
+                  <button
+                    className="cart-btn"
+                    disabled={
+                      addingToCartId === product._id
+                    }
+                    onClick={() =>
+                      addToCart(product._id)
+                    }
+                  >
+                    {addingToCartId === product._id ? (
+                      <Loader
+                        size="small"
+                        text="Adding..."
+                      />
+                    ) : (
+                      "🛒 Add to Cart"
+                    )}
+                  </button>
+
+                </div>
+
+              </div>
             </div>
+          ))}
+        </div>
+
+        {totalPages > 1 && (
+          <div className="pagination">
+
+            <button
+              className="page-btn"
+              disabled={currentPage === 1}
+              onClick={() =>
+                setCurrentPage(currentPage - 1)
+              }
+            >
+              ←
+            </button>
+
+            {Array.from(
+              { length: totalPages },
+              (_, index) => (
+                <button
+                  key={index + 1}
+                  className={
+                    currentPage === index + 1
+                      ? "page-number active"
+                      : "page-number"
+                  }
+                  onClick={() =>
+                    setCurrentPage(index + 1)
+                  }
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+
+            <button
+              className="page-btn"
+              disabled={
+                currentPage === totalPages
+              }
+              onClick={() =>
+                setCurrentPage(currentPage + 1)
+              }
+            >
+              →
+            </button>
 
           </div>
+        )}
+      </>
+    )}
 
-        ))}
-
-      </div>
-
-    </div>
-  );
+  </div>
+);
 }
 
 export default Products;

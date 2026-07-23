@@ -4,6 +4,7 @@ import API from "../api/api";
 import "./ProductDetails.css";
 import { notify } from "../utils/notify";
 import Loader from "../components/Loader/Loader";
+import { Link } from "react-router-dom";
 
 interface Product {
   _id: string;
@@ -48,7 +49,7 @@ function ProductDetails() {
 
       const res = await API.get(`/products/${id}`);
 
-      setProduct(res.data);
+      setProduct(res.data.data);
     } catch (error) {
       console.error(error);
 

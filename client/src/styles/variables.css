@@ -1,57 +1,120 @@
 :root {
 
-  /* Primary */
+  /* ==========================================
+     BRAND COLORS
+  ========================================== */
 
   --primary: #14B8A6;
   --primary-dark: #0F766E;
-  --primary-light: #99F6E4;
-
-  /* Secondary */
+  --primary-light: #5EEAD4;
 
   --secondary: #6366F1;
-  --secondary-dark: #4338CA;
-
-  /* Accent */
+  --secondary-dark: #4F46E5;
+  --secondary-light: #A5B4FC;
 
   --accent: #F97316;
 
-  /* Status */
+  /* ==========================================
+     AI COLORS
+  ========================================== */
+
+  --ai-purple: #7C3AED;
+  --ai-blue: #2563EB;
+  --ai-cyan: #06B6D4;
+  --ai-pink: #EC4899;
+
+  /* ==========================================
+     STATUS
+  ========================================== */
 
   --success: #22C55E;
-  --danger: #EF4444;
   --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #3B82F6;
 
-  /* Background */
+  /* ==========================================
+     BACKGROUND
+  ========================================== */
 
   --background: #F8FAFC;
-  --card: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F5F9;
 
-  /* Text */
+  /* ==========================================
+     TEXT
+  ========================================== */
 
-  --text: #0F172A;
-  --text-light: #64748B;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-light: #94A3B8;
+  --white: #FFFFFF;
 
-  /* Border */
+  /* ==========================================
+     BORDER
+  ========================================== */
 
   --border: #E2E8F0;
+  --border-light: #F1F5F9;
 
-  /* Radius */
+  /* ==========================================
+     BORDER RADIUS
+  ========================================== */
 
-  --radius-sm:8px;
-  --radius:16px;
-  --radius-lg:24px;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-round: 999px;
 
-  /* Shadows */
+  /* ==========================================
+     SHADOWS
+  ========================================== */
 
-  --shadow-sm:0 2px 10px rgba(0,0,0,.05);
+  --shadow-sm: 0 2px 10px rgba(15,23,42,.05);
 
-  --shadow:
-    0 8px 30px rgba(0,0,0,.08);
+  --shadow-md: 0 8px 25px rgba(15,23,42,.08);
 
-  --shadow-lg:
-    0 20px 50px rgba(0,0,0,.12);
+  --shadow-lg: 0 15px 40px rgba(15,23,42,.12);
 
-  /* Transition */
+  --shadow-xl: 0 25px 60px rgba(15,23,42,.16);
 
-  --transition:.3s ease;
+  /* ==========================================
+     GLASS
+  ========================================== */
+
+  --glass-bg: rgba(255,255,255,.15);
+
+  --glass-border: rgba(255,255,255,.25);
+
+  --blur: blur(18px);
+
+  /* ==========================================
+     GRADIENTS
+  ========================================== */
+
+  --gradient-primary:
+      linear-gradient(135deg,#14B8A6,#0F766E);
+
+  --gradient-ai:
+      linear-gradient(135deg,#7C3AED,#2563EB,#06B6D4);
+
+  --gradient-orange:
+      linear-gradient(135deg,#FB923C,#F97316);
+
+  --gradient-pink:
+      linear-gradient(135deg,#EC4899,#8B5CF6);
+
+  --gradient-card:
+      linear-gradient(180deg,#FFFFFF,#F8FAFC);
+
+  /* ==========================================
+     ANIMATION
+  ========================================== */
+
+  --transition-fast: .2s ease;
+
+  --transition: .3s ease;
+
+  --transition-slow: .5s ease;
 }

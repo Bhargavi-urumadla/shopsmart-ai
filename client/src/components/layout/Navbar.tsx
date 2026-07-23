@@ -39,23 +39,14 @@ function Navbar() {
       {/* Logo */}
 
       <div className="logo">
-        <Link
-          to="/"
-          onClick={closeMenu}
-        >
-          <span className="logo-icon">
-            🛍
-          </span>
-
-          <span>
-            ShopSmart
-          </span>
-
-          <span className="logo-ai">
-            AI
-          </span>
-        </Link>
-      </div>
+  <Link to="/" onClick={closeMenu}>
+    <img
+    src="/logo.png"
+      alt="ShopSmart AI"
+      className="logo-image"
+    />
+  </Link>
+</div>
 
 
       {/* Mobile Menu Button */}
@@ -156,11 +147,19 @@ function Navbar() {
               Orders
             </NavLink>
           </li>
-          <li>
-    <Link to="/ai-assistant">
-      🤖 AI Assistant
-    </Link>
-  </li>
+         <li>
+  <NavLink
+    to="/ai-assistant"
+    onClick={closeMenu}
+    className={({ isActive }) =>
+      isActive
+        ? "nav-link ai-link active"
+        : "nav-link ai-link"
+    }
+  >
+    🤖 AI Assistant
+  </NavLink>
+</li>
 
         </ul>
 

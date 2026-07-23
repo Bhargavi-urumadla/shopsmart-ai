@@ -1,0 +1,99 @@
+.products-toolbar{
+padding:40px 0;
+margin-bottom:8px;
+ margin-top:0;
+    padding-top:0;
+}
+
+.toolbar-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.toolbar-top h1{
+font-size:42px;
+margin-bottom:8px;
+color:var(--text-primary);
+}
+
+.toolbar-top p{
+color:var(--text-secondary);
+font-size:17px;
+}
+
+.product-count{
+padding:12px 22px;
+background:#ecfeff;
+border-radius:999px;
+font-weight:600;
+color:#0891b2;
+}
+
+.toolbar-middle{
+display:flex;
+gap:20px;
+margin-bottom:12px;
+flex-wrap:wrap;
+}
+
+.search-box{
+flex:1;
+display:flex;
+align-items:center;
+background:white;
+padding:14px 18px;
+border-radius:14px;
+box-shadow:var(--shadow-md);
+}
+
+.search-box svg{
+margin-right:12px;
+color:#0891b2;
+}
+
+.search-box input{
+flex:1;
+border:none;
+outline:none;
+font-size:16px;
+background:transparent;
+}
+
+.toolbar-middle select{
+padding:14px 18px;
+border:none;
+border-radius:14px;
+box-shadow:var(--shadow-md);
+cursor:pointer;
+min-width:220px;
+}
+
+.category-chips{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-top:0;
+ margin-bottom:8px;
+}
+
+.chip{
+padding:10px 22px;
+border:none;
+border-radius:999px;
+cursor:pointer;
+background:#f3f4f6;
+transition:.3s;
+}
+
+.chip:hover{
+transform:translateY(-3px);
+}
+
+.chip.active{
+background:#14b8a6;
+color:white;
+}

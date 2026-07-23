@@ -4,7 +4,15 @@ import API from "../api/api";
 import { notify } from "../utils/notify";
 import ProductSkeleton from "../components/Skeleton/ProductSkeleton";
 import "./Home.css";
-
+import Hero from "../components/home/Hero";
+import Stats from "../components/home/Stats";
+import FeaturedProducts from "../components/home/FeaturedProducts";
+import Categories from "../components/home/Categories";
+import AISection from "../components/home/AISection";
+import WhyChooseUs from "../components/home/WhyChooseUs";
+import Testimonials from "../components/home/Testimonials";
+import Newsletter from "../components/home/Newsletter";
+import Footer from "../components/home/Footer";
 interface Product {
   _id: string;
   name: string;
@@ -33,7 +41,7 @@ function Home() {
       const res = await API.get("/products");
 
       // Show only first 4 products
-      setProducts(res.data.slice(0, 4));
+      setProducts(res.data.data.slice(0, 4));
     } catch (error) {
       console.error(error);
 
@@ -48,160 +56,17 @@ function Home() {
   return (
     <>
   
-
-      <div className="home-page">
-
-        {/* Hero Section */}
-
-        <section className="hero">
-
-          <div className="hero-left">
-
-            <h1>👋 Welcome Back</h1>
-
-            <h2>
-              {user?.name || "Shopper"}
-            </h2>
-
-            <p>
-              Shop smarter with AI. Explore products,
-              save your favourites, manage your cart,
-              and track all your orders from one place.
-            </p>
-
-            <Link to="/products">
-              <button className="shop-btn">
-                🛍 Shop Now
-              </button>
-            </Link>
-
-          </div>
-
-          <div className="hero-right">
-            🤖
-          </div>
-
-        </section>
-
-        {/* Dashboard */}
-
-        <section className="dashboard">
-
-          <Link
-            to="/products"
-            className="dashboard-card"
-          >
-            <div className="icon">🛍</div>
-
-            <h3>Products</h3>
-
-            <p>Browse all available products</p>
-          </Link>
-
-          <Link
-            to="/wishlist"
-            className="dashboard-card"
-          >
-            <div className="icon">❤️</div>
-
-            <h3>Wishlist</h3>
-
-            <p>Products you saved</p>
-          </Link>
-
-          <Link
-            to="/cart"
-            className="dashboard-card"
-          >
-            <div className="icon">🛒</div>
-
-            <h3>Cart</h3>
-
-            <p>View shopping cart</p>
-          </Link>
-
-          <Link
-            to="/orders"
-            className="dashboard-card"
-          >
-            <div className="icon">📦</div>
-
-            <h3>Orders</h3>
-
-            <p>Track previous orders</p>
-          </Link>
-
-        </section>
-
-        {/* Featured Products */}
-
-        <section className="featured">
-
-          <div className="section-header">
-
-            <h2>🔥 Featured Products</h2>
-
-            <Link to="/products">
-              View All →
-            </Link>
-
-          </div>
-
-          {/* Featured Products Loading */}
-
-          {loading ? (
-  <ProductSkeleton count={4} />
-) : (
-
-            <div className="featured-grid">
-
-              {products.map((product) => (
-
-                <div
-                  className="featured-card"
-                  key={product._id}
-                >
-
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        "https://placehold.co/400x300?text=ShopSmart";
-                    }}
-                  />
-
-                  <h3>
-                    {product.name}
-                  </h3>
-
-                  <p>
-                    {product.category}
-                  </p>
-
-                  <h2>
-                    ₹ {product.price}
-                  </h2>
-
-                  <Link
-                    to={`/products/${product._id}`}
-                  >
-                    <button>
-                      View Product
-                    </button>
-                  </Link>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          )}
-
-        </section>
-
-        {/* AI Tip */}
+<Hero />
+<Stats />
+<FeaturedProducts />
+<Categories />
+<AISection />
+<WhyChooseUs />
+<Testimonials />
+<Newsletter />
+<Footer />
+{/* 
+      AI Tip
 
         <section className="ai-box">
 
@@ -213,9 +78,8 @@ function Home() {
             place orders with confidence.
           </p>
 
-        </section>
+        </section> */}
 
-      </div>
     </>
   );
 }
