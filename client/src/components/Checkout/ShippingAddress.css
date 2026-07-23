@@ -1,0 +1,46 @@
+.shipping-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  margin-bottom: 24px;
+}
+
+.shipping-card h2 {
+  margin-bottom: 20px;
+}
+
+.shipping-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 16px;
+}
+
+.shipping-grid input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.shipping-grid input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+}
+
+@media (max-width:768px) {
+  .shipping-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.error-text {
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.shipping-grid input.error {
+  border: 1px solid #dc3545;
+}

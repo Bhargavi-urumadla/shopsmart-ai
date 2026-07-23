@@ -65,7 +65,11 @@ function Wishlist() {
         }
       );
 
-      setWishlist(res.data);
+    setWishlist(
+  Array.isArray(res.data.wishlist)
+    ? res.data.wishlist
+    : []
+);
 
     } catch (error) {
       console.error(error);

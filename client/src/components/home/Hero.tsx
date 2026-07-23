@@ -1,42 +1,69 @@
+import { Link } from "react-router-dom";
 import "./Hero.css";
 
-
 function Hero() {
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+
   return (
-    <section className="hero">
+    <section
+      className="hero"
+      data-aos="zoom-in"
+      data-aos-duration="1500"
+    >
+      <div className="hero-content">
+        {/* Left Side */}
+        <div className="hero-left">
+          <div className="hero-tags">
+            <span className="welcome-tag">👋 Welcome Back</span>
 
-      <div className="hero-left">
+            <span className="ai-badge">
+              ✨ AI Powered Shopping
+            </span>
+          </div>
 
-        <h1>
-          Smart Shopping
-          <br />
-          Starts Here
-        </h1>
+          <h1>
+            Shop Smarter with <span>AI</span>
+          </h1>
 
-        <p>
-          Compare products using AI,
-          discover pros and cons,
-          and make smarter buying decisions.
-        </p>
+          <h2>
+            Welcome back, {user?.name || "Shopper"} 👋
+          </h2>
 
-        <div className="hero-buttons">
-          <button className="primary-btn">
-            Get Started
-          </button>
+          <p>
+            Discover products faster with intelligent recommendations,
+            save your favourites, compare prices instantly,
+            and enjoy a seamless shopping experience.
+          </p>
 
-          <button className="secondary-btn">
-            Explore
-          </button>
+          <div className="hero-features">
+            <span>🤖 AI Recommendations</span>
+            <span>❤️ Smart Wishlist</span>
+            <span>🛒 Fast Checkout</span>
+            <span>🔒 Secure Shopping</span>
+          </div>
+
+          <div className="hero-buttons">
+            <Link to="/products">
+              <button className="primary-btn">
+                Explore Products
+              </button>
+            </Link>
+
+            <Link to="/ai-assistant">
+              <button className="secondary-btn">
+                Ask AI
+              </button>
+            </Link>
+          </div>
         </div>
 
+        {/* Right Side */}
+        <div className="hero-right">
+          <div className="hero-circle">
+            🤖
+          </div>
+        </div>
       </div>
-
-      <div className="hero-right">
-
-        🤖
-
-      </div>
-
     </section>
   );
 }

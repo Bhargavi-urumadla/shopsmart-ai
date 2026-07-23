@@ -4,6 +4,7 @@ import "./Cart.css";
 import { notify } from "../utils/notify";
 import Loader from "../components/Loader/Loader";
 import EmptyState from "../components/EmptyState/EmptyState";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   _id: string;
@@ -21,6 +22,7 @@ interface CartItem {
 }
 
 function Cart() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState<CartItem[]>([]);
 
   // Page-level loading
@@ -52,7 +54,11 @@ function Cart() {
         },
       });
 
-      setCart(res.data);
+      setCart(
+  Array.isArray(res.data.cart)
+    ? res.data.cart
+    : []
+);
     } catch (error) {
       console.error(error);
 
@@ -347,9 +353,12 @@ function Cart() {
 
             </div>
 
-            <button className="checkout-btn">
-              Proceed to Checkout
-            </button>
+           <button
+  className="checkout-btn"
+  onClick={() => navigate("/checkout")}
+>
+  Proceed to Checkout
+</button>
 
           </div>
 

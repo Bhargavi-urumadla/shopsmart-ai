@@ -1,0 +1,134 @@
+.dashboard-hero-new{
+    background:linear-gradient(135deg,#0f766e,#14b8a6,#3b82f6);
+    border-radius:28px;
+    padding:40px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    gap:40px;
+    overflow:hidden;
+    position:relative;
+}
+
+.dashboard-hero-new::before{
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    right:-120px;
+    top:-120px;
+}
+
+.hero-left{
+    flex:1;
+    position:relative;
+    z-index:2;
+}
+
+.hero-badge{
+    display:inline-block;
+    background:rgba(255,255,255,.18);
+    padding:8px 18px;
+    border-radius:30px;
+    margin-bottom:20px;
+    backdrop-filter:blur(10px);
+}
+
+.hero-left h1{
+    font-size:48px;
+    margin:0;
+    line-height:1.2;
+}
+
+.hero-left p{
+    margin-top:20px;
+    font-size:18px;
+    max-width:520px;
+    opacity:.95;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+}
+
+.primary-btn{
+    border:none;
+    background:white;
+    color:#0f766e;
+    padding:14px 28px;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.secondary-btn{
+    border:1px solid rgba(255,255,255,.4);
+    background:transparent;
+    color:white;
+    padding:14px 28px;
+    border-radius:14px;
+    cursor:pointer;
+}
+
+.hero-right{
+    width:430px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    position:relative;
+    z-index:2;
+}
+
+.hero-card{
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:22px;
+    padding:22px;
+}
+
+.hero-card svg{
+    font-size:30px;
+}
+
+.hero-card h2{
+    margin:18px 0 8px;
+    font-size:32px;
+}
+
+.hero-card span{
+    opacity:.9;
+}
+
+@media(max-width:1100px){
+
+.dashboard-hero-new{
+    flex-direction:column;
+}
+
+.hero-right{
+    width:100%;
+}
+
+}
+
+@media(max-width:768px){
+
+.hero-left h1{
+    font-size:34px;
+}
+
+.hero-right{
+    grid-template-columns:1fr;
+}
+
+.hero-buttons{
+    flex-direction:column;
+}
+
+}

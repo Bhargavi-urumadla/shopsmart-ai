@@ -1,0 +1,177 @@
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:center;
+ padding:28px 40px;
+border-radius:28px;
+background:linear-gradient(135deg,#0fa7a4,#24c3b5);
+color:white;
+overflow:hidden;
+position:relative;
+margin-bottom:10px;
+  position: relative;
+  overflow: hidden;
+   min-height:340px;
+}
+
+.hero-left{
+max-width:55%;
+}
+
+.hero-date{
+font-size:18px;
+opacity:.9;
+margin-bottom:20px;
+}
+
+.hero h1{
+font-size:48px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.hero h1 span{
+color:#FFD54F;
+font-size:30px;
+}
+
+.hero-text{
+font-size:22px;
+line-height:1.5;
+opacity:.95;
+margin-bottom:24px;
+}
+
+.hero-btn{
+display:flex;
+align-items:center;
+gap:10px;
+padding:16px 30px;
+background:white;
+color:#0fa7a4;
+border:none;
+border-radius:40px;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.hero-btn:hover{
+transform:translateY(-3px);
+}
+
+.hero-right {
+  position: relative;
+  width: 420px;
+  height: 320px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.hero-right::before{
+content:"";
+position:absolute;
+width:380px;
+height:380px;
+border-radius:50%;
+background:rgba(255,255,255,.08);
+}
+
+.hero-right::after{
+content:"";
+position:absolute;
+width:240px;
+height:240px;
+border-radius:50%;
+background:rgba(255,255,255,.10);
+}
+
+.shopping-avatar{
+position:absolute;
+z-index:2;
+width:180px;
+height:180px;
+border-radius:50%;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:80px;
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+
+
+
+
+
+
+
+.sale-badge{
+    position:absolute;
+
+    top:40px;
+
+    right:10px;   /* Move slightly to the right */
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:14px 22px;
+
+    border-radius:50px;
+
+    background:#fff;
+
+    color:#0FA7A4;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+    z-index:10;
+
+    animation:floatBadge 3s ease-in-out infinite;
+}
+
+.sale-icon{
+    color:#ff9800;
+    font-size:28px;
+}
+
+@keyframes floatBadge{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+.shopping-girl{
+    position:absolute;
+
+    width:500px;   /* Increase size (try 380–420px) */
+
+    right:70px;    /* Move closer to the badge */
+
+    bottom:-10px;  /* Lower slightly */
+
+    z-index:5;
+
+    pointer-events:none;
+}
