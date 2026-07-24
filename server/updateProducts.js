@@ -19,8 +19,7 @@ async function updateProducts() {
       }
     );
 
-    console.log("✅ Update completed");
-    console.log(result);
+    
 
     process.exit(0);
   } catch (error) {

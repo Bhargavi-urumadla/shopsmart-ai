@@ -22,6 +22,12 @@ const aiRoutes = require("./routes/aiRoutes");
 
 const errorHandler = require("./middleware/errorMiddleware");
 
+const adminAIRoutes = require("./routes/adminAIRoutes");
+const inventoryRoutes = require("./routes/inventoryRoutes");
+const salesRoutes = require("./routes/salesRoutes");
+const customerRoutes = require("./routes/customerRoutes");
+const adminOrderRoutes = require("./routes/adminOrderRoutes");
+
 // ==============================
 // Validate Environment Variables
 // ==============================
@@ -47,7 +53,7 @@ connectDB();
 // Security Middleware
 // ==============================
 app.use(helmet());
-console.log("CLIENT_URL =", process.env.CLIENT_URL);
+// console.log("CLIENT_URL =", process.env.CLIENT_URL);
 
 app.use(
   cors({
@@ -92,7 +98,11 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/ai", aiRoutes);
-
+app.use("/api/admin-ai", adminAIRoutes);
+app.use("/api/inventory", inventoryRoutes);
+app.use("/api/admin/sales", salesRoutes);
+app.use("/api/admin/customers", customerRoutes);
+app.use("/api/admin/orders", adminOrderRoutes);
 // ==============================
 // Health Check
 // ==============================

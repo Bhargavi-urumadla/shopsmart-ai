@@ -1,60 +1,63 @@
-# 🛍️ ShopSmart AI
+# 🛍️ ShopSmart AI Backend
 
-> An AI-Powered E-Commerce Platform built using Node.js, Express.js, MongoDB, JWT Authentication, and Groq Llama AI.
+> 🚀 An AI-Powered E-Commerce REST API built with **Node.js**, **Express.js**, **MongoDB Atlas**, **JWT Authentication**, and **Groq Llama 3.3**. It provides secure authentication, product management, shopping cart, wishlist, order management, AI shopping assistance, inventory management, sales analytics, and admin dashboards.
 
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![Express](https://img.shields.io/badge/Express.js-Backend-black)
+![Express.js](https://img.shields.io/badge/Express.js-Backend-black)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![JWT](https://img.shields.io/badge/Auth-JWT-blue)
 ![Swagger](https://img.shields.io/badge/API-Swagger-success)
-![AI](https://img.shields.io/badge/AI-Groq%20Llama%203.3-orange)
+![Groq AI](https://img.shields.io/badge/AI-Groq%20Llama%203.3-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-## 📖 Overview
+# 📖 Overview
 
-ShopSmart AI is a modern AI-powered e-commerce backend that provides secure authentication, product management, shopping cart, wishlist, order management, and an intelligent shopping assistant.
+ShopSmart AI is a modern AI-powered e-commerce backend designed using RESTful architecture. It provides secure authentication, product management, shopping cart, wishlist, order processing, inventory management, sales analytics, customer management, and AI-powered shopping recommendations.
 
-The AI Assistant helps users discover products, compare items, and receive personalized shopping recommendations using **Groq Llama 3.3**.
+The platform also includes an **Admin Dashboard** with business insights, inventory tracking, customer management, and sales analytics.
 
 ---
 
 # ✨ Features
 
-### 👤 Authentication
+## 👤 Authentication
 
 - User Registration
 - User Login
 - JWT Authentication
-- Password Hashing using bcrypt
+- Role-Based Authorization
+- Password Hashing (bcryptjs)
 - Protected Routes
 
 ---
 
-### 🛍 Products
+## 🛍 Product Management
 
 - Add Product
 - Update Product
 - Delete Product
-- Search Products
+- Get Product Details
+- Product Search
 - Featured Products
+- Product Filtering
+- Product Sorting
 - Pagination
-- Filtering
-- Sorting
 
 ---
 
-### 🛒 Cart
+## 🛒 Shopping Cart
 
 - Add to Cart
-- Update Quantity
+- Update Cart Quantity
 - Remove from Cart
 - View Cart
+- Clear Cart
 
 ---
 
-### ❤️ Wishlist
+## ❤️ Wishlist
 
 - Add to Wishlist
 - Remove from Wishlist
@@ -62,35 +65,103 @@ The AI Assistant helps users discover products, compare items, and receive perso
 
 ---
 
-### 📦 Orders
+## 📦 Order Management
 
 - Place Order
+- View Order History
+- Get Order Details
 - Cancel Order
-- Order History
+- Admin Order Management
 - Update Order Status
-- Delete Order
+- Delete Orders
 
 ---
 
-### 🤖 AI Shopping Assistant
+## 🤖 AI Shopping Assistant
 
 - Product Recommendations
-- Compare Products
+- Product Comparison
 - Smart Shopping Suggestions
-- Conversation Memory
 - Personalized Responses
+- AI-powered Customer Assistance
 
-Powered by **Groq Llama 3.3**
+**Powered by Groq Llama 3.3**
 
 ---
 
-### 📖 API Documentation
+## 📊 Inventory Management
 
-Interactive Swagger documentation available at:
+- Inventory Overview
+- Low Stock Products
+- Out of Stock Products
+- Update Product Stock
+- Restock Products
+- Inventory History
+
+---
+
+## 📈 Sales Analytics
+
+- Sales Overview
+- Revenue Analytics
+- Monthly Sales Report
+- Top Selling Products
+- Top Categories
+
+---
+
+## 👥 Customer Management
+
+- View Customers
+- Customer Details
+- Block / Unblock Customers
+- Delete Customers
+
+---
+
+## 🧠 Admin AI Dashboard
+
+- AI Business Insights
+- Revenue Trends
+- Sales Analysis
+- Low Stock Alerts
+- Smart Recommendations
+
+---
+
+## 📖 API Documentation
+
+Interactive API documentation powered by Swagger UI.
 
 ```
 http://localhost:5000/api-docs
 ```
+
+---
+
+# 🏗️ Architecture
+
+```
+Client
+    │
+    ▼
+Routes
+    │
+Controllers
+    │
+Services
+    │
+Models
+    │
+MongoDB Atlas
+```
+
+### Middleware
+
+- JWT Authentication
+- Admin Authorization
+- Validation
+- Error Handling
 
 ---
 
@@ -129,8 +200,12 @@ http://localhost:5000/api-docs
 
 - Helmet
 - CORS
-- Rate Limiter
+- express-rate-limit
 - Compression
+
+## Development
+
+- Nodemon
 
 ---
 
@@ -159,7 +234,11 @@ ShopSmart-AI
 │
 ├── server.js
 │
-└── package.json
+├── package.json
+│
+├── .env.example
+│
+└── README.md
 ```
 
 ---
@@ -172,7 +251,7 @@ ShopSmart-AI
 git clone https://github.com/yourusername/shopsmart-ai.git
 ```
 
-```
+```bash
 cd shopsmart-ai
 ```
 
@@ -186,37 +265,37 @@ npm install
 
 ---
 
-## Environment Variables
+## Configure Environment Variables
 
 Create a `.env` file.
 
 ```env
 PORT=5000
 
-MONGODB_URI=your_mongodb_connection
+MONGO_URI=your_mongodb_connection_string
 
 JWT_SECRET=your_jwt_secret
 
 GROQ_API_KEY=your_groq_api_key
+
+NODE_ENV=development
 ```
 
 ---
 
-## Run Server
+## Run Development Server
 
 ```bash
 npm run dev
 ```
 
----
-
-Server
+Backend:
 
 ```
 http://localhost:5000
 ```
 
-Swagger
+Swagger:
 
 ```
 http://localhost:5000/api-docs
@@ -224,117 +303,195 @@ http://localhost:5000/api-docs
 
 ---
 
-# 📡 API Endpoints
+# 📡 API Modules
 
-## Authentication
+## 🔐 Authentication
 
-| Method | Endpoint |
-|----------|--------------------|
-| POST | /api/auth/register |
-| POST | /api/auth/login |
-| GET | /api/auth/profile |
+- Register User
+- Login User
+- Get User Profile
 
 ---
 
-## Products
+## 🛍 Products
 
-| Method | Endpoint |
-|----------|----------------------|
-| POST | /api/products |
-| GET | /api/products |
-| GET | /api/products/search |
-| GET | /api/products/featured |
-| GET | /api/products/:id |
-| PUT | /api/products/:id |
-| DELETE | /api/products/:id |
+- Create Product
+- Get Products
+- Get Product By ID
+- Update Product
+- Delete Product
+- Featured Products
+- Search Products
 
 ---
 
-## Cart
+## 🛒 Cart
 
-| Method | Endpoint |
-|----------|----------------|
-| POST | /api/cart |
-| GET | /api/cart |
-| PUT | /api/cart/:id |
-| DELETE | /api/cart/:id |
-
----
-
-## Wishlist
-
-| Method | Endpoint |
-|----------|---------------------|
-| POST | /api/wishlist |
-| GET | /api/wishlist |
-| DELETE | /api/wishlist/:id |
+- Add Item
+- View Cart
+- Update Quantity
+- Remove Item
+- Clear Cart
 
 ---
 
-## Orders
+## ❤️ Wishlist
 
-| Method | Endpoint |
-|----------|-------------------------|
-| POST | /api/orders |
-| GET | /api/orders |
-| GET | /api/orders/my-orders |
-| GET | /api/orders/:id |
-| PUT | /api/orders/:id/status |
-| PUT | /api/orders/:id/cancel |
-| DELETE | /api/orders/:id |
+- Add Item
+- Remove Item
+- View Wishlist
 
 ---
 
-## AI Assistant
+## 📦 Orders
 
-| Method | Endpoint |
-|----------|----------------|
-| POST | /api/ai/chat |
+- Place Order
+- Order History
+- Order Details
+- Cancel Order
+
+---
+
+## 🤖 AI Assistant
+
+- AI Shopping Chat
+- Product Recommendations
+
+---
+
+## 📊 Inventory
+
+- Inventory Overview
+- Low Stock
+- Out of Stock
+- Update Stock
+- Restock Products
+- Inventory History
+
+---
+
+## 📈 Sales Analytics
+
+- Sales Overview
+- Revenue Report
+- Monthly Sales
+- Top Products
+- Top Categories
+
+---
+
+## 👥 Customer Management
+
+- Get Customers
+- Customer Details
+- Block / Unblock Customer
+- Delete Customer
+
+---
+
+## 📦 Admin Order Management
+
+- View All Orders
+- Order Details
+- Update Order Status
+- Delete Orders
+
+---
+
+## 🧠 Admin AI
+
+- AI Dashboard Insights
 
 ---
 
 # 🔒 Security Features
 
 - JWT Authentication
-- Password Hashing
+- Role-Based Authorization
+- Password Hashing (bcryptjs)
 - Protected Routes
 - Helmet Security
-- API Rate Limiting
+- CORS
+- Rate Limiting
 - Input Validation
 - Centralized Error Handling
 
 ---
 
-# 📷 Screenshots
+# 📖 API Documentation
 
-## Swagger Documentation
+Swagger UI:
 
-(Add Screenshot)
+```
+http://localhost:5000/api-docs
+```
+
+Features:
+
+- Interactive Documentation
+- JWT Authorization Support
+- Request & Response Models
+- API Testing from Browser
 
 ---
 
-## MongoDB Atlas
+# 🌐 Deployment
 
-(Add Screenshot)
+## Backend
+
+Render
+
+## Database
+
+MongoDB Atlas
+
+## Environment Variables
+
+```
+PORT
+
+MONGO_URI
+
+JWT_SECRET
+
+GROQ_API_KEY
+
+NODE_ENV
+```
+
+---
+
+# 📷 Screenshots
+
+## Swagger UI
+
+> Add Screenshot
 
 ---
 
 ## Postman Collection
 
-(Add Screenshot)
+> Add Screenshot
+
+---
+
+## MongoDB Atlas
+
+> Add Screenshot
 
 ---
 
 # 🚀 Future Enhancements
 
-- Payment Gateway Integration
-- Admin Dashboard
-- Product Reviews
-- Product Ratings
-- Inventory Management
+- Stripe / Razorpay Payment Integration
+- Product Reviews & Ratings
+- Cloudinary Image Upload
 - Email Notifications
-- AI Voice Shopping Assistant
-- Recommendation Engine Improvements
+- AI Recommendation Improvements
+- Docker Support
+- Unit & Integration Testing
+- CI/CD Pipeline
+- Redis Caching
 
 ---
 
@@ -342,20 +499,49 @@ http://localhost:5000/api-docs
 
 **Bhargavi Urumadla**
 
-- MCA Graduate
-- Full Stack Developer
-- React.js | Node.js | MongoDB | AI
+MCA Graduate | Full Stack Developer
 
-GitHub:
-https://github.com/yourusername
+### Tech Stack
 
-LinkedIn:
-https://linkedin.com/in/yourprofile
+- React.js
+- TypeScript
+- Node.js
+- Express.js
+- MongoDB
+- Python
+- REST APIs
+- AI Integration
+
+### Connect
+
+**GitHub**
+
+```
+https://github.com/your-github-username
+```
+
+**LinkedIn**
+
+```
+https://linkedin.com/in/your-linkedin-profile
+```
+
+---
+
+# 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+Feel free to fork this repository and submit a pull request.
 
 ---
 
 # ⭐ Support
 
-If you found this project helpful, please give it a ⭐ on GitHub.
+If you found this project helpful, please consider giving it a ⭐ on GitHub.
 
 ---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
