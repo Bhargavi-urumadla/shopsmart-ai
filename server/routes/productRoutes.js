@@ -16,9 +16,7 @@ const {
   productValidation,
 } = require("../validators/productValidator");
 
-console.log("productValidation:", typeof productValidation);
-console.log("validate:", typeof validate);
-console.log("addProduct:", typeof addProduct);
+
 /**
  * @swagger
  * tags:

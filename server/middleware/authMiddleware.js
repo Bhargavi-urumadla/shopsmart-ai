@@ -3,6 +3,8 @@ const User = require("../models/User");
 
 const protect = async (req, res, next) => {
   try {
+    console.log("\n========== AUTH MIDDLEWARE ==========");
+
     let token;
 
     if (
@@ -12,6 +14,8 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     }
 
+    console.log("Token Received:", token);
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -19,11 +23,13 @@ const protect = async (req, res, next) => {
       });
     }
 
-    // Verify JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Get latest user from database
+    console.log("Decoded Token:", decoded);
+
     const user = await User.findById(decoded.id);
+
+    console.log("User From DB:", user);
 
     if (!user) {
       return res.status(401).json({
@@ -32,19 +38,21 @@ const protect = async (req, res, next) => {
       });
     }
 
-    // Attach user to request
     req.user = user;
 
-    next();
+   
 
+    next();
   } catch (error) {
+    console.log("AUTH ERROR:");
+    console.log(error);
+
     return res.status(401).json({
       success: false,
       message: "Invalid or expired token.",
+      error: error.message,
     });
   }
 };
 
-module.exports = {
-  protect,
-};
+module.exports = { protect };
