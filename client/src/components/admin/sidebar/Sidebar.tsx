@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   FiGrid,
   FiPackage,
@@ -11,7 +12,9 @@ import {
   FiSettings,
   FiUser,
   FiLogOut,
+  FiZap,
 } from "react-icons/fi";
+
 import "./Sidebar.css";
 
 const menuItems = [
@@ -29,39 +32,75 @@ const menuItems = [
 
 const Sidebar = () => {
   return (
-    <aside className="sidebar">
-      <div className="sidebar-logo">
-        <div className="logo-circle">AI</div>
+    <aside className="sidebar glass">
+
+      <motion.div
+        className="sidebar-logo"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+      >
+        <div className="logo-circle">
+          <FiZap />
+        </div>
 
         <div>
-          <h2>ShopSmart</h2>
-          <span>Admin Panel</span>
+          <h2>ShopSmart AI</h2>
+          <span>Admin Dashboard</span>
         </div>
-      </div>
+      </motion.div>
 
       <nav className="sidebar-menu">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            end={item.path === "/admin"}
-            className={({ isActive }) =>
-              isActive ? "menu-item active" : "menu-item"
-            }
-          >
-            <span className="menu-icon">{item.icon}</span>
 
-            <span>{item.name}</span>
-          </NavLink>
+        {menuItems.map((item, index) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              delay: index * 0.05,
+            }}
+          >
+            <NavLink
+              end={item.path === "/admin"}
+              to={item.path}
+              className={({ isActive }) =>
+                isActive ? "menu-item active" : "menu-item"
+              }
+            >
+              <span className="menu-icon">{item.icon}</span>
+
+              <span>{item.name}</span>
+            </NavLink>
+          </motion.div>
         ))}
+
       </nav>
 
       <div className="sidebar-footer">
+
+        <div className="sidebar-user">
+
+          <div className="user-avatar">
+            B
+          </div>
+
+          <div>
+            <h4>Bhargavi</h4>
+            <p>Administrator</p>
+          </div>
+
+        </div>
+
         <button className="logout-btn">
+
           <FiLogOut />
-          <span>Logout</span>
+
+          Logout
+
         </button>
+
       </div>
+
     </aside>
   );
 };

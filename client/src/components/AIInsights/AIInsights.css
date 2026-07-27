@@ -1,65 +1,113 @@
-.ai-insights {
-  background: #fff;
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+.ai-panel{
+    background:#fff;
+    border-radius:22px;
+    padding:24px;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+    display:flex;
+    flex-direction:column;
+    gap:18px;
 }
 
-.ai-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+.ai-title{
+    font-size:26px;
+    font-weight:700;
+    color:#0f172a;
 }
 
-.ai-header h2 {
-  font-size: 24px;
-  margin: 0;
+.health-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(135deg,#14b8a6,#06b6d4);
+    color:white;
+    border-radius:18px;
+    padding:20px;
 }
 
-.insight-card {
-  display: flex;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 16px;
-  margin-bottom: 16px;
-  transition: .3s;
+.health-score{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:white;
+    color:#14b8a6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    font-weight:bold;
 }
 
-.insight-card:hover {
-  transform: translateY(-3px);
+.divider{
+    height:1px;
+    background:#e5e7eb;
 }
 
-.insight-icon {
-  font-size: 24px;
+.section h4{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    margin-bottom:12px;
 }
 
-.success {
-  background: #ecfdf5;
+.forecast-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-.warning {
-  background: #fff7ed;
+.forecast-grid div{
+    background:#f8fafc;
+    border-radius:12px;
+    padding:14px;
 }
 
-.info {
-  background: #eff6ff;
+.forecast-grid span{
+    display:block;
+    color:#64748b;
+    font-size:13px;
 }
 
-.insight-content h4 {
-  margin: 0 0 6px;
+.forecast-grid strong{
+    font-size:20px;
 }
 
-.insight-content p {
-  margin: 0 0 12px;
-  color: #555;
+.alert-card{
+    background:#fff8e1;
+    border-left:5px solid orange;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:10px;
 }
 
-.insight-content button {
-  background: #14b8a6;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
+.high{
+    background:#ef4444;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.medium{
+    background:#f59e0b;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.low{
+    background:#10b981;
+    color:white;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.section ul{
+    padding-left:20px;
+}
+
+.section li{
+    margin-bottom:14px;
 }

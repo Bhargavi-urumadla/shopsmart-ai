@@ -1,130 +1,451 @@
+/* =====================================================
+   ShopSmart AI - Premium Sidebar
+===================================================== */
+
 .sidebar {
-  width: 270px;
-  height: 100vh;
   position: fixed;
-  left: 0;
   top: 0;
-  background: #0f172a;
-  color: white;
+  left: 0;
+
+  width: 280px;
+  height: 100vh;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 24px 18px;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-  z-index: 999;
+
+  padding: 26px 18px;
+
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+  z-index: 1000;
+
+  overflow: hidden;
 }
+
+/* Decorative glow */
+
+.sidebar::before {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: -80px;
+  left: -80px;
+
+  background: radial-gradient(circle, #3b82f6, transparent 70%);
+
+  opacity: .35;
+
+  filter: blur(60px);
+}
+
+.sidebar::after {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  bottom: -120px;
+  right: -120px;
+
+  background: radial-gradient(circle, #8b5cf6, transparent 70%);
+
+  opacity: .30;
+
+  filter: blur(70px);
+}
+
+/* ================= Logo ================= */
 
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+
   margin-bottom: 40px;
+
+  position: relative;
+  z-index: 5;
 }
 
 .logo-circle {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #14b8a6, #2563eb);
+  width: 58px;
+  height: 58px;
+
+  border-radius: 18px;
+
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-weight: 700;
-  font-size: 18px;
+  justify-content: center;
+
+  font-size: 24px;
+
+  color: #fff;
+
+  background: linear-gradient(
+      135deg,
+      #06b6d4,
+      #3b82f6,
+      #8b5cf6
+  );
+
+  box-shadow:
+      0 0 20px rgba(59,130,246,.45),
+      0 10px 25px rgba(0,0,0,.35);
+
+  animation: pulseLogo 4s infinite;
+}
+
+@keyframes pulseLogo {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .sidebar-logo h2 {
-  font-size: 20px;
+
+  color: white;
+
   margin: 0;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
 }
 
 .sidebar-logo span {
+
   color: #94a3b8;
+
   font-size: 13px;
+
 }
 
+/* ================= Menu ================= */
+
 .sidebar-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+
   flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  position: relative;
+
+  z-index: 5;
+
 }
 
 .menu-item {
+
   display: flex;
+
   align-items: center;
-  gap: 14px;
+
+  gap: 16px;
+
   text-decoration: none;
+
   color: #cbd5e1;
-  padding: 14px 16px;
-  border-radius: 12px;
-  transition: 0.3s ease;
+
+  padding: 15px 18px;
+
+  border-radius: 16px;
+
+  transition: .35s ease;
+
+  position: relative;
+
+  overflow: hidden;
+
   font-weight: 500;
+
+}
+
+.menu-item::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+      90deg,
+      rgba(59,130,246,.15),
+      rgba(6,182,212,.15)
+  );
+
+  opacity: 0;
+
+  transition: .35s;
+
+}
+
+.menu-item:hover::before {
+
+  opacity: 1;
+
 }
 
 .menu-item:hover {
-  background: #1e293b;
+
+  transform: translateX(6px);
+
   color: white;
+
 }
 
 .menu-item.active {
-  background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+
+  background: linear-gradient(
+      135deg,
+      #3b82f6,
+      #06b6d4
+  );
+
   color: white;
-  box-shadow: 0 8px 20px rgba(20, 184, 166, 0.35);
+
+  box-shadow:
+      0 10px 30px rgba(59,130,246,.35);
+
+}
+
+.menu-item.active::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: 8px;
+
+  width: 4px;
+
+  height: calc(100% - 16px);
+
+  border-radius: 20px;
+
+  background: white;
+
 }
 
 .menu-icon {
-  font-size: 20px;
+
+  font-size: 21px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
 }
 
+/* ================= Footer ================= */
+
 .sidebar-footer {
-  padding-top: 20px;
+
+  position: relative;
+
+  z-index: 5;
+
+}
+
+.sidebar-user {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 16px;
+
+  margin-bottom: 20px;
+
+  border-radius: 18px;
+
+  background: rgba(255,255,255,.05);
+
+  border: 1px solid rgba(255,255,255,.08);
+
+}
+
+.user-avatar {
+
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: linear-gradient(
+      135deg,
+      #3b82f6,
+      #8b5cf6
+  );
+
+  color: white;
+
+  font-weight: bold;
+
+  font-size: 18px;
+
+}
+
+.sidebar-user h4 {
+
+  margin: 0;
+
+  color: white;
+
+  font-size: 15px;
+
+}
+
+.sidebar-user p {
+
+  margin: 2px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
 }
 
 .logout-btn {
+
   width: 100%;
-  border: none;
-  background: #ef4444;
-  color: white;
-  padding: 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
+
   display: flex;
+
   justify-content: center;
+
+  align-items: center;
+
   gap: 10px;
-  transition: 0.3s;
+
+  border: none;
+
+  cursor: pointer;
+
+  padding: 15px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+      135deg,
+      #ef4444,
+      #dc2626
+  );
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: .35s;
+
 }
 
 .logout-btn:hover {
-  background: #dc2626;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+      0 12px 24px rgba(239,68,68,.35);
+
 }
 
-@media (max-width: 992px) {
-  .sidebar {
-    width: 80px;
-    padding: 20px 10px;
-  }
+/* ================= Responsive ================= */
 
-  .sidebar-logo h2,
-  .sidebar-logo span,
-  .menu-item span:not(.menu-icon),
-  .logout-btn span {
-    display: none;
-  }
+@media (max-width:992px){
 
-  .logo-circle {
-    margin: auto;
-  }
+.sidebar{
 
-  .menu-item {
-    justify-content: center;
-  }
+width:90px;
+
+padding:22px 10px;
+
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
+.sidebar-logo h2,
+.sidebar-logo span,
+.sidebar-user,
+.menu-item span:not(.menu-icon){
+
+display:none;
+
+}
+
+.logo-circle{
+
+margin:auto;
+
+}
+
+.menu-item{
+
+justify-content:center;
+
+padding:16px;
+
+}
+
+.logout-btn{
+
+padding:14px;
+
+font-size:0;
+
+}
+
+.logout-btn svg{
+
+font-size:20px;
+
+}
+
+}
+
+@media (max-width:768px){
+
+.sidebar{
+
+transform:translateX(-100%);
+
+}
+
 }

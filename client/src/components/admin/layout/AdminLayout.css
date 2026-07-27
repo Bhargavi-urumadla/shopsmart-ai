@@ -1,48 +1,262 @@
-*{
-    box-sizing:border-box;
+/* ===========================
+   ShopSmart AI - Admin Layout
+=========================== */
+
+:root {
+  --sidebar-width: 280px;
+
+  --bg: #0b1120;
+  --bg-secondary: #111827;
+
+  --card: rgba(255, 255, 255, 0.06);
+
+  --border: rgba(255, 255, 255, 0.08);
+
+  --text: #f8fafc;
+  --text-secondary: #94a3b8;
+
+  --blue: #3b82f6;
+  --cyan: #06b6d4;
+  --purple: #8b5cf6;
 }
 
-.admin-layout{
-    display:flex;
-    min-height:100vh;
-    background:#f5f7fb;
+/* ========================= */
+
+.admin-layout {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+
+  background: var(--bg);
+
+  color: var(--text);
 }
 
-.admin-main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    margin-left:270px;
-    transition:.3s;
+/* ========================= */
+
+.admin-main {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  margin-left: var(--sidebar-width);
+
+  transition: all 0.3s ease;
 }
 
-.admin-content{
-    flex:1;
-    padding:32px;
-    overflow:auto;
-    background:#f5f7fb;
+/* ========================= */
+
+.admin-content {
+  flex: 1;
+
+  padding: 32px;
+
+  position: relative;
+
+  z-index: 5;
 }
+
+/* ===========================
+   Animated Background
+=========================== */
+
+.background-grid {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.03) 1px,
+      transparent 1px
+    );
+
+  background-size: 40px 40px;
+
+  opacity: .25;
+
+  z-index: 0;
+}
+
+/* ========================= */
+
+.background-glow {
+  position: fixed;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  filter: blur(130px);
+
+  opacity: .35;
+
+  animation: floatGlow 12s ease-in-out infinite;
+
+  z-index: 0;
+}
+
+/* ========================= */
+
+.glow-one {
+  top: -180px;
+  left: -180px;
+
+  background: linear-gradient(
+      135deg,
+      var(--cyan),
+      var(--blue)
+  );
+}
+
+/* ========================= */
+
+.glow-two {
+  bottom: -220px;
+  right: -180px;
+
+  background: linear-gradient(
+      135deg,
+      var(--purple),
+      var(--cyan)
+  );
+
+  animation-delay: 3s;
+}
+
+/* ========================= */
+
+@keyframes floatGlow {
+
+  0%{
+      transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50%{
+
+      transform:
+      translateY(-40px)
+      scale(1.08);
+
+  }
+
+  100%{
+
+      transform:
+      translateY(0)
+      scale(1);
+
+  }
+
+}
+
+/* ========================= */
+
+.glass {
+
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  backdrop-filter: blur(24px);
+
+  -webkit-backdrop-filter: blur(24px);
+
+  border-radius: 22px;
+
+  box-shadow:
+
+  0 20px 50px rgba(0,0,0,.35);
+
+}
+
+/* ========================= */
+
+.gradient-text{
+
+    background:linear-gradient(
+        90deg,
+        var(--cyan),
+        var(--blue),
+        var(--purple)
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+/* ========================= */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#111827;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(
+        var(--blue),
+        var(--cyan)
+    );
+
+    border-radius:20px;
+
+}
+
+/* ========================= */
 
 @media(max-width:992px){
 
 .admin-main{
-    margin-left:80px;
+
+margin-left:90px;
+
 }
 
 .admin-content{
-    padding:20px;
+
+padding:20px;
+
 }
 
 }
+
+/* ========================= */
 
 @media(max-width:768px){
 
 .admin-main{
-    margin-left:0;
+
+margin-left:0;
+
 }
 
 .admin-content{
-    padding:16px;
+
+padding:18px;
+
 }
 
 }
