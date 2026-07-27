@@ -1,54 +1,179 @@
+import { useEffect, useState } from "react";
 import "./AIInsights.css";
-import {
-  FiTrendingUp,
-  FiAlertTriangle,
-  FiBarChart2,
-} from "react-icons/fi";
+import { FiTrendingUp, FiAlertTriangle, FiActivity } from "react-icons/fi";
+import { getDashboardInsights } from "../../services/adminAI";
 
-const insights = [
-  {
-    icon: <FiTrendingUp />,
-    title: "Trending Product",
-    message: "Electronics sales increased by 22%",
-    action: "View Details",
-    type: "success",
-  },
-  {
-    icon: <FiAlertTriangle />,
-    title: "Low Stock Alert",
-    message: "Bluetooth Headphones only 8 left",
-    action: "Restock",
-    type: "warning",
-  },
-  {
-    icon: <FiBarChart2 />,
-    title: "Sales Prediction",
-    message: "Weekend sales expected to grow by 18%",
-    action: "View Report",
-    type: "info",
-  },
-];
+interface DashboardInsights {
+  storeHealth: number;
+  summary: string;
+  forecast: {
+    growth: string;
+    expectedRevenue: string;
+  };
+  trending: {
+    category: string;
+    product: string;
+  };
+  alerts: {
+    type: string;
+    message: string;
+    priority: string;
+  }[];
+  recommendations: {
+    title: string;
+    reason: string;
+    priority: string;
+  }[];
+}
 
 const AIInsights = () => {
+  const [data, setData] = useState<DashboardInsights | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await getDashboardInsights();
+        setData(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    load();
+  }, []);
+
+  if (!data) {
+    return (
+      <div className="ai-panel">
+        <h2>🤖 AI Business Insights</h2>
+        <p>Loading AI Insights...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="ai-insights">
-      <div className="ai-header">
-        <span>🤖</span>
-        <h2>AI Business Insights</h2>
+    <div className="ai-panel">
+
+      <div className="ai-title">
+        🤖 AI Business Insights
       </div>
 
-      {insights.map((item, index) => (
-        <div className={`insight-card ${item.type}`} key={index}>
-          <div className="insight-icon">{item.icon}</div>
+      <div className="health-box">
 
-          <div className="insight-content">
-            <h4>{item.title}</h4>
-            <p>{item.message}</p>
-
-            <button>{item.action}</button>
-          </div>
+        <div>
+          <h4>Store Health</h4>
+          <p>Your store is performing well.</p>
         </div>
-      ))}
+
+        <div className="health-score">
+          {data.storeHealth}%
+        </div>
+
+      </div>
+
+      <div className="divider"/>
+
+      <div className="section">
+
+        <h4>
+          <FiActivity />
+          Business Summary
+        </h4>
+
+        <p>{data.summary}</p>
+
+      </div>
+
+      <div className="divider"/>
+
+      <div className="section">
+
+        <h4>
+          <FiTrendingUp />
+          Sales Forecast
+        </h4>
+
+        <div className="forecast-grid">
+
+          <div>
+            <span>Growth</span>
+            <strong>{data.forecast.growth}</strong>
+          </div>
+
+          <div>
+            <span>Revenue</span>
+            <strong>{data.forecast.expectedRevenue}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div className="divider"/>
+
+      <div className="section">
+
+        <h4>🔥 Trending Product</h4>
+
+        <p>
+          <strong>{data.trending.product}</strong>
+        </p>
+
+        <small>{data.trending.category}</small>
+
+      </div>
+
+      <div className="divider"/>
+
+      <div className="section">
+
+        <h4>
+          <FiAlertTriangle />
+          Alerts
+        </h4>
+
+        {data.alerts.map((alert, index) => (
+
+          <div className="alert-card" key={index}>
+
+            <span className={alert.priority.toLowerCase()}>
+              {alert.priority}
+            </span>
+
+            <p>{alert.message}</p>
+
+          </div>
+
+        ))}
+
+      </div>
+
+      <div className="divider"/>
+
+      <div className="section">
+
+        <h4>💡 AI Recommendations</h4>
+
+        <ul>
+
+          {data.recommendations.map((item, index) => (
+
+            <li key={index}>
+
+              <strong>{item.title}</strong>
+
+              <br/>
+
+              <small>{item.reason}</small>
+
+            </li>
+
+          ))}
+
+        </ul>
+
+      </div>
+
     </div>
   );
 };

@@ -61,19 +61,25 @@ const Dashboard = () => {
 
       {/* Coming Soon */}
 
-      <div className="dashboard-coming">
+     {/* Revenue Chart */}
 
-     <RevenueChart />
+<div className="dashboard-coming">
 
-        <div className="dashboard-bottom">
-
-    <RecentOrders />
+    <RevenueChart />
 
     <AIInsights />
 
 </div>
 
-      </div>
+{/* Orders */}
+
+<div className="dashboard-bottom">
+
+    <RecentOrders />
+
+    <div />
+
+</div>
 
     </div>
   );

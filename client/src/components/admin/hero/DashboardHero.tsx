@@ -1,39 +1,40 @@
+import { motion } from "framer-motion";
 import {
   FiTrendingUp,
   FiShoppingCart,
   FiUsers,
-  FiAward,
+  FiCpu,
 } from "react-icons/fi";
-import { motion } from "framer-motion";
+
 import "./DashboardHero.css";
 
 const DashboardHero = () => {
   return (
-    <motion.div
-      className="dashboard-hero-new"
-      initial={{ opacity: 0, y: 25 }}
+    <motion.section
+      className="dashboard-hero"
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
     >
-      <div className="hero-left">
+      <div className="hero-content">
 
-        <span className="hero-badge">
+        <span className="hero-chip">
           🤖 AI Commerce Dashboard
         </span>
 
         <h1>
-          Good Evening,
+          Welcome back,
           <br />
-          Bhargavi 👋
+          <span>Bhargavi 👋</span>
         </h1>
 
         <p>
-          Your AI Store Score increased to
-          <strong> 96%</strong>.
-          Revenue is growing faster than last week.
+          Your AI engine analysed today's sales.
+          Revenue is <strong>18%</strong> higher than yesterday and
+          your store health score is <strong>96%</strong>.
         </p>
 
-        <div className="hero-buttons">
+        <div className="hero-actions">
           <button className="primary-btn">
             View Analytics
           </button>
@@ -42,36 +43,37 @@ const DashboardHero = () => {
             Generate Report
           </button>
         </div>
+
       </div>
 
-      <div className="hero-right">
+      <div className="hero-stats">
 
-        <div className="hero-card">
+        <div className="stat-box">
           <FiTrendingUp />
-          <h2>₹42,540</h2>
+          <h3>₹42,540</h3>
           <span>Revenue Today</span>
         </div>
 
-        <div className="hero-card">
+        <div className="stat-box">
           <FiShoppingCart />
-          <h2>48</h2>
+          <h3>48</h3>
           <span>Orders Today</span>
         </div>
 
-        <div className="hero-card">
+        <div className="stat-box">
           <FiUsers />
-          <h2>124</h2>
-          <span>Visitors Online</span>
+          <h3>124</h3>
+          <span>Visitors</span>
         </div>
 
-        <div className="hero-card">
-          <FiAward />
-          <h2>96%</h2>
+        <div className="stat-box">
+          <FiCpu />
+          <h3>96%</h3>
           <span>AI Score</span>
         </div>
 
       </div>
-    </motion.div>
+    </motion.section>
   );
 };
 

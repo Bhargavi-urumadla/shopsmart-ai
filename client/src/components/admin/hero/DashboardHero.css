@@ -1,134 +1,278 @@
-.dashboard-hero-new{
-    background:linear-gradient(135deg,#0f766e,#14b8a6,#3b82f6);
-    border-radius:28px;
-    padding:40px;
-    color:white;
-    display:flex;
-    justify-content:space-between;
-    gap:40px;
-    overflow:hidden;
-    position:relative;
+.dashboard-hero{
+
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:30px;
+
+padding:32px;
+
+border-radius:24px;
+
+background:linear-gradient(
+135deg,
+#0f766e,
+#14b8a6,
+#2563eb
+);
+
+position:relative;
+
+overflow:hidden;
+
+color:white;
+
+margin-bottom:28px;
+
 }
 
-.dashboard-hero-new::before{
-    content:"";
-    position:absolute;
-    width:420px;
-    height:420px;
-    border-radius:50%;
-    background:rgba(255,255,255,.08);
-    right:-120px;
-    top:-120px;
+.dashboard-hero::before{
+
+content:"";
+
+position:absolute;
+
+right:-80px;
+
+top:-80px;
+
+width:260px;
+
+height:260px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
 }
 
-.hero-left{
-    flex:1;
-    position:relative;
-    z-index:2;
+.hero-content{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+z-index:2;
+
 }
 
-.hero-badge{
-    display:inline-block;
-    background:rgba(255,255,255,.18);
-    padding:8px 18px;
-    border-radius:30px;
-    margin-bottom:20px;
-    backdrop-filter:blur(10px);
+.hero-chip{
+
+display:inline-flex;
+
+align-items:center;
+
+padding:8px 18px;
+
+width:max-content;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.12);
+
+font-weight:600;
+
+margin-bottom:18px;
+
 }
 
-.hero-left h1{
-    font-size:48px;
-    margin:0;
-    line-height:1.2;
+.hero-content h1{
+
+font-size:44px;
+
+line-height:1.15;
+
+margin-bottom:18px;
+
+font-weight:800;
+
 }
 
-.hero-left p{
-    margin-top:20px;
-    font-size:18px;
-    max-width:520px;
-    opacity:.95;
-    line-height:1.8;
+.hero-content h1 span{
+
+color:#fff;
+
 }
 
-.hero-buttons{
-    margin-top:30px;
-    display:flex;
-    gap:15px;
+.hero-content p{
+
+font-size:16px;
+
+line-height:1.7;
+
+max-width:520px;
+
+color:rgba(255,255,255,.92);
+
+margin-bottom:24px;
+
+}
+
+.hero-actions{
+
+display:flex;
+
+gap:16px;
+
 }
 
 .primary-btn{
-    border:none;
-    background:white;
-    color:#0f766e;
-    padding:14px 28px;
-    border-radius:14px;
-    cursor:pointer;
-    font-weight:700;
+
+background:white;
+
+color:#0f172a;
+
+border:none;
+
+padding:14px 28px;
+
+border-radius:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.primary-btn:hover{
+
+transform:translateY(-3px);
+
 }
 
 .secondary-btn{
-    border:1px solid rgba(255,255,255,.4);
-    background:transparent;
-    color:white;
-    padding:14px 28px;
-    border-radius:14px;
-    cursor:pointer;
+
+background:transparent;
+
+border:1px solid rgba(255,255,255,.25);
+
+color:white;
+
+padding:14px 28px;
+
+border-radius:14px;
+
+cursor:pointer;
+
+transition:.3s;
+
 }
 
-.hero-right{
-    width:430px;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-    position:relative;
-    z-index:2;
+.secondary-btn:hover{
+
+background:rgba(255,255,255,.12);
+
 }
 
-.hero-card{
-    background:rgba(255,255,255,.15);
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:22px;
-    padding:22px;
+.hero-stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:18px;
+
+align-self:center;
+
+z-index:2;
+
 }
 
-.hero-card svg{
-    font-size:30px;
+.stat-box{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(16px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:18px;
+
+padding:20px;
+
+transition:.3s;
+
 }
 
-.hero-card h2{
-    margin:18px 0 8px;
-    font-size:32px;
+.stat-box:hover{
+
+transform:translateY(-5px);
+
+background:rgba(255,255,255,.18);
+
 }
 
-.hero-card span{
-    opacity:.9;
+.stat-box svg{
+
+font-size:26px;
+
+margin-bottom:10px;
+
+}
+
+.stat-box h3{
+
+font-size:28px;
+
+margin-bottom:6px;
+
+font-weight:700;
+
+}
+
+.stat-box span{
+
+font-size:14px;
+
+opacity:.9;
+
 }
 
 @media(max-width:1100px){
 
-.dashboard-hero-new{
-    flex-direction:column;
+.dashboard-hero{
+
+grid-template-columns:1fr;
+
 }
 
-.hero-right{
-    width:100%;
+.hero-stats{
+
+margin-top:20px;
+
 }
 
 }
 
 @media(max-width:768px){
 
-.hero-left h1{
-    font-size:34px;
+.dashboard-hero{
+
+padding:24px;
+
 }
 
-.hero-right{
-    grid-template-columns:1fr;
+.hero-content h1{
+
+font-size:34px;
+
 }
 
-.hero-buttons{
-    flex-direction:column;
+.hero-actions{
+
+flex-direction:column;
+
+}
+
+.hero-stats{
+
+grid-template-columns:1fr;
+
 }
 
 }

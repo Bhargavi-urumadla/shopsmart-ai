@@ -1,115 +1,323 @@
 .admin-header{
-    height:85px;
-    background:white;
+    height:90px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 30px;
-    border-bottom:1px solid #e2e8f0;
+
+    padding:0 32px;
+
     position:sticky;
     top:0;
+
     z-index:100;
+
+    background:rgba(15,23,42,.72);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
+/* Left */
+
 .header-left h2{
+
     margin:0;
-    font-size:28px;
-    color:#0f172a;
+
+    color:#fff;
+
+    font-size:32px;
+
+    font-weight:700;
+
 }
 
 .header-left p{
-    margin-top:5px;
-    color:#64748b;
-    font-size:14px;
+
+    margin-top:6px;
+
+    color:#94a3b8;
+
 }
+
+.header-left span{
+
+    color:#38bdf8;
+
+}
+
+/* Right */
 
 .header-right{
+
     display:flex;
+
     align-items:center;
-    gap:18px;
+
+    gap:16px;
+
 }
 
+/* Search */
+
 .search-box{
-    width:320px;
+
+    width:380px;
+
     display:flex;
+
     align-items:center;
-    gap:10px;
-    background:#f1f5f9;
-    padding:12px 18px;
-    border-radius:14px;
+
+    gap:12px;
+
+    padding:14px 18px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
 }
 
 .search-box svg{
-    color:#64748b;
+
+    color:#94a3b8;
+
     font-size:18px;
+
 }
 
 .search-box input{
-    border:none;
-    background:transparent;
-    outline:none;
+
     width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:white;
+
     font-size:15px;
+
 }
 
+.search-box input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+/* Buttons */
+
 .icon-btn{
+
     width:48px;
+
     height:48px;
+
     border:none;
-    background:#f8fafc;
-    border-radius:14px;
+
+    border-radius:16px;
+
     cursor:pointer;
-    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:white;
+
     transition:.3s;
-    font-size:18px;
+
+    position:relative;
+
 }
 
 .icon-btn:hover{
-    background:#e2e8f0;
+
+    transform:translateY(-3px);
+
+    background:#2563eb;
+
 }
+
+.ai-btn{
+
+    background:linear-gradient(
+        135deg,
+        #3b82f6,
+        #8b5cf6
+    );
+
+}
+
+/* Notification */
 
 .notification-dot{
+
     position:absolute;
-    top:10px;
-    right:10px;
+
     width:8px;
+
     height:8px;
+
+    top:12px;
+
+    right:12px;
+
     background:#ef4444;
+
     border-radius:50%;
+
 }
 
-.admin-profile{
+/* Status */
+
+.status-pill{
+
     display:flex;
+
     align-items:center;
+
+    gap:8px;
+
+    padding:10px 16px;
+
+    border-radius:30px;
+
+    background:rgba(34,197,94,.12);
+
+    color:#4ade80;
+
+    font-weight:600;
+
+    font-size:14px;
+
+}
+
+.status-dot{
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    animation:pulse 1.8s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+50%{
+
+transform:scale(1.5);
+
+opacity:.5;
+
+}
+
+100%{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+/* Profile */
+
+.admin-profile{
+
+    display:flex;
+
+    align-items:center;
+
     gap:12px;
+
     cursor:pointer;
-    padding-left:10px;
+
+    padding:6px 10px;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+}
+
+.admin-profile:hover{
+
+    background:rgba(255,255,255,.05);
+
 }
 
 .admin-profile img{
-    width:48px;
-    height:48px;
+
+    width:46px;
+
+    height:46px;
+
     border-radius:50%;
+
+    border:2px solid #3b82f6;
+
 }
 
 .profile-info h4{
+
     margin:0;
-    color:#0f172a;
+
+    color:white;
+
+    font-size:15px;
+
 }
 
 .profile-info span{
-    color:#64748b;
-    font-size:13px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
 }
 
-@media(max-width:992px){
+/* Responsive */
+
+@media(max-width:1100px){
 
 .search-box{
-    display:none;
+
+display:none;
+
 }
 
-.profile-info{
-    display:none;
+.status-pill{
+
+display:none;
+
 }
 
 }
@@ -117,15 +325,22 @@
 @media(max-width:768px){
 
 .admin-header{
-    padding:0 18px;
+
+padding:0 18px;
+
 }
 
-.header-left p{
-    display:none;
+.header-left p,
+.profile-info{
+
+display:none;
+
 }
 
 .header-left h2{
-    font-size:22px;
+
+font-size:24px;
+
 }
 
 }
