@@ -1,0 +1,186 @@
+.product-table-wrapper {
+  margin-top: 24px;
+  background: #111827;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #1f2937;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.product-table thead {
+  background: #1e293b;
+}
+
+.product-table th {
+  padding: 18px;
+  text-align: left;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.product-table td {
+  padding: 18px;
+  border-top: 1px solid #1f2937;
+  color: white;
+  vertical-align: middle;
+}
+
+.product-table tbody tr:hover {
+  background: #172033;
+}
+
+/* ---------- Product ---------- */
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.product-info img {
+  width: 65px;
+  height: 65px;
+  min-width: 65px;
+  max-width: 65px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.product-info h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.product-info p {
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* ---------- Stock ---------- */
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.green {
+  background: rgba(34,197,94,.15);
+  color: #22c55e;
+}
+
+.orange {
+  background: rgba(245,158,11,.15);
+  color: #f59e0b;
+}
+
+.red {
+  background: rgba(239,68,68,.15);
+  color: #ef4444;
+}
+
+/* ---------- Rating ---------- */
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fbbf24;
+}
+
+/* ---------- Status ---------- */
+
+.status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status.active {
+  background: rgba(34,197,94,.15);
+  color: #22c55e;
+}
+
+.status.inactive {
+  background: rgba(239,68,68,.15);
+  color: #ef4444;
+}
+
+/* ---------- Actions ---------- */
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: rgba(59,130,246,.15);
+  color: #3b82f6;
+}
+
+.delete-btn {
+  background: rgba(239,68,68,.15);
+  color: #ef4444;
+}
+
+/* ---------- Column widths ---------- */
+
+.product-table th:nth-child(1),
+.product-table td:nth-child(1) {
+  width: 34%;
+}
+
+.product-table th:nth-child(2),
+.product-table td:nth-child(2) {
+  width: 12%;
+}
+
+.product-table th:nth-child(3),
+.product-table td:nth-child(3) {
+  width: 12%;
+}
+
+.product-table th:nth-child(4),
+.product-table td:nth-child(4) {
+  width: 10%;
+}
+
+.product-table th:nth-child(5),
+.product-table td:nth-child(5) {
+  width: 8%;
+}
+
+.product-table th:nth-child(6),
+.product-table td:nth-child(6) {
+  width: 8%;
+}
+
+.product-table th:nth-child(7),
+.product-table td:nth-child(7) {
+  width: 10%;
+}
+
+.product-table th:nth-child(8),
+.product-table td:nth-child(8) {
+  width: 12%;
+}

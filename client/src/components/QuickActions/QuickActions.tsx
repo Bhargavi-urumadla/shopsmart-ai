@@ -1,82 +1,73 @@
-import "./QuickActions.css";
 import {
-  FiShoppingBag,
-  FiHeart,
+  FiPlusCircle,
   FiPackage,
-  FiUser,
-  FiArrowUpRight,
+  FiShoppingBag,
+  FiUsers,
+  FiBarChart2,
+  FiCpu,
 } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+
+import "./QuickActions.css";
+
+const actions = [
+  {
+    icon: <FiPlusCircle />,
+    title: "Add Product",
+    subtitle: "Create new product",
+  },
+  {
+    icon: <FiPackage />,
+    title: "Inventory",
+    subtitle: "Manage stock",
+  },
+  {
+    icon: <FiShoppingBag />,
+    title: "Orders",
+    subtitle: "View all orders",
+  },
+  {
+    icon: <FiUsers />,
+    title: "Customers",
+    subtitle: "Customer list",
+  },
+  {
+    icon: <FiBarChart2 />,
+    title: "Analytics",
+    subtitle: "Sales reports",
+  },
+  {
+    icon: <FiCpu />,
+    title: "AI Insights",
+    subtitle: "AI recommendations",
+  },
+];
 
 function QuickActions() {
-  const navigate = useNavigate();
-
-  const actions = [
-    {
-      title: "Continue Shopping",
-      subtitle: "Browse Products",
-      icon: <FiShoppingBag />,
-      path: "/products",
-      color: "#14B8A6",
-    },
-    {
-      title: "Wishlist",
-      subtitle: "Saved Items",
-      icon: <FiHeart />,
-      path: "/wishlist",
-      color: "#EC4899",
-    },
-    {
-      title: "My Orders",
-      subtitle: "Track Orders",
-      icon: <FiPackage />,
-      path: "/orders",
-      color: "#F59E0B",
-    },
-    {
-      title: "My Profile",
-      subtitle: "Update Details",
-      icon: <FiUser />,
-      path: "/profile",
-      color: "#6366F1",
-    },
-  ];
-
   return (
-    <section className="quick-actions">
+    <div className="quick-actions">
+
       <div className="quick-header">
         <h2>Quick Actions</h2>
-        <p>Everything you need in one place</p>
+        <p>Frequently used admin shortcuts</p>
       </div>
 
       <div className="quick-grid">
         {actions.map((item) => (
-          <div
-            key={item.title}
-            className="quick-card"
-            onClick={() => navigate(item.path)}
-          >
-            <div className="card-top">
-              <div
-                className="quick-icon"
-                style={{
-                  background: `${item.color}20`,
-                  color: item.color,
-                }}
-              >
-                {item.icon}
-              </div>
+          <div className="quick-card" key={item.title}>
 
-              <FiArrowUpRight className="arrow-icon" />
+            <div className="quick-icon">
+              {item.icon}
             </div>
 
-            <h3>{item.title}</h3>
+            <h4>{item.title}</h4>
 
-            <p>{item.subtitle}</p>
+            <span>{item.subtitle}</span>
+
           </div>
         ))}
       </div>
-    </section>
+
+    </div>
   );
 }
 

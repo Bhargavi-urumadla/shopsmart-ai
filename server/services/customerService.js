@@ -2,10 +2,14 @@ const User = require("../models/User");
 
 // Get all customers
 const getCustomers = async () => {
-  return await User.find(
+  const customers = await User.find(
     { role: "user" },
     "-password"
   ).sort({ createdAt: -1 });
+
+  console.log("Customers:", customers);
+
+  return customers;
 };
 
 // Get customer by ID

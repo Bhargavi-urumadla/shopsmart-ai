@@ -1,93 +1,129 @@
 import "./RecentOrders.css";
+import {
+  FiCheckCircle,
+  FiClock,
+  FiXCircle,
+  FiArrowRight,
+} from "react-icons/fi";
 
-const orders = [
-  {
-    id: "#ORD-1001",
-    customer: "Bhargavi",
-    product: "Apple Watch",
-    amount: "₹24,999",
-    status: "Delivered",
-    date: "Today",
-  },
-  {
-    id: "#ORD-1002",
-    customer: "Rahul",
-    product: "Sony Headphones",
-    amount: "₹8,499",
-    status: "Processing",
-    date: "Today",
-  },
-  {
-    id: "#ORD-1003",
-    customer: "Sneha",
-    product: "Nike Shoes",
-    amount: "₹5,999",
-    status: "Shipped",
-    date: "Yesterday",
-  },
-  {
-    id: "#ORD-1004",
-    customer: "Kiran",
-    product: "Laptop Bag",
-    amount: "₹2,199",
-    status: "Cancelled",
-    date: "Yesterday",
-  },
-];
+interface Product {
+  product: {
+    name: string;
+    brand?: string;
+    image?: string;
+  };
+}
 
-const RecentOrders = () => {
+interface Order {
+  _id: string;
+  totalAmount: number;
+  status: string;
+  createdAt: string;
+  user?: {
+    name: string;
+    email: string;
+  };
+  products: Product[];
+}
+
+interface RecentOrdersProps {
+  orders?: Order[];
+}
+
+const RecentOrders = ({
+  orders = [],
+}: RecentOrdersProps) => {
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "Delivered":
+        return <FiCheckCircle />;
+
+      case "Processing":
+        return <FiClock />;
+
+      case "Cancelled":
+        return <FiXCircle />;
+
+      default:
+        return <FiClock />;
+    }
+  };
+
   return (
-    <div className="orders-card">
-
+    <div className="recent-orders">
       <div className="orders-header">
-        <h2>Recent Orders</h2>
+        <div>
+          <h2>Recent Orders</h2>
+          <p>Latest customer orders</p>
+        </div>
 
-        <button>View All</button>
+        <button className="view-all-btn">
+          View All
+        </button>
       </div>
 
-      <table className="orders-table">
+      {orders.length === 0 ? (
+        <div className="empty-message">
+          No recent orders available.
+        </div>
+      ) : (
+        orders.map((order) => {
+          const firstProduct = order.products?.[0];
 
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Product</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-        </thead>
+          return (
+            <div
+              className="order-item"
+              key={order._id}
+            >
+              <img
+                src={
+                  firstProduct?.product?.image ||
+                  "/images/no-image.png"
+                }
+                alt={
+                  firstProduct?.product?.name ||
+                  "Product"
+                }
+                className="order-image"
+              />
 
-        <tbody>
+              <div className="order-details">
+                <h4>
+                  {firstProduct?.product?.name ||
+                    "Product"}
+                </h4>
 
-          {orders.map((order) => (
-            <tr key={order.id}>
+                <p>{order.user?.name || "Guest"}</p>
 
-              <td>{order.id}</td>
+                <small>
+                  {new Date(
+                    order.createdAt
+                  ).toLocaleDateString()}
+                </small>
+              </div>
 
-              <td>{order.customer}</td>
+              <div className="order-price">
+                ₹
+                {Number(
+                  order.totalAmount ?? 0
+                ).toLocaleString()}
+              </div>
 
-              <td>{order.product}</td>
+              <span
+                className={`status ${order.status.toLowerCase()}`}
+              >
+                {getStatusIcon(order.status)}
+                {order.status}
+              </span>
 
-              <td>{order.amount}</td>
-
-              <td>
-                <span
-                  className={`status ${order.status.toLowerCase()}`}
-                >
-                  {order.status}
-                </span>
-              </td>
-
-              <td>{order.date}</td>
-
-            </tr>
-          ))}
-
-        </tbody>
-
-      </table>
-
+              <button className="details-btn">
+                View
+                <FiArrowRight />
+              </button>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };

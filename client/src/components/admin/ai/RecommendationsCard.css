@@ -1,0 +1,61 @@
+.recommendations-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.recommendations-card h2 {
+  margin-bottom: 20px;
+}
+
+.recommendation-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 0;
+}
+
+.recommendation-item:last-child {
+  border-bottom: none;
+}
+
+.recommendation-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recommendation-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.recommendation-item p {
+  margin-top: 10px;
+  color: #6b7280;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.high {
+  background: #dc2626;
+}
+
+.medium {
+  background: #f59e0b;
+}
+
+.low {
+  background: #16a34a;
+}
+
+.empty-message {
+  color: #6b7280;
+}

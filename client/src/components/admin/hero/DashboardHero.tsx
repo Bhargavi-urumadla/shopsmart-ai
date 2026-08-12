@@ -8,70 +8,64 @@ import {
 
 import "./DashboardHero.css";
 
+const stats = [
+  {
+    icon: <FiTrendingUp />,
+    value: "₹42,540",
+    label: "Today's Revenue",
+  },
+  {
+    icon: <FiShoppingCart />,
+    value: "48",
+    label: "Orders",
+  },
+  {
+    icon: <FiUsers />,
+    value: "124",
+    label: "Customers",
+  },
+  {
+    icon: <FiCpu />,
+    value: "96%",
+    label: "AI Score",
+  },
+];
+
 const DashboardHero = () => {
   return (
     <motion.section
       className="dashboard-hero"
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.45 }}
     >
-      <div className="hero-content">
-
+      <div className="hero-left">
         <span className="hero-chip">
-          🤖 AI Commerce Dashboard
+          🤖 ShopSmart AI Dashboard
         </span>
 
-        <h1>
-          Welcome back,
-          <br />
-          <span>Bhargavi 👋</span>
-        </h1>
+        <h1>Welcome back, Bhargavi 👋</h1>
 
         <p>
-          Your AI engine analysed today's sales.
-          Revenue is <strong>18%</strong> higher than yesterday and
-          your store health score is <strong>96%</strong>.
+          Here's a quick overview of today's performance.
         </p>
-
-        <div className="hero-actions">
-          <button className="primary-btn">
-            View Analytics
-          </button>
-
-          <button className="secondary-btn">
-            Generate Report
-          </button>
-        </div>
-
       </div>
 
-      <div className="hero-stats">
+      <div className="hero-right">
+        {stats.map((item) => (
+          <div
+            key={item.label}
+            className="hero-card"
+          >
+            <div className="hero-icon">
+              {item.icon}
+            </div>
 
-        <div className="stat-box">
-          <FiTrendingUp />
-          <h3>₹42,540</h3>
-          <span>Revenue Today</span>
-        </div>
+            <h3>{item.value}</h3>
 
-        <div className="stat-box">
-          <FiShoppingCart />
-          <h3>48</h3>
-          <span>Orders Today</span>
-        </div>
-
-        <div className="stat-box">
-          <FiUsers />
-          <h3>124</h3>
-          <span>Visitors</span>
-        </div>
-
-        <div className="stat-box">
-          <FiCpu />
-          <h3>96%</h3>
-          <span>AI Score</span>
-        </div>
-
+            <span>{item.label}</span>
+          </div>
+        ))}
       </div>
     </motion.section>
   );

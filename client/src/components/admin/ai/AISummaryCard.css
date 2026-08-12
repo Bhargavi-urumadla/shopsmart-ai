@@ -1,0 +1,32 @@
+.ai-summary-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.summary-header {
+  margin-bottom: 20px;
+}
+
+.summary-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 24px;
+}
+
+.summary-content {
+  background: #f8fafc;
+  border-left: 5px solid #2563eb;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.summary-content p {
+  margin: 0;
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}

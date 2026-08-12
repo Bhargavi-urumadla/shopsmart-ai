@@ -12,8 +12,10 @@
   "dependencies": {
     "aos": "^2.3.4",
     "axios": "^1.18.1",
+    "bootstrap": "^5.3.8",
     "framer-motion": "^12.42.2",
     "react": "^19.2.7",
+    "react-bootstrap": "^2.10.10",
     "react-countup": "^6.5.3",
     "react-dom": "^19.2.7",
     "react-hot-toast": "^2.6.0",

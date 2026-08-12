@@ -1,113 +1,198 @@
-.ai-panel{
-    background:#fff;
-    border-radius:22px;
-    padding:24px;
-    box-shadow:0 10px 35px rgba(0,0,0,.08);
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+.ai-panel {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+
+  border-radius: 22px;
+  padding: 26px;
+
+  color: #fff;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
+
+  transition: .3s;
 }
 
-.ai-title{
-    font-size:26px;
-    font-weight:700;
-    color:#0f172a;
+.ai-panel:hover {
+  border-color: #3b82f6;
+}
+
+.ai-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.health-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+      135deg,
+      #0f766e,
+      #14b8a6,
+      #2563eb
+  );
+
+  color: white;
+}
+
+.health-box h4 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.health-box p {
+  margin: 0;
+  color: rgba(255,255,255,.85);
+}
+
+.health-score {
+  width: 90px;
+  height: 90px;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255,255,255,.15);
+
+  backdrop-filter: blur(10px);
+
+  border: 2px solid rgba(255,255,255,.25);
+
+  font-size: 30px;
+  font-weight: bold;
+
+  color: white;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,.08);
+}
+
+.section h4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: white;
+
+  margin-bottom: 16px;
+
+  font-size: 18px;
+}
+
+.section p,
+.section small,
+.section li {
+  color: #cbd5e1;
+  line-height: 1.8;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 14px;
+}
+
+.forecast-grid div {
+  background: rgba(255,255,255,.05);
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  border-radius: 16px;
+
+  padding: 16px;
+}
+
+.forecast-grid span {
+  display: block;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  margin-bottom: 6px;
+}
+
+.forecast-grid strong {
+  color: white;
+
+  font-size: 22px;
+}
+
+.alert-card {
+  background: rgba(255,255,255,.05);
+
+  border-left: 4px solid #f59e0b;
+
+  border-radius: 14px;
+
+  padding: 14px;
+
+  margin-bottom: 12px;
+}
+
+.alert-card p {
+  margin-top: 10px;
+}
+
+.high,
+.medium,
+.low {
+  display: inline-flex;
+
+  padding: 5px 12px;
+
+  border-radius: 30px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.high {
+  background: rgba(239,68,68,.18);
+  color: #ef4444;
+}
+
+.medium {
+  background: rgba(245,158,11,.18);
+  color: #f59e0b;
+}
+
+.low {
+  background: rgba(34,197,94,.18);
+  color: #22c55e;
+}
+
+.section ul {
+  padding-left: 20px;
+}
+
+.section li {
+  margin-bottom: 16px;
+}
+
+@media(max-width:768px){
+
+.forecast-grid{
+grid-template-columns:1fr;
 }
 
 .health-box{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:linear-gradient(135deg,#14b8a6,#06b6d4);
-    color:white;
-    border-radius:18px;
-    padding:20px;
+flex-direction:column;
+gap:20px;
+text-align:center;
 }
 
-.health-score{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    background:white;
-    color:#14b8a6;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:26px;
-    font-weight:bold;
-}
-
-.divider{
-    height:1px;
-    background:#e5e7eb;
-}
-
-.section h4{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:18px;
-    margin-bottom:12px;
-}
-
-.forecast-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.forecast-grid div{
-    background:#f8fafc;
-    border-radius:12px;
-    padding:14px;
-}
-
-.forecast-grid span{
-    display:block;
-    color:#64748b;
-    font-size:13px;
-}
-
-.forecast-grid strong{
-    font-size:20px;
-}
-
-.alert-card{
-    background:#fff8e1;
-    border-left:5px solid orange;
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:10px;
-}
-
-.high{
-    background:#ef4444;
-    color:white;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:12px;
-}
-
-.medium{
-    background:#f59e0b;
-    color:white;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:12px;
-}
-
-.low{
-    background:#10b981;
-    color:white;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:12px;
-}
-
-.section ul{
-    padding-left:20px;
-}
-
-.section li{
-    margin-bottom:14px;
 }

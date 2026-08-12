@@ -1,88 +1,85 @@
+import { useEffect, useState } from "react";
 import "./Dashboard.css";
-import {
-  FiDollarSign,
-  FiShoppingBag,
-  FiUsers,
-  FiPackage,
-} from "react-icons/fi";
 
-import StatCard from "../../components/admin/cards/StatCard";
-import RevenueChart from "../../components/admin/charts/RevenueChart";
 import DashboardHero from "../../components/admin/hero/DashboardHero";
+import RevenueChart from "../../components/admin/charts/RevenueChart";
 import RecentOrders from "../../components/admin/tables/RecentOrders";
-import AIInsights from "../../components/AIInsights/AIInsights";
 
-const Dashboard = () => {
+import StatsCards from "../../components/StatsCards/StatsCards";
+import AIInsights from "../../components/AIInsights/AIInsights";
+import QuickActions from "../../components/QuickActions/QuickActions";
+
+import {
+  getSalesOverview,
+  getMonthlySales,
+  getRecentOrders,
+  getAIInsights,
+} from "../../services/dashboardService";
+
+function Dashboard() {
+  const [overview, setOverview] = useState<any>(null);
+  const [monthlySales, setMonthlySales] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [aiData, setAiData] = useState<any>(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadDashboard();
+  }, []);
+
+  const loadDashboard = async () => {
+    try {
+      const [
+        overviewResponse,
+        monthlyResponse,
+        ordersResponse,
+        aiResponse,
+      ] = await Promise.all([
+        getSalesOverview(),
+        getMonthlySales(),
+        getRecentOrders(),
+        getAIInsights(),
+      ]);
+
+      setOverview(overviewResponse);
+      setMonthlySales(monthlyResponse);
+      setOrders(ordersResponse);
+      setAiData(aiResponse);
+    } catch (error) {
+      console.error("Dashboard Load Failed", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <h2>Loading Dashboard...</h2>;
+  }
+
   return (
     <div className="dashboard-page">
-
-      {/* Hero */}
-
       <DashboardHero />
 
-      {/* KPI Cards */}
+      <StatsCards data={overview} />
 
-      <div className="stats-grid">
+      <div className="dashboard-top">
+        <div className="dashboard-left">
+          <RevenueChart data={monthlySales} />
 
-        <StatCard
-          title="Revenue"
-          value={542320}
-          prefix="₹"
-          growth="+18.4% this month"
-          color="linear-gradient(135deg,#14b8a6,#06b6d4)"
-          icon={<FiDollarSign />}
-        />
+          <QuickActions />
+        </div>
 
-        <StatCard
-          title="Orders"
-          value={352}
-          growth="+12% today"
-          color="linear-gradient(135deg,#6366f1,#8b5cf6)"
-          icon={<FiShoppingBag />}
-        />
-
-        <StatCard
-          title="Customers"
-          value={1248}
-          growth="+9.3% this week"
-          color="linear-gradient(135deg,#10b981,#22c55e)"
-          icon={<FiUsers />}
-        />
-
-        <StatCard
-          title="Products"
-          value={265}
-          growth="+5 New"
-          color="linear-gradient(135deg,#f59e0b,#fb923c)"
-          icon={<FiPackage />}
-        />
-
+        <div className="dashboard-right">
+          <AIInsights data={aiData} />
+        </div>
       </div>
 
-      {/* Coming Soon */}
-
-     {/* Revenue Chart */}
-
-<div className="dashboard-coming">
-
-    <RevenueChart />
-
-    <AIInsights />
-
-</div>
-
-{/* Orders */}
-
-<div className="dashboard-bottom">
-
-    <RecentOrders />
-
-    <div />
-
-</div>
-
+      <div className="dashboard-bottom">
+        <RecentOrders orders={orders} />
+      </div>
     </div>
   );
-};
+}
 
 export default Dashboard;

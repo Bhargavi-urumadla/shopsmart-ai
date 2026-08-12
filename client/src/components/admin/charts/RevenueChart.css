@@ -1,41 +1,102 @@
-.revenue-card{
-    background:#fff;
-    border-radius:22px;
-    padding:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+.revenue-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+
+  backdrop-filter: blur(20px);
+
+  border-radius: 22px;
+
+  padding: 26px;
+
+  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+
+  transition: .3s;
+}
+
+.revenue-card:hover{
+    border-color:#3b82f6;
 }
 
 .chart-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
 }
 
 .chart-header h2{
-    margin:0;
-    color:#0f172a;
+
+margin:0;
+
+color:white;
+
+font-size:26px;
+
+font-weight:700;
+
 }
 
 .chart-header p{
-    margin-top:6px;
-    color:#64748b;
+
+margin-top:8px;
+
+color:#94a3b8;
+
 }
 
 .chart-header select{
-    padding:10px 16px;
-    border-radius:10px;
-    border:1px solid #e2e8f0;
-    background:white;
-    cursor:pointer;
+
+padding:10px 16px;
+
+background:#111827;
+
+color:white;
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:12px;
+
+outline:none;
+
+cursor:pointer;
+
+}
+
+.recharts-cartesian-grid line{
+
+stroke:#334155;
+
+}
+
+.recharts-cartesian-axis-tick-value{
+
+fill:#94a3b8;
+
+font-size:13px;
+
+}
+
+.recharts-tooltip-wrapper{
+
+outline:none;
+
 }
 
 @media(max-width:768px){
 
 .chart-header{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:15px;
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:18px;
+
 }
 
 }
