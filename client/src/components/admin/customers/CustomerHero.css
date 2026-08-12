@@ -1,0 +1,43 @@
+.customer-hero {
+  margin-bottom: 25px;
+}
+
+.customer-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 100%;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.customer-card:hover {
+  transform: translateY(-4px);
+}
+
+.customer-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 22px;
+}
+
+.customer-content h6 {
+  margin: 0;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.customer-content h3 {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}

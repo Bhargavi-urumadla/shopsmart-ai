@@ -1,0 +1,42 @@
+.order-hero {
+  margin-bottom: 25px;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+  height: 100%;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+}
+
+.order-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  color: white;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-content h6 {
+  margin: 0;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.order-content h3 {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 700;
+}

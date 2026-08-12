@@ -1,0 +1,30 @@
+.top-categories-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+.top-categories-card h2 {
+  margin-bottom: 20px;
+}
+
+.categories-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.categories-table th,
+.categories-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.categories-table th {
+  background: #f8fafc;
+}
+
+.empty-message {
+  color: #6b7280;
+}

@@ -1,0 +1,25 @@
+.modal-content {
+  border-radius: 12px;
+}
+
+.modal-header {
+  border-bottom: 1px solid #eee;
+}
+
+.modal-footer {
+  border-top: 1px solid #eee;
+}
+
+.form-select {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.btn-primary {
+  background: #2563eb;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}

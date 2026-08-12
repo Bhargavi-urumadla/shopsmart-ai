@@ -1,8 +1,10 @@
-const { generateDashboardInsights } = require("../ai/adminAI");
+const {
+  generateBusinessInsights,
+} = require("../services/adminAIService");
 
 const getDashboardInsights = async (req, res) => {
   try {
-    const insights = await generateDashboardInsights();
+    const insights = await generateBusinessInsights();
 
     return res.status(200).json({
       success: true,
@@ -22,3 +24,4 @@ const getDashboardInsights = async (req, res) => {
 module.exports = {
   getDashboardInsights,
 };
+

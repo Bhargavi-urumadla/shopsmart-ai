@@ -1,0 +1,151 @@
+.inventory-table-container {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Header */
+
+.inventory-table thead {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.inventory-table th {
+  color: #ffffff;
+  padding: 18px 20px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Body */
+
+.inventory-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid #edf2f7;
+  color: #1f2937;
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+.inventory-table tbody tr {
+  transition: all 0.25s ease;
+}
+
+.inventory-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+/* Product */
+
+.inventory-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.inventory-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #2563eb;
+  font-size: 22px;
+}
+
+.inventory-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inventory-product h4 {
+  margin: 0;
+  font-size: 15px;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Status */
+
+.stock-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stock-status.instock {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.stock-status.low {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.stock-status.out {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Update Button */
+
+.update-stock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.update-stock-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* Empty & Loading */
+
+.inventory-loading,
+.no-inventory {
+  text-align: center;
+  padding: 50px;
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .inventory-table-container {
+    overflow-x: auto;
+  }
+
+  .inventory-table {
+    min-width: 950px;
+  }
+}

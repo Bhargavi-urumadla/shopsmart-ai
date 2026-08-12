@@ -5,31 +5,46 @@ const protect = async (req, res, next) => {
   try {
     console.log("\n========== AUTH MIDDLEWARE ==========");
 
-    let token;
+    // Get Authorization header
+    const authHeader = req.headers.authorization;
 
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer ")
-    ) {
-      token = req.headers.authorization.split(" ")[1];
-    }
+    console.log("Authorization Header:", authHeader);
 
-    console.log("Token Received:", token);
-
-    if (!token) {
+    // Check if Authorization header exists
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
         success: false,
         message: "Access denied. No token provided.",
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Extract token
+    const token = authHeader.split(" ")[1];
+
+    // Prevent "Bearer null" or "Bearer undefined"
+    if (
+      !token ||
+      token === "null" ||
+      token === "undefined"
+    ) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid authentication token. Please login again.",
+      });
+    }
+
+    console.log("Token Received:", token);
+
+    // Verify JWT
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
     console.log("Decoded Token:", decoded);
 
+    // Find user
     const user = await User.findById(decoded.id);
-
-    console.log("User From DB:", user);
 
     if (!user) {
       return res.status(401).json({
@@ -38,21 +53,47 @@ const protect = async (req, res, next) => {
       });
     }
 
+    // Check blocked account
+    if (user.isBlocked) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account has been blocked.",
+      });
+    }
+
     req.user = user;
 
-   
+    console.log("Authenticated User:", {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
 
     next();
   } catch (error) {
-    console.log("AUTH ERROR:");
-    console.log(error);
+    console.error("AUTH ERROR:", error);
 
-    return res.status(401).json({
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        message: "Token expired. Please login again.",
+      });
+    }
+
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid authentication token.",
+      });
+    }
+
+    return res.status(500).json({
       success: false,
-      message: "Invalid or expired token.",
-      error: error.message,
+      message: "Authentication failed.",
     });
   }
 };
 
-module.exports = { protect };
+module.exports = {
+  protect,
+};

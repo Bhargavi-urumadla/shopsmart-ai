@@ -42,6 +42,10 @@ requiredEnv.forEach((key) => {
   }
 });
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://shopsmart-ai-murex.vercel.app",
+];
 const app = express();
 
 // ==============================
@@ -55,9 +59,21 @@ connectDB();
 app.use(helmet());
 // console.log("CLIENT_URL =", process.env.CLIENT_URL);
 
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL || "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );

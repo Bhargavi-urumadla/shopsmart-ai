@@ -1,0 +1,36 @@
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.detail-card {
+  background: #f8fafc;
+  padding: 18px;
+  border-radius: 10px;
+}
+
+.detail-card h5 {
+  margin-bottom: 15px;
+  color: #2563eb;
+}
+
+.detail-card p {
+  margin-bottom: 8px;
+}
+
+.summary-box {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.summary-box h4 {
+  color: #10b981;
+  font-weight: 700;
+}
+
+@media (max-width:768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

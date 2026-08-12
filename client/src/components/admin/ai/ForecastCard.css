@@ -1,0 +1,23 @@
+.forecast-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.forecast-card h2 {
+  margin: 0;
+  color: #1f2937;
+}
+
+.forecast-amount {
+  margin: 20px 0;
+  font-size: 40px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.forecast-text {
+  color: #6b7280;
+  line-height: 1.6;
+}
