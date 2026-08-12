@@ -148,15 +148,20 @@ app.use(errorHandler);
 // ==============================
 // Start Server
 // ==============================
+// const PORT = process.env.PORT || 5000;
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`
-========================================
-🚀 ShopSmart AI Backend Started
-🌐 Server   : http://localhost:${PORT}
-❤️ Health   : http://localhost:${PORT}/health
-📦 Environment : ${process.env.NODE_ENV || "development"}
-========================================
-`);
+  console.log(`🚀 ShopSmart AI Backend running on port ${PORT}`);
 });
+// app.listen(PORT, () => {
+//   console.log(`
+// ========================================
+// 🚀 ShopSmart AI Backend Started
+// 🌐 Server   : http://localhost:${PORT}
+// ❤️ Health   : http://localhost:${PORT}/health
+// 📦 Environment : ${process.env.NODE_ENV || "development"}
+// ========================================
+// `);
+// });
