@@ -11,8 +11,7 @@ import { notify } from "../../utils/notify";
 function Navbar() {
   const navigate = useNavigate();
 
-  const [menuOpen, setMenuOpen] =
-    useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const user = JSON.parse(
     localStorage.getItem("user") || "null"
@@ -22,9 +21,7 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    notify.success(
-      "Logged out successfully."
-    );
+    notify.success("Logged out successfully.");
 
     navigate("/login");
   };
@@ -37,33 +34,26 @@ function Navbar() {
     <nav className="navbar">
 
       {/* Logo */}
-
       <div className="logo">
-  <Link to="/" onClick={closeMenu}>
-    <img
-    src="/logo.png"
-      alt="ShopSmart AI"
-      className="logo-image"
-    />
-  </Link>
-</div>
-
+        <Link to="/" onClick={closeMenu}>
+          <img
+            src="/logo.png"
+            alt="ShopSmart AI"
+            className="logo-image"
+          />
+        </Link>
+      </div>
 
       {/* Mobile Menu Button */}
-
       <button
         className="mobile-menu-btn"
-        onClick={() =>
-          setMenuOpen(!menuOpen)
-        }
+        onClick={() => setMenuOpen(!menuOpen)}
         aria-label="Toggle navigation menu"
       >
         {menuOpen ? "✕" : "☰"}
       </button>
 
-
       {/* Navigation */}
-
       <div
         className={
           menuOpen
@@ -74,6 +64,7 @@ function Navbar() {
 
         <ul className="nav-links">
 
+          {/* Home */}
           <li>
             <NavLink
               to="/"
@@ -88,6 +79,7 @@ function Navbar() {
             </NavLink>
           </li>
 
+          {/* Products */}
           <li>
             <NavLink
               to="/products"
@@ -102,6 +94,7 @@ function Navbar() {
             </NavLink>
           </li>
 
+          {/* Wishlist */}
           <li>
             <NavLink
               to="/wishlist"
@@ -112,12 +105,11 @@ function Navbar() {
                   : "nav-link"
               }
             >
-              <span>
-                ❤️ Wishlist
-              </span>
+              ❤️ Wishlist
             </NavLink>
           </li>
 
+          {/* Cart */}
           <li>
             <NavLink
               to="/cart"
@@ -128,12 +120,11 @@ function Navbar() {
                   : "nav-link"
               }
             >
-              <span>
-                🛒 Cart
-              </span>
+              🛒 Cart
             </NavLink>
           </li>
 
+          {/* Orders */}
           <li>
             <NavLink
               to="/orders"
@@ -144,30 +135,46 @@ function Navbar() {
                   : "nav-link"
               }
             >
-              Orders
+              📦 Orders
             </NavLink>
           </li>
-         <li>
-  <NavLink
-    to="/ai-assistant"
-    onClick={closeMenu}
-    className={({ isActive }) =>
-      isActive
-        ? "nav-link ai-link active"
-        : "nav-link ai-link"
-    }
-  >
-    🤖 AI Assistant
-  </NavLink>
-</li>
+
+          {/* Dashboard */}
+          <li>
+            <NavLink
+              to="/dashboard"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link dashboard-link active"
+                  : "nav-link dashboard-link"
+              }
+            >
+              🏠 Dashboard
+            </NavLink>
+          </li>
+
+          {/* AI Assistant */}
+          <li>
+            <NavLink
+              to="/ai-assistant"
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link ai-link active"
+                  : "nav-link ai-link"
+              }
+            >
+              🤖 AI Assistant
+            </NavLink>
+          </li>
 
         </ul>
 
-
         {/* Right Side */}
-
         <div className="nav-right">
 
+          {/* User Info */}
           <div className="user-info">
 
             <div className="user-avatar">
@@ -190,7 +197,7 @@ function Navbar() {
 
           </div>
 
-
+          {/* Logout */}
           <button
             className="logout-btn"
             onClick={handleLogout}

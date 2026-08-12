@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 import Sidebar from "../sidebar/Sidebar";
 import Header from "../header/Header";
+import { logout } from "../../../utils/auth";
 
 import "./AdminLayout.css";
 
@@ -13,12 +14,17 @@ const AdminLayout = () => {
       <div className="background-glow glow-one"></div>
       <div className="background-glow glow-two"></div>
       <div className="background-grid"></div>
+      
 
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content */}
       <div className="admin-main">
+        <button onClick={logout}>
+  Logout
+</button>
+        
         <Header />
 
         <motion.main

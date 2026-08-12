@@ -39,22 +39,28 @@ function Stats() {
       ]);
 
       setStats({
-        products: products.data.count || products.data.data?.length || 0,
+        products:
+          products.data.count ||
+          products.data.data?.length ||
+          0,
+
         wishlist:
           wishlist.data.totalItems ||
           wishlist.data.wishlist?.length ||
           0,
+
         cart:
           cart.data.totalItems ||
           cart.data.cart?.length ||
           0,
+
         orders:
           orders.data.totalOrders ||
           orders.data.orders?.length ||
           0,
       });
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch dashboard stats:", error);
     }
   };
 
@@ -95,26 +101,32 @@ function Stats() {
 
   return (
     <section className="stats-section">
-      <div className="stats-grid">
-        {cards.map((card) => (
-          <Link
-            key={card.title}
-            to={card.link}
-            className={`stats-card ${card.color}`}
-          >
-            <div className="stats-top">
-              <div className="stats-icon">{card.icon}</div>
+      <div className="stats-container">
+        <div className="stats-grid">
+          {cards.map((card) => (
+            <Link
+              key={card.title}
+              to={card.link}
+              className={`stats-card ${card.color}`}
+            >
+              <div className="stats-top">
+                <div className="stats-icon">
+                  {card.icon}
+                </div>
 
-              <FaArrowRight className="arrow-icon" />
-            </div>
+                <FaArrowRight className="arrow-icon" />
+              </div>
 
-            <div className="stats-body">
-              <h3>{card.title}</h3>
-              <h2>{card.count}</h2>
-              <p>{card.subtitle}</p>
-            </div>
-          </Link>
-        ))}
+              <div className="stats-body">
+                <h3>{card.title}</h3>
+
+                <h2>{card.count}</h2>
+
+                <p>{card.subtitle}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

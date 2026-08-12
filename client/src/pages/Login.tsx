@@ -22,54 +22,86 @@ function Login() {
   };
 
   const handleSubmit = async (
-  e: React.FormEvent<HTMLFormElement>
-) => {
-  // VERY IMPORTANT:
-  // Prevent the form from refreshing the browser
-  e.preventDefault();
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    // Prevent the form from refreshing the browser
+    e.preventDefault();
 
-  // Prevent multiple clicks
-  if (loading) return;
+    // Prevent multiple clicks
+    if (loading) return;
 
-  // Start small button loader
-  setLoading(true);
+    // Start loader
+    setLoading(true);
 
-  try {
-    console.log("Login started");
+    try {
+      console.log("Login started");
 
-    const res = await API.post("/auth/login", formData);
+      // ===============================
+      // LOGIN API
+      // ===============================
+      const res = await API.post("/auth/login", formData);
+      console.log("========== LOGIN DEBUG ==========");
+console.log("Login response:", res.data);
+console.log("Logged-in user:", res.data.user);
+console.log("Logged-in email:", res.data.user?.email);
+console.log("Logged-in role:", res.data.user?.role);
+console.log("=================================");
 
-    console.log("Login response:", res.data);
+      console.log("Login response:", res.data);
 
-    // Save JWT token
-    localStorage.setItem("token", res.data.token);
+      // ===============================
+      // SAVE JWT TOKEN
+      // ===============================
+   // Clear previous login first
+localStorage.removeItem("token");
+localStorage.removeItem("user");
 
-    // Save user
-    localStorage.setItem(
-      "user",
-      JSON.stringify(res.data.user)
-    );
+// Save new JWT token
+localStorage.setItem("token", res.data.token);
 
-    console.log(
-      "Token saved:",
-      localStorage.getItem("token")
-    );
+// Save new logged-in user
+localStorage.setItem(
+  "user",
+  JSON.stringify(res.data.user)
+);
 
-    notify.success("Login successful");
+      console.log(
+        "Token saved:",
+        localStorage.getItem("token")
+      );
 
-    // Go to dashboard
-    navigate("/dashboard");
-  } catch (error: any) {
-    console.error("Login error:", error);
+      // ===============================
+      // GET LOGGED-IN USER
+      // ===============================
+      const user = res.data.user;
 
-    notify.error(
-      error.response?.data?.message ||
-        "Something went wrong. Please try again."
-    );
-  } finally {
-    setLoading(false);
-  }
-};;
+      console.log("Authenticated User:", user);
+      console.log("User Role:", user?.role);
+
+      notify.success("Login successful");
+
+      // ===============================
+      // ROLE-BASED REDIRECTION
+      // ===============================
+if (user?.role?.toLowerCase() === "admin") {
+  console.log("Admin login detected");
+  navigate("/admin", { replace: true });
+} else {
+  console.log("Normal user login detected");
+  navigate("/", { replace: true });
+}
+
+    } catch (error: any) {
+      console.error("Login error:", error);
+
+      notify.error(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -82,6 +114,9 @@ function Login() {
 
         <form onSubmit={handleSubmit}>
 
+          {/* ===============================
+              EMAIL
+          =============================== */}
           <div className="input-group">
 
             <label>Email</label>
@@ -97,6 +132,9 @@ function Login() {
 
           </div>
 
+          {/* ===============================
+              PASSWORD
+          =============================== */}
           <div className="input-group">
 
             <label>Password</label>
@@ -112,28 +150,36 @@ function Login() {
 
           </div>
 
+          {/* ===============================
+              LOGIN BUTTON
+          =============================== */}
           <button
-  type="submit"
-  className="login-btn"
-  disabled={loading}
->
-  {loading ? (
-    <Loader
-      size="small"
-      text="Logging in..."
-    />
-  ) : (
-    "Login"
-  )}
-</button>
+            type="submit"
+            className="login-btn"
+            disabled={loading}
+          >
+            {loading ? (
+              <Loader
+                size="small"
+                text="Logging in..."
+              />
+            ) : (
+              "Login"
+            )}
+          </button>
 
         </form>
 
+        {/* ===============================
+            REGISTER
+        =============================== */}
         <div className="bottom-text">
 
           Don't have an account?
 
-          <Link to="/register"> Register</Link>
+          <Link to="/register">
+            {" "}Register
+          </Link>
 
         </div>
 

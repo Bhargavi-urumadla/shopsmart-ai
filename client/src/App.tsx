@@ -1,6 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useEffect } from "react";
+
+// Public/User Pages
 import Landing from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,12 +13,14 @@ import ProductDetails from "./pages/ProductDetails";
 import Wishlist from "./pages/Wishlist";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout/Checkout";
-import Layout from "./components/layout/Layout";
 import AIAssistant from "./pages/AIAssistant";
-import { useEffect } from "react";
 import OrderSuccess from "./pages/OrderSuccess/OrderSuccess";
 import Orders from "./pages/Orders/Orders";
-import OrderDetails from "./pages/OrderDetails/OrderDetails"; 
+import OrderDetails from "./pages/OrderDetails/OrderDetails";
+
+// User Layout
+import Layout from "./components/layout/Layout";
+
 // Admin Layout
 import AdminLayout from "./components/admin/layout/AdminLayout";
 
@@ -31,6 +36,9 @@ import AIInsights from "./pages/admin/AIInsights";
 import Settings from "./pages/admin/Settings";
 import Profile from "./pages/admin/Profile";
 
+// Admin Route Protection
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+
 function App() {
   useEffect(() => {
     AOS.init({
@@ -40,114 +48,169 @@ function App() {
       offset: 100,
     });
   }, []);
+
   return (
     <Routes>
-      {/* Public Routes - No Navbar */}
+      {/* =====================================================
+          PUBLIC ROUTES
+      ===================================================== */}
+
       <Route path="/login" element={<Login />} />
+
       <Route path="/register" element={<Register />} />
 
+      {/* =====================================================
+          ADMIN ROUTES
+          
+          ProtectedAdminRoute checks:
+          - token exists
+          - user exists
+          - user.role === "admin"
+      ===================================================== */}
 
-      {/* ================= ADMIN ROUTES ================= */}
+      <Route element={<ProtectedAdminRoute />}>
+        <Route path="/admin" element={<AdminLayout />}>
 
-<Route path="/admin" element={<AdminLayout />}>
-  <Route index element={<DashboardAdmin />} />
+          {/* Admin Dashboard */}
+          <Route
+            index
+            element={<DashboardAdmin />}
+          />
 
-  <Route
-    path="products"
-    element={<ProductsAdmin />}
-  />
+          {/* Admin Products */}
+          <Route
+            path="products"
+            element={<ProductsAdmin />}
+          />
 
-  <Route
-    path="orders"
-    element={<OrdersAdmin />}
-  />
+          {/* Admin Orders */}
+          <Route
+            path="orders"
+            element={<OrdersAdmin />}
+          />
 
-  <Route
-    path="customers"
-    element={<Customers />}
-  />
+          {/* Admin Customers */}
+          <Route
+            path="customers"
+            element={<Customers />}
+          />
 
-  <Route
-    path="categories"
-    element={<Categories />}
-  />
+          {/* Admin Categories */}
+          <Route
+            path="categories"
+            element={<Categories />}
+          />
 
-  <Route
-    path="inventory"
-    element={<Inventory />}
-  />
+          {/* Admin Inventory */}
+          <Route
+            path="inventory"
+            element={<Inventory />}
+          />
 
-  <Route
-    path="analytics"
-    element={<Analytics />}
-  />
+          {/* Admin Analytics */}
+          <Route
+            path="analytics"
+            element={<Analytics />}
+          />
 
-  <Route
-    path="ai-insights"
-    element={<AIInsights />}
-  />
+          {/* Admin AI Insights */}
+          <Route
+            path="ai-insights"
+            element={<AIInsights />}
+          />
 
-  <Route
-    path="settings"
-    element={<Settings />}
-  />
+          {/* Admin Settings */}
+          <Route
+            path="settings"
+            element={<Settings />}
+          />
 
-  <Route
-    path="profile"
-    element={<Profile />}
-  />
-</Route>
+          {/* Admin Profile */}
+          <Route
+            path="profile"
+            element={<Profile />}
+          />
 
-      {/* Shared Layout - Navbar appears on all routes below */}
+        </Route>
+      </Route>
+
+      {/* =====================================================
+          USER ROUTES
+          
+          Normal logged-in users use this layout.
+      ===================================================== */}
+
       <Route element={<Layout />}>
-        <Route path="/" element={<Landing />} />
 
+        {/* Home */}
         <Route
-  path="/orders/:id"
-  element={<OrderDetails />}
-/>
+          path="/"
+          element={<Landing />}
+        />
 
+        {/* User Dashboard */}
         <Route
           path="/dashboard"
           element={<Dashboard />}
         />
 
+        {/* Products */}
         <Route
           path="/products"
           element={<Products />}
         />
 
+        {/* Product Details */}
         <Route
           path="/products/:id"
           element={<ProductDetails />}
         />
 
+        {/* Wishlist */}
         <Route
           path="/wishlist"
           element={<Wishlist />}
         />
 
+        {/* Cart */}
         <Route
           path="/cart"
           element={<Cart />}
         />
+
+        {/* Orders */}
+        <Route
+          path="/orders"
+          element={<Orders />}
+        />
+
+        {/* Order Details */}
+        <Route
+          path="/orders/:id"
+          element={<OrderDetails />}
+        />
+
       </Route>
-      <Route path="/checkout" element={<Checkout />} />
 
-<Route
-  path="/order-success"
-  element={<OrderSuccess />}
-/>
-
-<Route
-  path="/orders"
-  element={<Orders />}
-/>
+      {/* =====================================================
+          OTHER USER ROUTES
+      ===================================================== */}
 
       <Route
-  path="/ai-assistant"
-  element={<AIAssistant />}
-/>
+        path="/checkout"
+        element={<Checkout />}
+      />
+
+      <Route
+        path="/order-success"
+        element={<OrderSuccess />}
+      />
+
+      <Route
+        path="/ai-assistant"
+        element={<AIAssistant />}
+      />
+
     </Routes>
   );
 }

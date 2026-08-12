@@ -1,4 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import {
+  FaBoxOpen,
+  FaCalendarAlt,
+  FaCreditCard,
+  FaArrowRight,
+} from "react-icons/fa";
 import "./OrderCard.css";
 
 interface Product {
@@ -23,37 +29,118 @@ interface Props {
 }
 
 function OrderCard({ order }: Props) {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const statusClass = order.status
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+
+  const formattedDate = new Date(
+    order.createdAt
+  ).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
   return (
-    <div className="order-card">
-      <h3>📦 Order</h3>
+    <article className="order-card">
+      {/* Top section */}
+      <div className="order-card-top">
+        <div className="order-id-section">
+          <div className="order-icon">
+            <FaBoxOpen />
+          </div>
 
-      <p>
-        <strong>Date:</strong>{" "}
-        {new Date(order.createdAt).toLocaleDateString()}
-      </p>
+          <div>
+            <span className="order-label">
+              ORDER
+            </span>
 
-      <p>
-        <strong>Status:</strong> {order.status}
-      </p>
+            <h3>
+              #{order._id.slice(-8).toUpperCase()}
+            </h3>
+          </div>
+        </div>
 
-      <p>
-        <strong>Payment:</strong> {order.paymentMethod}
-      </p>
+        <span
+          className={`order-status ${statusClass}`}
+        >
+          <span className="status-dot"></span>
+          {order.status}
+        </span>
+      </div>
 
-      <p>
-        <strong>Products:</strong> {order.products.length}
-      </p>
+      {/* Divider */}
+      <div className="order-divider"></div>
 
-     ₹ {order.totalAmount.toLocaleString("en-IN")}
+      {/* Order information */}
+      <div className="order-info-grid">
+        <div className="order-info-item">
+          <div className="info-icon">
+            <FaCalendarAlt />
+          </div>
 
-      <button
-  onClick={() => navigate(`/orders/${order._id}`)}
->
-  View Details
-</button>
-    </div>
+          <div>
+            <span>Date</span>
+            <strong>{formattedDate}</strong>
+          </div>
+        </div>
+
+        <div className="order-info-item">
+          <div className="info-icon">
+            <FaCreditCard />
+          </div>
+
+          <div>
+            <span>Payment</span>
+            <strong>
+              {order.paymentMethod}
+            </strong>
+          </div>
+        </div>
+
+        <div className="order-info-item">
+          <div className="info-icon">
+            <FaBoxOpen />
+          </div>
+
+          <div>
+            <span>Products</span>
+            <strong>
+              {order.products.length}{" "}
+              {order.products.length === 1
+                ? "Item"
+                : "Items"}
+            </strong>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom section */}
+      <div className="order-card-bottom">
+        <div className="order-total">
+          <span>Total Amount</span>
+
+          <strong>
+            ₹{" "}
+            {order.totalAmount.toLocaleString(
+              "en-IN"
+            )}
+          </strong>
+        </div>
+
+        <button
+          className="view-order-btn"
+          onClick={() =>
+            navigate(`/orders/${order._id}`)
+          }
+        >
+          View Details
+          <FaArrowRight />
+        </button>
+      </div>
+    </article>
   );
 }
 

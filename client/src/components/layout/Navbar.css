@@ -1,7 +1,13 @@
 /* ===========================
    NAVBAR
 =========================== */
+.dashboard-link {
+  font-weight: 600;
+}
 
+.dashboard-link.active {
+  transform: translateY(-1px);
+}
 .navbar{
     position:sticky;
     top:0;
