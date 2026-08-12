@@ -1,37 +1,30 @@
 import "./OrderDetailsModal.css";
 import { Modal, Button, Table } from "react-bootstrap";
 
-interface Product {
-  product?: {
-    name?: string;
-    image?: string;
-  };
-  quantity: number;
-  price: number;
-}
+import type { Order } from "../../../types/admin";
 
-interface Order {
-  _id: string;
-  user?: {
-    name?: string;
-    email?: string;
-  };
-  products: Product[];
-  totalAmount: number;
-  paymentMethod: string;
-  paymentStatus: string;
-  status: string;
-  shippingAddress?: {
-    fullName: string;
-    phone: string;
-    address: string;
-    city: string;
-    state: string;
-    pincode: string;
-    country: string;
-  };
-  createdAt: string;
-}
+// interface Order {
+//   _id: string;
+//   user?: {
+//     name?: string;
+//     email?: string;
+//   };
+//   products: Product[];
+//   totalAmount: number;
+//   paymentMethod: string;
+//   paymentStatus: string;
+//   status: string;
+//   shippingAddress?: {
+//     fullName: string;
+//     phone: string;
+//     address: string;
+//     city: string;
+//     state: string;
+//     pincode: string;
+//     country: string;
+//   };
+//   createdAt: string;
+// }
 
 interface Props {
   show: boolean;

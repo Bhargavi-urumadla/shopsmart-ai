@@ -6,21 +6,22 @@ import {
   FaTrash,
 } from "react-icons/fa";
 
-interface Order {
-  _id: string;
-  user?: {
-    name?: string;
-    email?: string;
-  };
-  shippingAddress?: {
-    fullName?: string;
-  };
-  totalAmount: number;
-  paymentMethod: string;
-  paymentStatus: string;
-  status: string;
-  createdAt: string;
-}
+// interface Order {
+//   _id: string;
+//   user?: {
+//     name?: string;
+//     email?: string;
+//   };
+//   shippingAddress?: {
+//     fullName?: string;
+//   };
+//   totalAmount: number;
+//   paymentMethod: string;
+//   paymentStatus: string;
+//   status: string;
+//   createdAt: string;
+// }
+import type { Order } from "../../../types/admin";
 
 interface Props {
   orders: Order[];
@@ -59,7 +60,7 @@ const OrderTable = ({
             <th>Payment Status</th>
             <th>Status</th>
             <th>Date</th>
-            <th width="180">Actions</th>
+            <th style={{ width: "180px" }}>Actions</th>
           </tr>
         </thead>
 

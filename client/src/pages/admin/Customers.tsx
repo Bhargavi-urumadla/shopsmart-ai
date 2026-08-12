@@ -13,16 +13,17 @@ import {
   toggleBlockCustomer,
 } from "../../services/customerService";
 
-interface Customer {
-  _id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  isBlocked: boolean;
-  createdAt: string;
-  orders?: number;
-  totalSpent?: number;
-}
+// interface Customer {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   phone?: string;
+//   isBlocked: boolean;
+//   createdAt: string;
+//   orders?: number;
+//   totalSpent?: number;
+// }
+import type { Customer } from "../../types/admin";
 
 const Customers = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
