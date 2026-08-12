@@ -22,14 +22,12 @@ import {
   FaCrown,
   FaTruck,
   FaShieldAlt,
-  FaClock,
-  FaFire,
-  FaTags,
+  
+  
   FaChevronRight,
 } from "react-icons/fa";
 import {
-  MdCategory,
-  MdLocalOffer,
+  
   MdTrendingUp,
   MdFavorite,
 } from "react-icons/md";
