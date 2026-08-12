@@ -8,15 +8,16 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 
-interface Customer {
-  _id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  isBlocked: boolean;
-  orders?: number;
-  totalSpent?: number;
-}
+// interface Customer {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   phone?: string;
+//   isBlocked: boolean;
+//   orders?: number;
+//   totalSpent?: number;
+// }
+import type { Customer } from "../../../types/admin";
 
 interface Props {
   customers: Customer[];
@@ -54,7 +55,7 @@ const CustomerTable = ({
             <th>Orders</th>
             <th>Total Spent</th>
             <th>Status</th>
-            <th width="180">Actions</th>
+            <th style={{ width: "180px" }}>Actions</th>
           </tr>
         </thead>
 

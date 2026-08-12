@@ -14,9 +14,9 @@ function Dashboard() {
       sidebar={<Sidebar />}
       hero={<Hero />}
       quickActions={<QuickActions />}
-      stats={<StatsCards />}
+      stats={<StatsCards data={null} />}
       profile={<ProfileCard />}
-      recentOrders={<RecentOrders />}
+      recentOrders={<RecentOrders orders={[]} />}
       offerBanner={<OfferBanner />} header={undefined}    />
   );
 }

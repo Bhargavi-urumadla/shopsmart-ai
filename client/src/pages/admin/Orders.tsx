@@ -11,17 +11,18 @@ import {
   deleteOrder,
 } from "../../services/adminOrderService";
 
-interface Order {
-  _id: string;
-  user: any;
-  products: any[];
-  totalAmount: number;
-  paymentMethod: string;
-  paymentStatus: string;
-  status: string;
-  shippingAddress: any;
-  createdAt: string;
-}
+// interface Order {
+//   _id: string;
+//   user: any;
+//   products: any[];
+//   totalAmount: number;
+//   paymentMethod: string;
+//   paymentStatus: string;
+//   status: string;
+//   shippingAddress: any;
+//   createdAt: string;
+// }
+import type { Order } from "../../types/admin";
 
 const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([]);

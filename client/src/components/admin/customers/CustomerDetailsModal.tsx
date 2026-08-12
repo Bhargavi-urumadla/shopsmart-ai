@@ -1,23 +1,23 @@
 import "./CustomerDetailsModal.css";
 
-interface Customer {
-  _id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  isBlocked: boolean;
-  createdAt: string;
-  orders?: number;
-  totalSpent?: number;
-  address?: {
-    street?: string;
-    city?: string;
-    state?: string;
-    country?: string;
-    pincode?: string;
-  };
-}
-
+// interface Customer {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   phone?: string;
+//   isBlocked: boolean;
+//   createdAt: string;
+//   orders?: number;
+//   totalSpent?: number;
+//   address?: {
+//     street?: string;
+//     city?: string;
+//     state?: string;
+//     country?: string;
+//     pincode?: string;
+//   };
+// }
+import type { Customer } from "../../../types/admin";
 interface Props {
   show: boolean;
   customer: Customer | null;

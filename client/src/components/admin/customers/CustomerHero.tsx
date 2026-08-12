@@ -7,12 +7,12 @@ import {
   FaRupeeSign,
 } from "react-icons/fa";
 
-interface Customer {
-  _id: string;
-  isBlocked: boolean;
-  totalSpent?: number;
-}
-
+// interface Customer {
+//   _id: string;
+//   isBlocked: boolean;
+//   totalSpent?: number;
+// }
+import type { Customer } from "../../../types/admin";
 interface Props {
   customers: Customer[];
 }

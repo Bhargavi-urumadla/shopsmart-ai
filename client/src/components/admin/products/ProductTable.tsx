@@ -1,7 +1,7 @@
 import "./ProductTable.css";
 import {
   FiEdit2,
-  FiTrash2,
+
   FiStar,
   FiTrash,
 } from "react-icons/fi";
