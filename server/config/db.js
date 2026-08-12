@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const User = require("../models/User");
 
 const connectDB = async () => {
   try {
@@ -10,22 +9,11 @@ const connectDB = async () => {
     console.log("Database   :", conn.connection.name);
     console.log("========================================");
 
-    const users = await User.find({}, {
-      name: 1,
-      email: 1,
-      role: 1,
-    }).lean();
-
-   
-    
-
-    const admin = await User.findOne({
-      email: "admin@gmail.com",
-    }).lean();
-
-    
+    return conn;
   } catch (error) {
-    console.error(error);
+    console.error("❌ MongoDB Connection Error:");
+    console.error(error.message);
+
     process.exit(1);
   }
 };
