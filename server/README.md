@@ -1,173 +1,413 @@
-# 🛍️ ShopSmart AI Backend
+# 🛍️ ShopSmart AI — Backend
 
-> 🚀 An AI-Powered E-Commerce REST API built with **Node.js**, **Express.js**, **MongoDB Atlas**, **JWT Authentication**, and **Groq Llama 3.3**. It provides secure authentication, product management, shopping cart, wishlist, order management, AI shopping assistance, inventory management, sales analytics, and admin dashboards.
+> 🚀 AI-powered e-commerce REST API built with Node.js, Express.js,
+> MongoDB Atlas, JWT Authentication, and Groq AI.
 
-![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![Express.js](https://img.shields.io/badge/Express.js-Backend-black)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
-![JWT](https://img.shields.io/badge/Auth-JWT-blue)
-![Swagger](https://img.shields.io/badge/API-Swagger-success)
-![Groq AI](https://img.shields.io/badge/AI-Groq%20Llama%203.3-orange)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+The ShopSmart AI backend provides secure REST APIs for authentication,
+products, wishlist, cart, orders, inventory, customer management,
+sales analytics, and AI-powered shopping assistance.
+
+It also provides protected administrator APIs for managing the
+e-commerce platform.
 
 ---
 
 # 📖 Overview
 
-ShopSmart AI is a modern AI-powered e-commerce backend designed using RESTful architecture. It provides secure authentication, product management, shopping cart, wishlist, order processing, inventory management, sales analytics, customer management, and AI-powered shopping recommendations.
+The ShopSmart AI backend follows a modular REST API architecture.
 
-The platform also includes an **Admin Dashboard** with business insights, inventory tracking, customer management, and sales analytics.
+It is responsible for:
+
+- User authentication
+- JWT-based authorization
+- Role-based access control
+- Product management
+- Wishlist management
+- Shopping cart management
+- Order processing
+- Inventory management
+- Customer management
+- Sales analytics
+- AI shopping assistance
+- Administrative AI functionality
+
+The backend communicates with the React frontend through REST APIs
+and uses MongoDB Atlas as the production database.
 
 ---
 
 # ✨ Features
 
-## 👤 Authentication
+## 🔐 Authentication & Authorization
 
-- User Registration
-- User Login
-- JWT Authentication
-- Role-Based Authorization
-- Password Hashing (bcryptjs)
-- Protected Routes
+- User registration
+- User login
+- JWT authentication
+- Role-based authorization
+- Password hashing with bcryptjs
+- Protected routes
+- Admin-only routes
+
+### Authentication Flow
+
+```text
+Client
+  │
+  ▼
+Register / Login
+  │
+  ▼
+Express Authentication API
+  │
+  ▼
+Validate Credentials
+  │
+  ▼
+MongoDB
+  │
+  ▼
+JWT Token
+  │
+  ▼
+Authenticated Request
+  │
+  ▼
+JWT Middleware
+  │
+  ▼
+Role Authorization
+  │
+  ├───────────────┐
+  ▼               ▼
+Customer         Admin
+  │               │
+  ▼               ▼
+Customer APIs    Admin APIs
+```
+
+Authentication verifies **who the user is**, while authorization
+determines **what the user is allowed to access**.
 
 ---
 
-## 🛍 Product Management
+# 🛍️ Product Management
 
-- Add Product
-- Update Product
-- Delete Product
-- Get Product Details
-- Product Search
-- Featured Products
-- Product Filtering
-- Product Sorting
+- Create products
+- Update products
+- Delete products
+- Get product details
+- Product search
+- Featured products
+- Product filtering
+- Product sorting
 - Pagination
 
 ---
 
-## 🛒 Shopping Cart
+# 🛒 Shopping Cart
 
-- Add to Cart
-- Update Cart Quantity
-- Remove from Cart
-- View Cart
-- Clear Cart
-
----
-
-## ❤️ Wishlist
-
-- Add to Wishlist
-- Remove from Wishlist
-- View Wishlist
+- Add products to cart
+- Update cart quantity
+- Remove cart items
+- View cart
+- Clear cart
 
 ---
 
-## 📦 Order Management
+# ❤️ Wishlist
 
-- Place Order
-- View Order History
-- Get Order Details
-- Cancel Order
-- Admin Order Management
-- Update Order Status
-- Delete Orders
+- Add products to wishlist
+- Remove products from wishlist
+- View wishlist
 
 ---
 
-## 🤖 AI Shopping Assistant
+# 📦 Order Management
 
-- Product Recommendations
-- Product Comparison
-- Smart Shopping Suggestions
-- Personalized Responses
-- AI-powered Customer Assistance
+### Customer
 
-**Powered by Groq Llama 3.3**
+- Place orders
+- View order history
+- View order details
+- Cancel orders
+- Track order status
 
----
+### Administrator
 
-## 📊 Inventory Management
-
-- Inventory Overview
-- Low Stock Products
-- Out of Stock Products
-- Update Product Stock
-- Restock Products
-- Inventory History
+- View all orders
+- View order details
+- Update order status
+- Delete orders
 
 ---
 
-## 📈 Sales Analytics
+# 🤖 AI Shopping Assistant
 
-- Sales Overview
-- Revenue Analytics
-- Monthly Sales Report
-- Top Selling Products
-- Top Categories
+ShopSmart AI integrates Groq AI through an OpenAI-compatible client.
 
----
+The AI service supports:
 
-## 👥 Customer Management
+- Product recommendations
+- Product comparison
+- Shopping assistance
+- Product-related questions
+- Shopping suggestions
 
-- View Customers
-- Customer Details
-- Block / Unblock Customers
-- Delete Customers
+### AI Architecture
 
----
-
-## 🧠 Admin AI Dashboard
-
-- AI Business Insights
-- Revenue Trends
-- Sales Analysis
-- Low Stock Alerts
-- Smart Recommendations
-
----
-
-## 📖 API Documentation
-
-Interactive API documentation powered by Swagger UI.
-
+```text
+React Frontend
+      │
+      ▼
+POST /api/ai
+      │
+      ▼
+Express Backend
+      │
+      ▼
+AI Service
+      │
+      ▼
+Groq API
+      │
+      ▼
+AI Response
+      │
+      ▼
+React Frontend
 ```
+
+The Groq API key is stored only on the backend and is never exposed
+to the frontend.
+
+---
+
+# 📊 Inventory Management
+
+- Inventory overview
+- Low-stock products
+- Out-of-stock products
+- Update product stock
+- Restock products
+- Inventory information
+
+---
+
+# 📈 Sales Analytics
+
+The backend provides APIs supporting administrative sales information,
+including:
+
+- Sales overview
+- Revenue information
+- Monthly sales information
+- Top-selling products
+- Top categories
+
+---
+
+# 👥 Customer Management
+
+Administrators can manage customer information through protected APIs.
+
+- View customers
+- View customer details
+- Block / unblock customers
+- Delete customers
+
+---
+
+# 🧠 Admin AI
+
+The backend also supports administrative AI functionality for
+business-related insights.
+
+Examples include:
+
+- Business insights
+- Sales analysis
+- Revenue-related insights
+- Inventory-related insights
+- Smart recommendations
+
+---
+
+# 🏗️ Backend Architecture
+
+```text
+                    React Frontend
+                           │
+                           │ HTTPS / REST API
+                           ▼
+                    Express.js Server
+                           │
+              ┌────────────┴────────────┐
+              │                         │
+              ▼                         ▼
+        Authentication              API Routes
+        & Authorization                  │
+                                        ▼
+                                  Controllers
+                                        │
+                                        ▼
+                                    Services
+                                        │
+                                        ▼
+                                     Models
+                                        │
+                                        ▼
+                                  MongoDB Atlas
+
+                         AI Service
+                              │
+                              ▼
+                           Groq API
+```
+
+---
+
+# 🔄 API Request Flow
+
+```text
+Frontend
+   │
+   │ HTTP Request
+   ▼
+Express Router
+   │
+   ▼
+Authentication Middleware
+   │
+   ▼
+Authorization Middleware
+   │
+   ▼
+Controller
+   │
+   ▼
+Service / Business Logic
+   │
+   ▼
+Mongoose Model
+   │
+   ▼
+MongoDB Atlas
+   │
+   ▼
+JSON Response
+   │
+   ▼
+Frontend
+```
+
+This architecture separates routing, authentication,
+business logic, database access, and response handling.
+
+---
+
+# 🛡️ Middleware & Security
+
+The backend uses several middleware components for security,
+performance, and request processing.
+
+### Security
+
+- Helmet
+- CORS
+- JWT authentication
+- Role-based authorization
+- Password hashing
+- Rate limiting
+- Input validation
+
+### Performance
+
+- Compression
+
+### Development & Logging
+
+- Morgan
+- Nodemon
+
+### Error Handling
+
+- Centralized error-handling middleware
+- Custom 404 handling
+
+---
+
+# 🌐 CORS Configuration
+
+The backend uses CORS to control which frontend applications
+can communicate with the API.
+
+Allowed frontend environments include:
+
+```text
+http://localhost:5173
+http://localhost:5174
+https://shopsmart-ai-murex.vercel.app
+```
+
+The production frontend communicates with the deployed backend
+over HTTPS.
+
+```text
+Vercel
+   │
+   │ HTTPS
+   ▼
+Render Backend
+   │
+   ▼
+REST APIs
+```
+
+---
+
+# 🔌 API Modules
+
+| Module | Endpoint |
+|---|---|
+| Authentication | `/api/auth` |
+| Products | `/api/products` |
+| Wishlist | `/api/wishlist` |
+| Cart | `/api/cart` |
+| Orders | `/api/orders` |
+| AI Assistant | `/api/ai` |
+| Admin AI | `/api/admin-ai` |
+| Inventory | `/api/inventory` |
+| Sales | `/api/admin/sales` |
+| Customers | `/api/admin/customers` |
+| Admin Orders | `/api/admin/orders` |
+| Health Check | `/health` |
+| Swagger Documentation | `/api-docs` |
+
+---
+
+# 📖 Swagger API Documentation
+
+The backend includes interactive API documentation using Swagger UI.
+
+### Local
+
+```text
 http://localhost:5000/api-docs
 ```
 
----
+### Features
 
-# 🏗️ Architecture
-
-```
-Client
-    │
-    ▼
-Routes
-    │
-Controllers
-    │
-Services
-    │
-Models
-    │
-MongoDB Atlas
-```
-
-### Middleware
-
-- JWT Authentication
-- Admin Authorization
-- Validation
-- Error Handling
+- Interactive API documentation
+- API endpoint descriptions
+- Request and response documentation
+- API testing from the browser
+- Authentication support where configured
 
 ---
 
-# 🛠 Tech Stack
+# 🛠️ Technology Stack
 
-## Backend
+## Runtime & Framework
 
 - Node.js
 - Express.js
@@ -179,18 +419,14 @@ MongoDB Atlas
 
 ## Authentication
 
-- JWT
+- JSON Web Tokens (JWT)
 - bcryptjs
 
 ## AI
 
 - Groq API
-- Llama 3.3
-
-## API Documentation
-
-- Swagger UI
-- Swagger JSDoc
+- OpenAI-compatible client
+- Llama 3.3 model
 
 ## Validation
 
@@ -201,7 +437,20 @@ MongoDB Atlas
 - Helmet
 - CORS
 - express-rate-limit
+
+## Performance
+
 - Compression
+
+## Logging
+
+- Morgan
+
+## API Documentation
+
+- Swagger UI
+- swagger-ui-express
+- Swagger configuration
 
 ## Development
 
@@ -211,53 +460,56 @@ MongoDB Atlas
 
 # 📂 Project Structure
 
-```
-ShopSmart-AI
+```text
+server/
 │
-├── config
+├── ai/
+│
+├── config/
 │   ├── db.js
 │   └── swagger.js
 │
-├── controllers
+├── controllers/
 │
-├── middleware
+├── middleware/
 │
-├── models
+├── models/
 │
-├── routes
+├── routes/
 │
-├── services
+├── services/
+│   └── aiService.js
 │
-├── validators
+├── utils/
 │
-├── utils
+├── validators/
 │
 ├── server.js
-│
 ├── package.json
-│
-├── .env.example
-│
+├── package-lock.json
+├── .env
 └── README.md
 ```
+
+> `.env` is excluded from Git and should never be committed.
 
 ---
 
 # 🚀 Installation
 
-## Clone Repository
+Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/shopsmart-ai.git
+git clone https://github.com/Bhargavi-urumadla/shopsmart-ai.git
 ```
+
+Navigate to the backend:
 
 ```bash
-cd shopsmart-ai
+cd shopsmart-ai/server
 ```
 
----
-
-## Install Dependencies
+Install dependencies:
 
 ```bash
 npm install
@@ -265,233 +517,196 @@ npm install
 
 ---
 
-## Configure Environment Variables
+# 🔑 Environment Variables
 
-Create a `.env` file.
+Create a `.env` file inside the `server` directory.
 
 ```env
 PORT=5000
 
-MONGO_URI=your_mongodb_connection_string
+MONGODB_URI=your_mongodb_connection_string
 
 JWT_SECRET=your_jwt_secret
 
 GROQ_API_KEY=your_groq_api_key
 
 NODE_ENV=development
+
+CLIENT_URL=http://localhost:5173
 ```
+
+For production, configure the corresponding environment variables
+in the deployment platform.
+
+### ⚠️ Never commit secrets
+
+Never commit:
+
+```text
+.env
+```
+
+Never expose:
+
+```text
+MONGODB_URI
+JWT_SECRET
+GROQ_API_KEY
+```
+
+in frontend source code, GitHub, screenshots, or README files.
 
 ---
 
-## Run Development Server
+# ▶️ Run Locally
+
+Start the backend in development mode:
 
 ```bash
 npm run dev
 ```
 
+Or start normally:
+
+```bash
+npm start
+```
+
 Backend:
 
-```
+```text
 http://localhost:5000
+```
+
+Health check:
+
+```text
+http://localhost:5000/health
 ```
 
 Swagger:
 
-```
+```text
 http://localhost:5000/api-docs
 ```
 
 ---
 
-# 📡 API Modules
+# ❤️ Health Check
 
-## 🔐 Authentication
+The backend exposes a health-check endpoint:
 
-- Register User
-- Login User
-- Get User Profile
-
----
-
-## 🛍 Products
-
-- Create Product
-- Get Products
-- Get Product By ID
-- Update Product
-- Delete Product
-- Featured Products
-- Search Products
-
----
-
-## 🛒 Cart
-
-- Add Item
-- View Cart
-- Update Quantity
-- Remove Item
-- Clear Cart
-
----
-
-## ❤️ Wishlist
-
-- Add Item
-- Remove Item
-- View Wishlist
-
----
-
-## 📦 Orders
-
-- Place Order
-- Order History
-- Order Details
-- Cancel Order
-
----
-
-## 🤖 AI Assistant
-
-- AI Shopping Chat
-- Product Recommendations
-
----
-
-## 📊 Inventory
-
-- Inventory Overview
-- Low Stock
-- Out of Stock
-- Update Stock
-- Restock Products
-- Inventory History
-
----
-
-## 📈 Sales Analytics
-
-- Sales Overview
-- Revenue Report
-- Monthly Sales
-- Top Products
-- Top Categories
-
----
-
-## 👥 Customer Management
-
-- Get Customers
-- Customer Details
-- Block / Unblock Customer
-- Delete Customer
-
----
-
-## 📦 Admin Order Management
-
-- View All Orders
-- Order Details
-- Update Order Status
-- Delete Orders
-
----
-
-## 🧠 Admin AI
-
-- AI Dashboard Insights
-
----
-
-# 🔒 Security Features
-
-- JWT Authentication
-- Role-Based Authorization
-- Password Hashing (bcryptjs)
-- Protected Routes
-- Helmet Security
-- CORS
-- Rate Limiting
-- Input Validation
-- Centralized Error Handling
-
----
-
-# 📖 API Documentation
-
-Swagger UI:
-
-```
-http://localhost:5000/api-docs
+```http
+GET /health
 ```
 
-Features:
+Example response:
 
-- Interactive Documentation
-- JWT Authorization Support
-- Request & Response Models
-- API Testing from Browser
+```json
+{
+  "success": true,
+  "message": "ShopSmart AI Backend is healthy",
+  "environment": "development"
+}
+```
+
+This endpoint can be used to verify that the backend is running
+correctly after deployment.
 
 ---
 
-# 🌐 Deployment
+# 🌍 Deployment
+
+## Frontend
+
+The frontend is deployed on:
+
+**Vercel**
+
+```text
+https://shopsmart-ai-murex.vercel.app
+```
 
 ## Backend
 
-Render
+The backend is deployed on:
+
+**Render**
+
+```text
+https://shopsmart-ai-vqjp.onrender.com
+```
+
+## Production Health Check
+
+```text
+https://shopsmart-ai-vqjp.onrender.com/health
+```
 
 ## Database
 
-MongoDB Atlas
+Production database:
 
-## Environment Variables
+**MongoDB Atlas**
 
-```
-PORT
+## AI Service
 
-MONGO_URI
+Production AI integration:
 
-JWT_SECRET
-
-GROQ_API_KEY
-
-NODE_ENV
-```
+**Groq API**
 
 ---
 
-# 📷 Screenshots
+# 🧪 Backend Verification
 
-## Swagger UI
+Before deploying backend changes, verify:
 
-> Add Screenshot
+### Local
+
+- [ ] MongoDB connection succeeds
+- [ ] Server starts successfully
+- [ ] `/health` returns HTTP 200
+- [ ] Swagger loads
+- [ ] User registration works
+- [ ] User login works
+- [ ] Admin login works
+- [ ] Customer authorization works
+- [ ] Admin authorization works
+- [ ] Product APIs work
+- [ ] Cart APIs work
+- [ ] Wishlist APIs work
+- [Order APIs work
+- [AI API works
+
+### Production
+
+- [ ] Render deployment succeeds
+- [ ] MongoDB Atlas connection succeeds
+- [ ] `/health` returns HTTP 200
+- [ ] Vercel frontend can access backend APIs
+- [ ] CORS works correctly
+- [ ] Customer login works
+- [ ] Admin login works
+- [ ] Role-based authorization works
+- [ ] AI functionality works
+- [ ] No secrets are exposed
 
 ---
 
-## Postman Collection
+# 🔮 Future Enhancements
 
-> Add Screenshot
+Potential future improvements include:
 
----
-
-## MongoDB Atlas
-
-> Add Screenshot
-
----
-
-# 🚀 Future Enhancements
-
-- Stripe / Razorpay Payment Integration
-- Product Reviews & Ratings
-- Cloudinary Image Upload
-- Email Notifications
-- AI Recommendation Improvements
-- Docker Support
-- Unit & Integration Testing
-- CI/CD Pipeline
-- Redis Caching
+- Payment integration
+- Product reviews and ratings
+- Cloud image storage
+- Email notifications
+- Advanced AI recommendations
+- Automated testing
+- Docker support
+- CI/CD pipeline
+- Redis caching
+- Application monitoring
 
 ---
 
@@ -499,9 +714,9 @@ NODE_ENV
 
 **Bhargavi Urumadla**
 
-MCA Graduate | Full Stack Developer
+MCA Graduate | Full-Stack Developer
 
-### Tech Stack
+### Technologies
 
 - React.js
 - TypeScript
@@ -512,36 +727,33 @@ MCA Graduate | Full Stack Developer
 - REST APIs
 - AI Integration
 
-### Connect
+### GitHub
 
-**GitHub**
-
-```
-https://github.com/your-github-username
-```
-
-**LinkedIn**
-
-```
-https://linkedin.com/in/your-linkedin-profile
-```
+https://github.com/Bhargavi-urumadla
 
 ---
 
 # 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome.
+This project is primarily maintained as a portfolio project.
 
-Feel free to fork this repository and submit a pull request.
+Suggestions, issues, and improvements are welcome.
 
 ---
 
 # ⭐ Support
 
-If you found this project helpful, please consider giving it a ⭐ on GitHub.
+If you find the project useful, consider giving the repository
+a ⭐ on GitHub.
 
 ---
 
-# 📄 License
+## 📚 Related Documentation
 
-This project is licensed under the **MIT License**.
+For complete system documentation, frontend architecture,
+authentication flow, e-commerce workflow, deployment architecture,
+and AI functionality, see the main project README:
+
+```text
+../README.md
+```
