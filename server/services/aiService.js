@@ -46,9 +46,12 @@ const client = new OpenAI({
 // AI Model
 // ==============================
 
+// const MODEL =
+//   process.env.GROQ_MODEL ||
+//   "llama-3.3-70b-versatile";
 const MODEL =
   process.env.GROQ_MODEL ||
-  "llama-3.3-70b-versatile";
+  "openai/gpt-oss-120b";
 
 // ==============================
 // System Prompt
@@ -100,15 +103,13 @@ const generateAIResponse = async (userPrompt) => {
       completion?.choices?.[0]?.message?.content?.trim() ||
       "I'm sorry, I couldn't generate a response at the moment."
     );
-  } catch (error) {
-    console.error(
-      "❌ Groq API Error:",
-      error?.response?.data || error.message
-    );
+    } catch (error) {
+    console.error("❌ Groq API Error");
+    console.error("Status:", error?.status);
+    console.error("Message:", error?.message);
+    console.error("Response:", error?.response?.data);
 
-    throw new Error(
-      "Failed to generate AI response."
-    );
+    throw error;
   }
 };
 
