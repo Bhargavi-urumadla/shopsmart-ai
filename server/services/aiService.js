@@ -3,39 +3,21 @@
 // ==============================
 
 const dotenv = require("dotenv");
-
 dotenv.config();
 
 // ==============================
-// OpenAI-Compatible Groq Client
+// Groq Client
 // ==============================
 
 const OpenAI = require("openai");
 
-// Get Groq API key
 const groqApiKey = process.env.GROQ_API_KEY;
 
-// Debug check - never print the actual API key
-console.log(
-  "🔑 GROQ API KEY AVAILABLE:",
-  Boolean(groqApiKey)
-);
-
-console.log(
-  "🔑 GROQ API KEY LENGTH:",
-  groqApiKey ? groqApiKey.length : 0
-);
-
-// Stop immediately if the key is missing
 if (!groqApiKey) {
   throw new Error(
-    "❌ GROQ_API_KEY is missing. Please check server/.env"
+    "❌ GROQ_API_KEY is missing. Check server/.env"
   );
 }
-
-// ==============================
-// Create Groq Client
-// ==============================
 
 const client = new OpenAI({
   apiKey: groqApiKey,
@@ -43,71 +25,78 @@ const client = new OpenAI({
 });
 
 // ==============================
-// AI Model
+// Model
 // ==============================
 
-// const MODEL =
-//   process.env.GROQ_MODEL ||
-//   "llama-3.3-70b-versatile";
 const MODEL =
   process.env.GROQ_MODEL ||
-  "openai/gpt-oss-120b";
+  "llama-3.1-8b-instant";
 
 // ==============================
 // System Prompt
 // ==============================
 
 const SYSTEM_PROMPT = `
-You are ShopSmart AI, an intelligent shopping assistant.
+You are ShopSmart AI, an intelligent ecommerce shopping assistant.
 
-Your responsibilities:
+Rules:
 
-- Help customers choose the right products.
-- Recommend only products provided in the prompt.
-- Never invent products, prices, or specifications.
-- Explain recommendations clearly.
-- Compare products objectively.
-- If no matching products exist, politely inform the user.
-- Answer general shopping questions naturally.
-- Keep responses concise (under 200 words).
-- Be friendly and professional.
+1. Use only the products provided by ShopSmart.
+2. Never invent products.
+3. Never invent prices.
+4. Never invent stock.
+5. Never invent specifications.
+6. Recommend products only from the provided data.
+7. Compare products objectively.
+8. If no products match, say so clearly.
+9. Keep responses concise.
+10. Be friendly and professional.
 `;
 
 // ==============================
 // Generate AI Response
 // ==============================
 
-const generateAIResponse = async (userPrompt) => {
+const generateAIResponse = async (
+  userPrompt,
+  options = {}
+) => {
   try {
     const completion =
-      await client.chat.completions.create({
-        model: MODEL,
+      await client.chat.completions.create(
+        {
+          model: MODEL,
 
-        messages: [
-          {
-            role: "system",
-            content: SYSTEM_PROMPT,
-          },
-          {
-            role: "user",
-            content: userPrompt,
-          },
-        ],
+          messages: [
+            {
+              role: "system",
+              content: SYSTEM_PROMPT,
+            },
+            {
+              role: "user",
+              content: userPrompt,
+            },
+          ],
 
-        temperature: 0.7,
+          temperature:
+            options.temperature ?? 0.2,
 
-        max_tokens: 300,
-      });
+          max_tokens:
+            options.maxTokens ?? 180,
+        },
+        {
+          timeout: 15000,
+        }
+      );
 
     return (
       completion?.choices?.[0]?.message?.content?.trim() ||
-      "I'm sorry, I couldn't generate a response at the moment."
+      "Sorry, I couldn't generate a response."
     );
-    } catch (error) {
+  } catch (error) {
     console.error("❌ Groq API Error");
     console.error("Status:", error?.status);
     console.error("Message:", error?.message);
-    console.error("Response:", error?.response?.data);
 
     throw error;
   }

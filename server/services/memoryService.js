@@ -1,5 +1,9 @@
 const Conversation = require("../models/Conversation");
 
+// ============================================================
+// SAVE CONVERSATION
+// ============================================================
+
 const saveConversation = async (
   sessionId,
   message,
@@ -9,35 +13,54 @@ const saveConversation = async (
   aiResponse = ""
 ) => {
   try {
-    const productIds = products.map((product) => product._id);
+    if (!sessionId) {
+      console.warn("⚠️ No sessionId. Conversation not saved.");
+      return null;
+    }
 
-    // Get existing conversation
-    let conversation = await Conversation.findOne({ sessionId });
+    const productIds = products
+      .map((product) => product?._id)
+      .filter(Boolean);
+
+    let conversation = await Conversation.findOne({
+      sessionId,
+    });
 
     if (!conversation) {
       conversation = new Conversation({
         sessionId,
+        chatHistory: [],
       });
     }
 
-    // Update latest conversation state
+    // Latest state
     conversation.lastMessage = message;
-    conversation.preferences = preferences;
-    conversation.lastIntent = intent;
+
+    conversation.preferences = {
+      ...(preferences || {}),
+    };
+
+    conversation.lastIntent = {
+      ...(intent || {}),
+    };
+
     conversation.lastProducts = productIds;
 
-    // Save chat history (keep last 20 messages)
-    conversation.chatHistory.push(
-      {
-        role: "user",
-        message,
-      },
-      {
-        role: "assistant",
-        message: aiResponse,
-      }
-    );
+    // Add user message
+    conversation.chatHistory.push({
+      role: "user",
+      message: String(message),
+    });
 
+    // Add AI response only if available
+    if (aiResponse) {
+      conversation.chatHistory.push({
+        role: "assistant",
+        message: String(aiResponse),
+      });
+    }
+
+    // Keep only latest 20 messages
     if (conversation.chatHistory.length > 20) {
       conversation.chatHistory =
         conversation.chatHistory.slice(-20);
@@ -47,20 +70,49 @@ const saveConversation = async (
 
     return conversation;
   } catch (error) {
-    console.error("Error saving conversation:", error);
-    throw error;
+    // IMPORTANT:
+    // Memory failure should NOT break shopping.
+    console.error(
+      "⚠️ Conversation save failed:",
+      error.message
+    );
+
+    return null;
   }
 };
 
+// ============================================================
+// GET CONVERSATION
+// ============================================================
+
 const getConversation = async (sessionId) => {
   try {
-    return await Conversation.findOne({ sessionId })
-      .populate("lastProducts");
+    if (!sessionId) {
+      return null;
+    }
+
+    const conversation =
+      await Conversation.findOne({
+        sessionId,
+      }).populate("lastProducts");
+
+    return conversation;
   } catch (error) {
-    console.error("Error loading conversation:", error);
-    throw error;
+    // IMPORTANT:
+    // If memory fails, start a fresh conversation.
+    // Do NOT break the shopping request.
+    console.error(
+      "⚠️ Conversation load failed:",
+      error.message
+    );
+
+    return null;
   }
 };
+
+// ============================================================
+// EXPORT
+// ============================================================
 
 module.exports = {
   saveConversation,

@@ -100,28 +100,50 @@ const getProducts = async (req, res) => {
       filter.productType = req.query.productType;
     }
 
-    if (req.query.search) {
-      filter.$or = [
-        {
-          name: {
-            $regex: req.query.search,
-            $options: "i",
-          },
+   if (req.query.search) {
+  const searchTerm = req.query.search.trim();
+
+  if (searchTerm) {
+    filter.$or = [
+      {
+        name: {
+          $regex: searchTerm,
+          $options: "i",
         },
-        {
-          description: {
-            $regex: req.query.search,
-            $options: "i",
-          },
+      },
+      {
+        description: {
+          $regex: searchTerm,
+          $options: "i",
         },
-        {
-          brand: {
-            $regex: req.query.search,
-            $options: "i",
-          },
+      },
+      {
+        brand: {
+          $regex: searchTerm,
+          $options: "i",
         },
-      ];
-    }
+      },
+      {
+        category: {
+          $regex: searchTerm,
+          $options: "i",
+        },
+      },
+      {
+        productType: {
+          $regex: searchTerm,
+          $options: "i",
+        },
+      },
+      {
+        tags: {
+          $regex: searchTerm,
+          $options: "i",
+        },
+      },
+    ];
+  }
+}
 
     if (req.query.minPrice || req.query.maxPrice) {
       filter.price = {};
@@ -172,6 +194,24 @@ const getProducts = async (req, res) => {
       .sort(sort)
       .skip(skip)
       .limit(limit);
+      console.log("=================================");
+console.log("🔎 PRODUCT API DEBUG");
+console.log("Search:", req.query.search || "none");
+console.log("Filter:", JSON.stringify(filter, null, 2));
+console.log("Products Found:", products.length);
+console.log(
+  "Products:",
+  products.map((p) => ({
+    name: p.name,
+    brand: p.brand,
+    category: p.category,
+    stock: p.stock,
+    isActive: p.isActive,
+  }))
+);
+console.log("=================================");
+      
+
 
     const totalProducts = await Product.countDocuments(filter);
 
