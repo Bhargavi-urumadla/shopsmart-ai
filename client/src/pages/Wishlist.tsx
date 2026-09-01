@@ -8,17 +8,18 @@ import { notify } from "../utils/notify";
 import Loader from "../components/Loader/Loader";
 import EmptyState from "../components/EmptyState/EmptyState";
 
+interface WishlistProduct {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  description: string;
+  image?: string;
+}
+
 interface WishlistItem {
   _id: string;
-
-  product: {
-    _id: string;
-    name: string;
-    price: number;
-    category: string;
-    description: string;
-    image: string;
-  };
+  product: WishlistProduct | null;
 }
 
 function Wishlist() {
@@ -43,13 +44,9 @@ function Wishlist() {
   const token =
     localStorage.getItem("token");
 
-  useEffect(() => {
-    fetchWishlist();
-  }, []);
-
-  // =========================
+  // ==========================================================
   // Fetch Wishlist
-  // =========================
+  // ==========================================================
 
   const fetchWishlist = async () => {
     try {
@@ -65,39 +62,92 @@ function Wishlist() {
         }
       );
 
-    setWishlist(
-  Array.isArray(res.data.wishlist)
-    ? res.data.wishlist
-    : []
-);
+      const receivedWishlist =
+        Array.isArray(
+          res.data?.wishlist
+        )
+          ? res.data.wishlist
+          : [];
 
+      console.log(
+        "❤️ WISHLIST API RESPONSE:",
+        res.data
+      );
+
+      console.log(
+        "❤️ WISHLIST RECEIVED:",
+        receivedWishlist
+      );
+
+      // ========================================================
+      // IMPORTANT:
+      // Keep only wishlist entries that have a valid product.
+      //
+      // This prevents:
+      // item.product.image
+      // from crashing when product === null.
+      // ========================================================
+
+      const validWishlist =
+        receivedWishlist.filter(
+          (item: WishlistItem) =>
+            item &&
+            item._id &&
+            item.product &&
+            item.product._id
+        );
+
+      const invalidCount =
+        receivedWishlist.length -
+        validWishlist.length;
+
+      if (invalidCount > 0) {
+        console.warn(
+          `⚠️ Removed ${invalidCount} invalid wishlist item(s) from UI.`
+        );
+      }
+
+      setWishlist(
+        validWishlist
+      );
     } catch (error) {
-      console.error(error);
+      console.error(
+        "❌ WISHLIST FETCH ERROR:",
+        error
+      );
+
+      setWishlist([]);
 
       notify.error(
         "Unable to load your wishlist. Please try again."
       );
-
     } finally {
       setLoading(false);
     }
   };
 
-  // =========================
+  useEffect(() => {
+    fetchWishlist();
+  }, []);
+
+  // ==========================================================
   // Add Product To Cart
-  // =========================
+  // ==========================================================
 
   const addToCart = async (
     productId: string
   ) => {
     if (
-      addingToCartId === productId
+      addingToCartId ===
+      productId
     ) {
       return;
     }
 
     try {
-      setAddingToCartId(productId);
+      setAddingToCartId(
+        productId
+      );
 
       await API.post(
         "/cart",
@@ -116,72 +166,82 @@ function Wishlist() {
       notify.success(
         "Added to cart successfully."
       );
-
     } catch (error: any) {
-      console.error(error);
+      console.error(
+        "❌ ADD TO CART ERROR:",
+        error
+      );
 
       notify.error(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           "Unable to add product to cart."
       );
-
     } finally {
-      setAddingToCartId(null);
+      setAddingToCartId(
+        null
+      );
     }
   };
 
-  // =========================
+  // ==========================================================
   // Remove From Wishlist
-  // =========================
+  // ==========================================================
 
-  const removeWishlist = async (
-    id: string
-  ) => {
-    if (removingId === id) {
-      return;
-    }
+  const removeWishlist =
+    async (
+      id: string
+    ) => {
+      if (
+        removingId === id
+      ) {
+        return;
+      }
 
-    try {
-      setRemovingId(id);
+      try {
+        setRemovingId(id);
 
-      await API.delete(
-        `/wishlist/${id}`,
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`,
-          },
-        }
-      );
+        await API.delete(
+          `/wishlist/${id}`,
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        );
 
-      // Remove immediately from UI
-      setWishlist(
-        (prevWishlist) =>
-          prevWishlist.filter(
-            (item) =>
-              item._id !== id
-          )
-      );
+        // Remove immediately from UI
+        setWishlist(
+          (prevWishlist) =>
+            prevWishlist.filter(
+              (item) =>
+                item._id !== id
+            )
+        );
 
-      notify.success(
-        "Removed from wishlist successfully."
-      );
+        notify.success(
+          "Removed from wishlist successfully."
+        );
+      } catch (error) {
+        console.error(
+          "❌ REMOVE WISHLIST ERROR:",
+          error
+        );
 
-    } catch (error) {
-      console.error(error);
+        notify.error(
+          "Failed to remove from wishlist. Please try again."
+        );
+      } finally {
+        setRemovingId(
+          null
+        );
+      }
+    };
 
-      notify.error(
-        "Failed to remove from wishlist. Please try again."
-      );
-
-    } finally {
-      setRemovingId(null);
-    }
-  };
-
-  // =========================
+  // ==========================================================
   // Page Loader
-  // =========================
+  // ==========================================================
 
   if (loading) {
     return (
@@ -192,10 +252,28 @@ function Wishlist() {
     );
   }
 
+  // ==========================================================
+  // Final Safety Filter
+  // ==========================================================
+
+  const validWishlist =
+    wishlist.filter(
+      (item) =>
+        item &&
+        item.product &&
+        item.product._id
+    );
+
+  // ==========================================================
+  // Empty Wishlist
+  // ==========================================================
+
   return (
     <div className="wishlist-page">
 
-      {/* Header */}
+      {/* ======================================================
+          Header
+      ======================================================= */}
 
       <div className="wishlist-header">
 
@@ -214,10 +292,12 @@ function Wishlist() {
           </p>
         </div>
 
-        {wishlist.length > 0 && (
+        {validWishlist.length >
+          0 && (
           <div className="wishlist-count">
-            {wishlist.length}{" "}
-            {wishlist.length === 1
+            {validWishlist.length}{" "}
+            {validWishlist.length ===
+            1
               ? "Product"
               : "Products"}
           </div>
@@ -225,9 +305,12 @@ function Wishlist() {
 
       </div>
 
-      {/* Empty Wishlist */}
+      {/* ======================================================
+          Empty Wishlist
+      ======================================================= */}
 
-      {wishlist.length === 0 ? (
+      {validWishlist.length ===
+      0 ? (
 
         <EmptyState
           icon="❤️"
@@ -241,148 +324,194 @@ function Wishlist() {
 
         <div className="wishlist-grid">
 
-          {wishlist.map((item) => (
+          {validWishlist.map(
+            (item) => {
 
-            <div
-              className="wishlist-card"
-              key={item._id}
-            >
+              // ------------------------------------------------
+              // Extra defensive check
+              // ------------------------------------------------
 
-              {/* Product Image */}
+              if (
+                !item ||
+                !item.product
+              ) {
+                return null;
+              }
 
-              <div className="wishlist-image-container">
+              const product =
+                item.product;
 
-                <img
-                  src={item.product.image}
-                  alt={item.product.name}
-                  onClick={() =>
-                    navigate(
-                      `/products/${item.product._id}`
-                    )
-                  }
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "https://placehold.co/400x300?text=ShopSmart";
-                  }}
-                />
+              const productImage =
+                product.image ||
+                "https://placehold.co/400x300?text=ShopSmart";
 
-                <span className="wishlist-category">
-                  {item.product.category}
-                </span>
-
-              </div>
-
-              {/* Product Content */}
-
-              <div className="wishlist-card-content">
-
-                <h3
-                  onClick={() =>
-                    navigate(
-                      `/products/${item.product._id}`
-                    )
-                  }
-                >
-                  {item.product.name}
-                </h3>
-
-                <p className="wishlist-description">
-                  {item.product.description}
-                </p>
-
-                {/* Price */}
-
-                <div className="wishlist-price-row">
-
-                  <div>
-                    <span className="price-label">
-                      Price
-                    </span>
-
-                    <p className="wishlist-price">
-                      ₹ {item.product.price}
-                    </p>
-                  </div>
-
-                  <span className="saved-badge">
-                    ❤️ Saved
-                  </span>
-
-                </div>
-
-                {/* Actions */}
-
-                <div className="wishlist-actions">
-
-                  <button
-                    className="wishlist-view-btn"
-                    onClick={() =>
-                      navigate(
-                        `/products/${item.product._id}`
-                      )
-                    }
-                  >
-                    View Details
-                  </button>
-
-                  <button
-                    className="wishlist-cart-btn"
-                    onClick={() =>
-                      addToCart(
-                        item.product._id
-                      )
-                    }
-                    disabled={
-                      addingToCartId ===
-                      item.product._id
-                    }
-                  >
-                    {addingToCartId ===
-                    item.product._id ? (
-                      <Loader
-                        size="small"
-                        text="Adding..."
-                      />
-                    ) : (
-                      "🛒 Add to Cart"
-                    )}
-                  </button>
-
-                </div>
-
-                {/* Remove */}
-
-                <button
-                  className="wishlist-remove-btn"
-                  onClick={() =>
-                    removeWishlist(
-                      item._id
-                    )
-                  }
-                  disabled={
-                    removingId ===
+              return (
+                <div
+                  className="wishlist-card"
+                  key={
                     item._id
                   }
                 >
-                  {removingId ===
-                  item._id ? (
-                    <Loader
-                      size="small"
-                      text="Removing..."
+
+                  {/* ==========================================
+                      Product Image
+                  =========================================== */}
+
+                  <div className="wishlist-image-container">
+
+                    <img
+                      src={productImage}
+                      alt={
+                        product.name ||
+                        "Product"
+                      }
+                      onClick={() =>
+                        navigate(
+                          `/products/${product._id}`
+                        )
+                      }
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://placehold.co/400x300?text=ShopSmart";
+                      }}
                     />
-                  ) : (
-                    "🗑 Remove from Wishlist"
-                  )}
-                </button>
 
-              </div>
+                    <span className="wishlist-category">
+                      {
+                        product.category ||
+                        "Product"
+                      }
+                    </span>
 
-            </div>
+                  </div>
 
-          ))}
+                  {/* ==========================================
+                      Product Content
+                  =========================================== */}
+
+                  <div className="wishlist-card-content">
+
+                    <h3
+                      onClick={() =>
+                        navigate(
+                          `/products/${product._id}`
+                        )
+                      }
+                    >
+                      {
+                        product.name
+                      }
+                    </h3>
+
+                    <p className="wishlist-description">
+                      {
+                        product.description ||
+                        "No description available."
+                      }
+                    </p>
+
+                    {/* ========================================
+                        Price
+                    ========================================= */}
+
+                    <div className="wishlist-price-row">
+
+                      <div>
+                        <span className="price-label">
+                          Price
+                        </span>
+
+                        <p className="wishlist-price">
+                          ₹{" "}
+                          {
+                            product.price
+                          }
+                        </p>
+                      </div>
+
+                      <span className="saved-badge">
+                        ❤️ Saved
+                      </span>
+
+                    </div>
+
+                    {/* ========================================
+                        Actions
+                    ========================================= */}
+
+                    <div className="wishlist-actions">
+
+                      <button
+                        className="wishlist-view-btn"
+                        onClick={() =>
+                          navigate(
+                            `/products/${product._id}`
+                          )
+                        }
+                      >
+                        View Details
+                      </button>
+
+                      <button
+                        className="wishlist-cart-btn"
+                        onClick={() =>
+                          addToCart(
+                            product._id
+                          )
+                        }
+                        disabled={
+                          addingToCartId ===
+                          product._id
+                        }
+                      >
+                        {addingToCartId ===
+                        product._id ? (
+                          <Loader
+                            size="small"
+                            text="Adding..."
+                          />
+                        ) : (
+                          "🛒 Add to Cart"
+                        )}
+                      </button>
+
+                    </div>
+
+                    {/* ========================================
+                        Remove
+                    ========================================= */}
+
+                    <button
+                      className="wishlist-remove-btn"
+                      onClick={() =>
+                        removeWishlist(
+                          item._id
+                        )
+                      }
+                      disabled={
+                        removingId ===
+                        item._id
+                      }
+                    >
+                      {removingId ===
+                      item._id ? (
+                        <Loader
+                          size="small"
+                          text="Removing..."
+                        />
+                      ) : (
+                        "🗑 Remove from Wishlist"
+                      )}
+                    </button>
+
+                  </div>
+
+                </div>
+              );
+            }
+          )}
 
         </div>
-
       )}
 
     </div>
