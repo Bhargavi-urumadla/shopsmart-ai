@@ -17,6 +17,7 @@ interface Product {
   description: string;
   image: string;
   rating?: number;
+  stock?: number;
 }
 
 function Products() {
@@ -87,6 +88,9 @@ const fetchProducts = useCallback(async () => {
     const res = await API.get(
       `/products?${params.toString()}`
     );
+    console.log("🔎 PRODUCTS API RESPONSE:", res.data);
+console.log("🔎 PRODUCTS RECEIVED:", res.data.data);
+console.log("🔎 SEARCH:", debouncedSearch);
 
     setProducts(res.data.data || []);
 
@@ -298,9 +302,17 @@ if (res.data.pagination) {
                     </p>
                   </div>
 
-                  <span className="stock-badge">
-                    In Stock
-                  </span>
+            <span
+  className={
+    product.stock && product.stock > 0
+      ? "stock-badge"
+      : "stock-badge out-of-stock"
+  }
+>
+  {product.stock && product.stock > 0
+    ? "In Stock"
+    : "Out of Stock"}
+</span>
                 </div>
 
                 <div className="product-actions">
