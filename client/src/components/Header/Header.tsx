@@ -5,10 +5,10 @@ import {
   FiSettings,
 } from "react-icons/fi";
 
-function Header() {
-  const user = JSON.parse(
-    localStorage.getItem("user") || "{}"
-  );
+// function Header() {
+//   const user = JSON.parse(
+//     // localStorage.getItem("user") || "{}"
+//   );
 
   return (
     <header className="dashboard-header">
